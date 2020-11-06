@@ -1,0 +1,223 @@
+import React, { Component } from 'react';
+import DemoShaderFilter from './DemoShaderFilter'
+import * as PIXI from 'pixi.js';
+import {getRender} from './../../../utils/mapRendererToStage'
+var animate = require('animate');
+
+
+export default class DemoShaderFilterComponent extends Component {
+    static defaultProps = {
+        pause:false,
+        offset:0,
+    }
+	constructor(props){
+		super(props)
+		this.filter =  new DemoShaderFilter()
+	}
+	componentWillMount(){
+        // window.addEventListener('mousemove',this.handleMouse)
+    }
+    handleMouse = (e)=>{
+        this.filter.mouse =  [e.clientX/window.innerWidth,e.clientY/window.innerHeight];
+    }
+	update = (nextProps) =>{
+		// if(this.props.pause) return;
+        // this.filter.mouse =  [0,nextProps.offset]
+        this.filter.offset =  nextProps.offset;
+        // console.log('offset',nextProps.offset)
+    }
+    componentWillReceiveProps(nextProps){
+        this.update(nextProps)
+    }
+	componentDidMount(){
+        const RESOLUTION = 10;
+
+        var values = {
+            friction: 0.8,
+            timeStep: 0.01,
+            amount: 15,
+            mass: 2,
+            count: 0
+        };
+        values.invMass = 1 / values.mass;
+        var springs = [];
+        var view = {size:{height:200,width:200}};
+        var size = view.size;
+        
+        var Spring = function(a, b, strength, restLength) {
+            this.a = a;
+            this.b = b;
+            this.restLength = restLength || 8;
+            this.strength = strength ? strength : 0.55;
+            this.mamb = values.invMass * values.invMass;
+        };
+        Spring.prototype.update = function() {
+            // if(!this.a) this.a = {y:-0,x:0}
+            // if(!this.b) this.b = {y:-0,x:0}
+          
+            // var delta = this.b - this.a;
+            var delta = {x:this.b.x - this.a.x ,y:this.b.y - this.a.y };
+            var a = delta.x;
+            var b = delta.y;
+
+            var dist = Math.sqrt( a*a + b*b );
+            // var dist = delta.length;
+            var normDistStrength = (dist - this.restLength) /
+                    (dist * this.mamb) * this.strength;
+            delta.y *= normDistStrength * values.invMass * 0.2;
+            if (!this.a.fixed)
+                this.a.y += delta.y;
+            if (!this.b.fixed)
+                this.b.y -= delta.y;
+        };
+        var path = []
+        var dots = [];
+        const createDots = ()=>{
+            dots = path.map((p,i)=>{
+              
+                var graphics =  new PIXI.Graphics();
+                graphics.lineStyle(1,0xff00ff,1)
+                graphics.drawRect(0,0,5,5);
+                const renderer =  getRender(this.container.stage);
+                let texture = renderer.generateTexture( graphics);
+                //let texture = graphics.generateCanvasTexture();
+                
+                
+                var sprite = new PIXI.Sprite(texture);
+                // sprite.addChild(graphics)
+                sprite.x =p.x;
+                sprite.y = p.y;
+                // sprite.cacheAsBitmap = true;
+                this.container.addChild(sprite)
+                return sprite;
+                // graphics.lineTo(,p.y);
+            })
+        }
+        function createPoints(strength) {
+            springs = [];
+            for (var i = 0; i <= values.amount; i++) {
+                var point = {idx:i, x:(i / values.amount)*200, y:0.5};
+                if (i == 0 || i == values.amount)
+                    // point.y += size.height;
+                point.px = point.x;
+                point.py = point.y;
+                // The first two and last two points are fixed:
+                point.fixed = i < 2 || i > values.amount - 2;
+
+                if (i > 0) {
+                    var prev = path.slice(-1)[0] ;
+                    
+                    var spring = new Spring(prev , point, strength);
+                    springs.push(spring);
+                    
+                    
+                }
+                path.push(point)
+               
+
+            }
+            //path.position.x -= size.width / 4;
+            return path;
+        }
+
+        function updateWave(path) {
+            var force = 1 - values.friction * values.timeStep * values.timeStep;
+          
+            for (var i = 0, l = path.length; i < l; i++) {
+                var point = path[i];
+                var dy = (point.y - point.py) * force;
+                point.py = point.y;
+                point.y = Math.max(point.y + dy, 0);
+            }
+
+            for (var j = 0, l = springs.length; j < l; j++) {
+                springs[j].update();
+            }
+            // console.log(path.map(p=>p.y))
+        }
+
+
+        createPoints(0.1);
+        createDots();
+        var graphics =  new PIXI.Graphics();
+        graphics.lineStyle(2,0xff00ff,1);
+        graphics.drawRect(0,0,300,300);
+        graphics.endFill();
+
+       
+
+        this.container.addChild(graphics);
+        function draw(){
+            
+            path.forEach((p,i)=>{
+                
+                dots[i].y = p.y;
+                // graphics.lineStyle(20,0xff00ff,1)
+                // graphics.drawRect(p.x,1,1,p.y);
+                // graphics.lineTo(,p.y);
+            })
+        }
+
+        
+
+        var animation = animate(function frame() {
+            // console.log('draw step')
+            updateWave(path);
+            draw();//
+            
+          }, 30)
+           
+          animation.pause()
+          animation.resume()
+          
+
+        
+        
+
+        function onMouseMove(event) {
+            var mouse  = {x:event.clientX,y:event.clientY-550}
+            var location = path.find(p=>p.x > mouse.x)
+            
+            
+            // var location = path.getNearestLocation(event.point);
+            // var segment = location.segment;
+            var point = location;
+            
+            if (point && !point.fixed ){//&& mouse.y > 0 && mouse.y < 100 &&  Math.abs(mouse.y - point.y < 50) ){//&& location.distance < size.height / 4) {
+                var y = mouse.y*0.1;//event.point.y;
+                point.y += (y - point.y) / 6;
+                var previusPoint = path[point.idx - 1];
+                var nextPoint = path[point.idx + 1];
+                if (previusPoint && !previusPoint.fixed) {
+                    var previous = previusPoint
+                    previous.y += (y - previous.y) / 24;
+                }
+                if (nextPoint && !nextPoint.fixed) {
+                    var next = nextPoint;
+                    next.y += (y - next.y) / 24;
+                }
+            }
+        }
+        window.addEventListener('mousemove',onMouseMove)
+
+        
+        this.update(this.props);
+
+        // this.container.anchor.set(0.5);
+	}
+	componentWillUnmount(){
+    }
+    
+    renderChidren(children){
+       return React.Children.map(children, child =>  React.cloneElement(child,{...child.props,filters:[this.filter]},child.props.children))
+       
+    }
+    render() {
+		return <div ref={ref=>this.container=ref}  filters={[this.filter]}>{this.props.children}</div>
+    }
+    
+	// render() {
+    //     // console.log('(this.props.children',this.props.children)
+	// 	return this.renderChidren(this.props.children)
+	// }
+}

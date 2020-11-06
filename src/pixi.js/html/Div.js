@@ -2,7 +2,6 @@ import * as PIXI from 'pixi.js';
 import css from 'css-to-react-native';
 import parseCsstransition from 'parse-css-transition';
 import camelizeStyleName from 'fbjs/lib/camelizeStyleName';
-import FPSController from 'FpsController';
 import shallowequal from 'shallowequal';
 
 var date = Date.now();
@@ -21,28 +20,6 @@ const checkfps = (fps = FPS) => {
     }
     return allow;
 };
-
-// class FPSController {
-//     constructor(){
-//     }
-//     dates = {}
-//     checkfps = (fps = FPS,id = 0) => {
-//         if(!this.dates[id]) this.dates[id] = Date.now();
-//         let allow = false;
-//         const interval = 1000 / fps;
-//         const then = this.dates[id];
-//         const now = Date.now();
-//         const delta = now - then;
-//         if (delta > interval && this.dates[id]) {
-//             this.dates[id] = now - (delta % interval);
-//             allow = true
-
-//         }
-//         return allow;
-//     };
-// }
-
-const fpsController = new FPSController()
 
 // utils
 const parseColor = (color)=>{
@@ -191,7 +168,7 @@ function drawBackground(w,h,color= '#000000', width=0,style = 'solid'){
     }
     var background = new PIXI.Graphics();
     const {hex,alpha} = parseColor(color);
-    background.beginFill(hex,.2)
+    background.beginFill(hex,alpha)
     width && background.lineStyle(width,hex,alpha)
     background.drawRect(
         0,
@@ -312,18 +289,17 @@ export default class Div extends PIXI.Sprite {
     applyCssProperty            = applyCssProperty
     applyCssTransformProperty   = applyCssTransformProperty
     applyStyle(style){
-        // console.log('render style!!!')
+
         if(!style) return;
         this.getBounds();
         const bounds = this._bounds;
         const width = this.width || style.width || bounds.maxX - bounds.minX;
         const height = this.height || style.height || bounds.maxY - bounds.minY ;
         const {width:textureWidth,height:textureHeight} = this.texture;
-
+       
         this.width === 0 &&  (this.width = width)
         this.height === 0 && (this.height = height)
-        
-
+    
         if(style.transform){
             
             this.applyCssTransformProperty(style.transform)
@@ -338,7 +314,8 @@ export default class Div extends PIXI.Sprite {
             && height
             && (this.__width !== width ||this.__height !== height)
             ){
-                this.clip(0,0,width,height)   
+                
+                this.clip(0,0,width || style.width,height || style.width)   
                 this._clip = true;        
         }
         
@@ -350,8 +327,7 @@ export default class Div extends PIXI.Sprite {
                 || this.__textureWidth !== textureWidth ||this.__textureHeight !== textureHeight
                 )
             ){
-           
-                this.drawBoundingbox(textureWidth || width ,textureHeight ||height ,style.borderColor,style.borderWidth,style.borderStyle)
+                this.drawBoundingbox( width ,height ,style.borderColor,style.borderWidth,style.borderStyle)
             
         }
         //background
@@ -363,12 +339,10 @@ export default class Div extends PIXI.Sprite {
                 )
             ){
                 this.drawBackground(this.texture.valid ? textureWidth : width ,this.texture.valid ? textureHeight : height ,style.backgroundColor,style.borderWidth,style.borderStyle)
-
-              // this.drawBackground(this.texture.valid ? textureWidth : width ,this.texture.valid ? textureHeight : height ,style.backgroundColor,style.borderWidth,style.borderStyle)
             
         }
        
-        console.log('draw canvas div',this)
+        // console.log('draw canvas div',this)
         this.applyCssProperty('left',style.left,'x');
         this.applyCssProperty('top',style.top,'y');
         this.applyCssProperty('opacity',style.opacity);
@@ -407,6 +381,8 @@ export default class Div extends PIXI.Sprite {
         this.transform.updateTransform(this.parent.transform);
         // TODO: check render flags, how to process stuff here
         this.worldAlpha = this.alpha * this.parent.worldAlpha;
+        // console.log(this._scaleX,this.scaleX)
+        // this.scale.set(this._scaleX,this._scaleY)
 
         for (let i = 0, j = this.children.length; i < j; ++i)
         {
@@ -587,6 +563,23 @@ export default class Div extends PIXI.Sprite {
     }
     set y(y){       
         this.transform.position.y = y + this.translateY + (this._style.paddingTop ||0)
+    }
+    _scaleX = 1
+    _scaleY = 1
+    get scaleX(){
+        return this._scaleX || 2;
+    }
+    set scaleX(scaleX){  
+         this._scaleX = scaleX;
+         this.scale.set(scaleX,this._scaleY)
+    }
+    get scaleY(){
+        return this._scaleY || 1;
+
+    }
+    set scaleY(scaleY){  
+         this._scaleY = scaleY;
+         this.scale.set(this._scaleX,scaleY)
     }
 }
 

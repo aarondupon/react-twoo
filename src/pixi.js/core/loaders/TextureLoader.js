@@ -143,7 +143,8 @@ export default class TextureLoader{
                         v.setAttribute('_GLSL_ID',url)
                         v.muted = true;                      
                         v.src = url;
-                        let sprite =  new PIXI.Sprite.from( PIXI.Texture.fromVideo(v,1,false,false));
+                        v.autoplay = true;
+                        let sprite =  new PIXI.Sprite.from( PIXI.Texture.fromVideo(v,1,true,true));
                         texture = sprite.texture;
                         // UGLY UGLY UGLY !!!!
                         const source = texture.baseTexture.source;
@@ -214,8 +215,8 @@ export default class TextureLoader{
        
         // texture.baseTexture.wrapMode = PIXI.WRAP_MODES.CLAMP;
         
-        // if(this.filter && this.filter.renderer) this.filter.renderer.bindTexture(texture)
-        // this.bindSampler2D(texture,uniforms,alias)
+        if(this.filter && this.filter.renderer) this.filter.renderer.bindTexture(texture)
+        this.bindSampler2D(texture,uniforms,alias)
         if(cache) this.cacheTexture(texture,url,cache)
     }
     cacheTexture = (texture,url)=>{

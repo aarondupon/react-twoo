@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js'
 export const DISPLAY_OBJECT_PROPS = {
     // alpha: 1,
-    defaultCursor: 'pointer',
+    cursor: 'pointer',
     
     // if included, props.children would be used! children:null,
     filterArea: null,
@@ -11,7 +11,7 @@ export const DISPLAY_OBJECT_PROPS = {
     anchor: .0,
     renderable: true,
     rotation: 0,
-    scale: 1,//new PIXI.Point(1, 1),
+    scale: new PIXI.Point(1, 1),
     visible: true,
     width:null, 
     height:null,
@@ -28,5 +28,8 @@ export const DISPLAY_OBJECT_PROPS = {
     accessible:'null',
     button:false,
     pluginName:undefined,
+
+    scaleX:1,
+    scaleY:1
 
 };

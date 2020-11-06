@@ -1,14 +1,13 @@
 import * as PIXI from 'pixi.js';
 import '../pixi.js/html/Div';
 import '../pixi.js/html/Img';
-import '../pixi.js/html/DivAnimated';
-import TextContent from '../pixi.js/html/TextContent';
-import SDFTextContent from '../pixi.js/html/SDFTextContent';
-import '../pixi.js/extras/IlluminateRender/Illuminate';
+// import '../pixi.js/html/DivAnimated';
 
-import '../pixi.js/extras/SliderRender/Slider';
+// import TextContent from '../pixi.js/html/TextContent';
+// import SDFTextContent from '../pixi.js/html/SDFTextContent';
+// import '../pixi.js/extras/IlluminateRender/Illuminate';
+// import '../pixi.js/extras/SliderRender/Slider';
 
-//dangerouslySetInnerHTML={{__html:hyphenatedText}}
 function getHtmlText(dangerouslySetInnerHTML){
     if(dangerouslySetInnerHTML){
       return dangerouslySetInnerHTML.__html
@@ -50,12 +49,12 @@ export const COMPONENTS = {
     img: (props) => new PIXI.Img(props),
     slider: (props) => new PIXI.Slider(props),
     //text elements
-    textContent: (props) => new TextContent(props),
-    sdfTextContent: (props) => new SDFTextContent(props),
+    // textContent: (props) => new TextContent(props),
+    // sdfTextContent: (props) => new SDFTextContent(props),
     h1: (props) => {console.log('propspropspropsprops',props); return new SDFTextContent(props)},
     illuminate: (props) => {console.log('propspropspropsprops',props); return new PIXI.Illuminate(props)},
     //slider: (props) => new PIXI.Sprite(props.baseTexture),
-    'div-animated': (props) => new PIXI.DivAnimated(props),
+    // 'div-animated': (props) => new PIXI.DivAnimated(props),
     default: (props) => new PIXI.Container()
 }
 

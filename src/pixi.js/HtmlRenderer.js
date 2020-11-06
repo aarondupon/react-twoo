@@ -1,7 +1,7 @@
 import * as core from 'pixi.js/lib/core';
 // import Device from 'ismobilejs';
 import accessibleTarget from './accessibleTarget';
-import FpsController from 'FpsController';
+import FpsController from './../common/FpsController';
 
 const fpsController  = new FpsController();
 // add some extra variables to the container..

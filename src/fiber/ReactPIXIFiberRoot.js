@@ -1,9 +1,9 @@
 import * as PIXI from 'pixi.js';
-import {mapStage,mapRender,mapCanvasToStage} from './../utils/mapRendererToStage';
-import {renderAnimationRaf} from '../utils/renderAnimation';
+import {mapStage,mapRender,mapCanvasToStage} from '../common/utils/mapRendererToStage';
+import {renderAnimationRaf} from '../common/utils/renderAnimation';
 import HtmlRenderer from '../pixi.js/HtmlRenderer';
-import animate from '../utils/animate';
-import FPSController from 'FpsController';
+import animate from 'animate';
+import FPSController from '../common/FpsController';
 
 
 const PIXI_RENDERS = [];
@@ -20,7 +20,7 @@ export class ReactPIXIFiberRoot {
       return this;  
     }
     cancel = () =>{
-      this.raf &&  this.raf.cancel()
+      (this.raf && typeof this.raf.cancel === "function") &&  this.raf.cancel()
     }
     autoRender = (renderfunction) =>{
       
@@ -37,7 +37,8 @@ export class ReactPIXIFiberRoot {
         const stage = new PIXI.Sprite()
         stage.CANVAS_ID = COUNT;
         // stage.UID = this.UID
-        stage.filters = [new PIXI.filters.AlphaFilter()];
+        // stage.filters = [new PIXI.filters.AlphaFilter()];
+        // stage.filters = [];
         const paddig = 0
         stage.y = paddig
         const res = 1
@@ -46,7 +47,7 @@ export class ReactPIXIFiberRoot {
 
         // PIXI.settings.RESOLUTION = 1  
         let renderer;
-        PIXI.RESOLUTION = window.devicePixelRatio || 1;
+        // PIXI.RESOLUTION = window.devicePixelRatio || 1;
        // const COUNT = Date.now();//Snew Date().getUTCMilliseconds();
         if (!document.getElementById(target) || target === undefined) {
             renderer = new PIXI.WebGLRenderer((width),(height)+paddig*2, {

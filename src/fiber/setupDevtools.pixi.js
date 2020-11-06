@@ -65,18 +65,17 @@ type DevToolsPluginConnection = {
     //   const NativeModules = require('NativeModules');
     //   const {UIManager} = NativeModules;
       let currentHighlight = null;
-      agent.sub('highlight', ({node}) => {
-          debugger
-        // UIManager.setBoundingBoxVisible(node, true);
-        currentHighlight = node;
-        debugger
+      agent.addListener('showNativeHighlight',({node}) => {
+      // UIManager.setBoundingBoxVisible(node, true);
+      currentHighlight = node;
       });
-      agent.sub('hideHighlight', () => {
+      agent.addListener('hideNativeHighlight' ,() => {
         if (currentHighlight !== null) {
         //   UIManager.setBoundingBoxVisible(currentHighlight, false);
         }
         currentHighlight = null;
       });
+
     });
     global.registerDevtoolsPlugin = register;
   }

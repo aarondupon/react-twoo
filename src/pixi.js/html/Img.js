@@ -2,9 +2,8 @@ import * as PIXI from 'pixi.js';
 import css from 'css-to-react-native';
 import parseCsstransition from 'parse-css-transition';
 import camelizeStyleName from 'fbjs/lib/camelizeStyleName';
-import FPSController from 'FpsController';
 import shallowequal from 'shallowequal';
-
+// import FpsController from '../../common/FpsController';
 
 
 class AssetsLoader {
@@ -16,12 +15,19 @@ class AssetsLoader {
     }
   
     add(url,name, cb) {
+        
     const res = this.resources[name];
     if(res){
             cb({ [res.name]: res });
         return
         }
-      this.loadResource(url,name, cb);
+
+    
+    try{
+        this.loadResource(url,name, cb);
+    } catch(error){
+        console.error(error)
+    }
     }
     cancel(){
       this.loader.removeAllListeners();
@@ -80,6 +86,7 @@ function transformBackgroundImage(image,width,height){
     // image.pivot.y = ty;
 }
 function addBackgroundImage(src,backgroundSize,w,h){
+  
     if(this._src === src  && this.backgroundImage) {
         transformBackgroundImage(this.backgroundImage,this.width,this.height);
         return;
@@ -107,15 +114,17 @@ function addBackgroundImage(src,backgroundSize,w,h){
         // image.filters =  this.filters;
         this.addChild(image);
         this.backgroundImage = image;
-        console.log('loaded',this,src,originalframe)
+        // console.log('loaded',this,src,originalframe)
         // image.cashAsBitmap = true
-        //if(this.props.casheAsBitmap ) this.casheAsBitmap =  true
-        if(this.props.enableMesh) this.props.onMesh(image);
+        if(this.props.casheAsBitmap ) this.casheAsBitmap =  true
+        if(this.props.enableMesh && typeof this.props.onMesh === "function") this.props.onMesh(image);
     }
     const handleAssetsLoadedBinded= handleAssetsLoaded.bind(this)
    
-   
-    assetsLoader.add(src,name, handleAssetsLoadedBinded);
+    if(assetsLoader.resources[src]){
+        return handleAssetsLoaded(assetsLoader.resources)
+    }
+    return  assetsLoader.add(src,src, handleAssetsLoadedBinded);
   
 }
 
@@ -136,25 +145,25 @@ const checkfps = (fps = FPS) => {
     return allow;
 };
 
-// class FPSController {
-//     constructor(){
-//     }
-//     dates = {}
-//     checkfps = (fps = FPS,id = 0) => {
-//         if(!this.dates[id]) this.dates[id] = Date.now();
-//         let allow = false;
-//         const interval = 1000 / fps;
-//         const then = this.dates[id];
-//         const now = Date.now();
-//         const delta = now - then;
-//         if (delta > interval && this.dates[id]) {
-//             this.dates[id] = now - (delta % interval);
-//             allow = true
+class FPSController {
+    constructor(){
+    }
+    dates = {}
+    checkfps = (fps = FPS,id = 0) => {
+        if(!this.dates[id]) this.dates[id] = Date.now();
+        let allow = false;
+        const interval = 1000 / fps;
+        const then = this.dates[id];
+        const now = Date.now();
+        const delta = now - then;
+        if (delta > interval && this.dates[id]) {
+            this.dates[id] = now - (delta % interval);
+            allow = true
 
-//         }
-//         return allow;
-//     };
-// }
+        }
+        return allow;
+    };
+}
 
 const fpsController = new FPSController()
 
@@ -192,13 +201,6 @@ function rgbToHex(strColor){
   }
 
 
-// function applyCssProperty(property,value,SETTER){
-//     if(value && this[`__${property}`] !== value ){
-//         //console.log('applyCssProperty',property,value)
-//         this[SETTER || property] = value;
-//         this[`__${property}`] = value;
-//     }
-// }
 function applyCssProperty(property,value,SETTER){
     if(value && this[`__${property}`] !== value ){
         //console.log('applyCssProperty',property,value)
@@ -411,6 +413,7 @@ export default class Img extends PIXI.Sprite {
         
         super(props.texture)
         this.props = props;
+    
         this._UID =  `div_${new Date().getTime()}`
        
         const style = Object.assign(JSON.parse(JSON.stringify(Img.defaultProps.style)),props.style)
@@ -481,7 +484,9 @@ export default class Img extends PIXI.Sprite {
             
         }
         //backgroudImage
+        
         if(
+            
             (this.src)
             && (
                 this.__width !== width ||this.__height !== height
@@ -489,7 +494,9 @@ export default class Img extends PIXI.Sprite {
                 )
             ){
                 
-               this.addBackgroundImage(this.src,this.texture.valid ? textureWidth : width ,this.texture.valid ? textureHeight : height ,style.backgroundColor,style.borderWidth,style.borderStyle)
+
+               
+               this.addBackgroundImage(this.props.src,this.texture.valid ? textureWidth : width ,this.texture.valid ? textureHeight : height ,style.backgroundColor,style.borderWidth,style.borderStyle)
             
         }
        
@@ -524,15 +531,13 @@ export default class Img extends PIXI.Sprite {
      */
     updateTransform()
     {
-        //if(!checkfps(1)) return
-       // if(!fpsController.checkfps(24,'updateTransform')) return 
 
         this._boundsID++;
         
         this.transform.updateTransform(this.parent.transform);
         // TODO: check render flags, how to process stuff here
         this.worldAlpha = this.alpha * this.parent.worldAlpha;
-
+        
         for (let i = 0, j = this.children.length; i < j; ++i)
         {
             const child = this.children[i];
@@ -572,7 +577,7 @@ export default class Img extends PIXI.Sprite {
     calculateBounds()
     {   
         //if(!checkfps(2)) return this._bounds;
-     //   if(!fpsController.checkfps(10,'calculateBounds')) return this._bounds
+       if(!fpsController.checkfps(10,'calculateBounds')) return this._bounds
         const style = this._style;
         this
             ._bounds

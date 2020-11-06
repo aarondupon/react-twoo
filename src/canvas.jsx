@@ -27,13 +27,15 @@ export default class Canvas extends Component {
         // this.resize = throttle(this.resize,200)
     }
     componentWillUnmount(){
-        this._reactPIXIFiberRoot.cancel()
+        if(this._reactPIXIFiberRoot && typeof this._reactPIXIFiberRoot.cancel  ===  'function' ){
+            this._reactPIXIFiberRoot.cancel();
+        }
         console.log('componentWillUnmount:')
     }
     componentWillReceiveProps = (nextProps) => {
         console.log('renderInner3:canvas: created and stage')//,Date.now(),this.props, this.container)
-
-        // console.log('_reactPIXIFiberRoot',this._reactPIXIFiberRoot)
+ 
+          // console.log('_reactPIXIFiberRoot',this._reactPIXIFiberRoot)
         ReactPIXIFiber.render(nextProps.children, this._reactPIXIFiberRoot.stage);
         
         if( nextProps.width !== this.props.width || nextProps.height !== this.props.height){
@@ -52,9 +54,9 @@ export default class Canvas extends Component {
     }
     shouldComponentUpdate({width,height}){
         return( width !== this.props.width || height !== this.props.height )
-    }
+    }    
     componentDidMount() {
-        // if(this._reactPIXIFiberRoot)this._reactPIXIFiberRoot.update(this.props)
+        if(this._reactPIXIFiberRoot)this._reactPIXIFiberRoot.update(this.props)
         console.log('if(this._reactPIXIFiberRoot',this._reactPIXIFiberRoot)
         this.renderInner()
        

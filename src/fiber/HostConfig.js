@@ -1,5 +1,6 @@
+import React from 'react';
 import {forceUpdate,finalizeInitialChildren,checkIfNodeHasMethods,renderNodes,transferEvents,transferDisplayObjectPropsByName,applyMethodsToInstance,createElement,appendChild,createTextElement,updateZBuffer} from './ReactPIXIFiberManager'
-import {getRender } from './../utils/mapRendererToStage'
+import {getRender } from './../common/utils/mapRendererToStage'
     
 const HostConfig = {
     appendInitialChild(parent, child) {
@@ -14,6 +15,9 @@ const HostConfig = {
         // forceUpdate(parent.stage)
     },
     setInitialProperties() {
+        
+    },
+    clearContainer(element){
         
     },
     removeChild(parent,child){

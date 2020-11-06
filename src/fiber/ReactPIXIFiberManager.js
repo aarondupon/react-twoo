@@ -6,7 +6,7 @@ import {COMPONENTS} from '../shared/components';
 import {HANDLERS} from '../shared/events';
 import {TYPES} from '../shared/types';
 
-import {getRender} from '../utils/mapRendererToStage';
+import {getRender} from '../common/utils/mapRendererToStage';
 // import {renderAnimationOnce} from '../utils/renderAnimation'
 // import {forceRender} from '../utils/renderAnimation'
 
@@ -87,8 +87,13 @@ export const transferDisplayObjectPropsByName = (
                
                 if(node[propname] instanceof PIXI.ObservablePoint){
                     // console.log("setObservable",`node[${propname}].set(${newProps[propname]})`,node,newProps[propname])
-                    // node[propname].set(newProps[propname]);
-
+                    if(Array.isArray(newProps[propname])){
+                        node[propname].set(...newProps[propname]);
+                    }else{
+                        node[propname].set(...Object.values(newProps[propname]));
+                    }
+                  
+                        
                 } else if (propname === 'filters'  ) {
                    
                     node[propname] = Array.isArray(newProps[propname])
