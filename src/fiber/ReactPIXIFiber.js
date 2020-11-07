@@ -4,7 +4,7 @@
 import reconciler from 'react-reconciler';
 import HostConfig from './HostConfig';
 import * as PIXI from 'pixi.js';
-import './setupDevtools.pixi';
+// import './setupDevtools.pixi';
 const ReactPIXIRender = reconciler(HostConfig);
 
 
