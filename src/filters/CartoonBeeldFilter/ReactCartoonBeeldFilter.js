@@ -4,12 +4,6 @@ import moize from 'moize'
 
 
 class ReactCartoonBeeldFilter extends Component {
-    static defaultProps = {
-        pause:false,
-        offset:0,
-        filters:[],
-        padding:0,
-    }
 	constructor(props){
 		super(props)
         this.filter =  new CartoonBeeldFilter(props.padding)
@@ -53,6 +47,13 @@ class ReactCartoonBeeldFilter extends Component {
         // console.log('(this.props.children',this.props.children)
 		return this.renderChidren(this.props.children)
 	}
+}
+
+ReactCartoonBeeldFilter.defaultProps = {
+    pause:false,
+    offset:0,
+    filters:[],
+    padding:0,
 }
 
 export default ReactCartoonBeeldFilter

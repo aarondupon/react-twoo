@@ -389,26 +389,6 @@ const cleanupStyle = (style) =>
 const getStyle = (style) =>css(Object.keys(style).map((key)=>[key,String(style[key])]))
 
 export default class Img extends PIXI.Sprite {
-    static defaultProps = {
-        style:{
-            
-            color:'none',
-            paddingTop: 0,
-            paddingRight: 0,
-            paddingBottom: 0,
-            paddingLeft: 0,
-            height:'initial',
-            width:'initial',
-            overflow:'none',
-            overflowX: 'none',
-            overflowY:'none',
-            transform:'none',
-            border:'none',
-            opacity:'none',
-            zIndex:'none',
-            },
-            src:null,
-    }
     constructor(props) {
         
         super(props.texture)
@@ -733,6 +713,26 @@ export default class Img extends PIXI.Sprite {
     get enableMesh(){
         return this._enableMesh;
     }
+}
+
+Img.defaultProps = {
+    style:{
+        color:'none',
+        paddingTop: 0,
+        paddingRight: 0,
+        paddingBottom: 0,
+        paddingLeft: 0,
+        height:'initial',
+        width:'initial',
+        overflow:'none',
+        overflowX: 'none',
+        overflowY:'none',
+        transform:'none',
+        border:'none',
+        opacity:'none',
+        zIndex:'none',
+    },
+    src:null,
 }
 
 PIXI.Img = Img;

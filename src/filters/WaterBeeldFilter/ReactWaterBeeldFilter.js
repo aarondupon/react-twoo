@@ -15,12 +15,6 @@ var loader = PIXI.loader;
 
 
 export default class ReactWaterBeeldFilter extends Component {
-    static defaultProps = {
-        pause:false,
-        offset:0,
-        filters:[0],
-    }
-    
 	constructor(props){
         super(props)
         this.handleMouse.bind(this)
@@ -138,4 +132,10 @@ export default class ReactWaterBeeldFilter extends Component {
 	render() {
         return this.renderChidren(this.props.children)
 	}
+}
+
+ReactWaterBeeldFilter.defaultProps = {
+    pause:false,
+    offset:0,
+    filters:[0],
 }

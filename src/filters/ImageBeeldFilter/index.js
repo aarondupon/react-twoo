@@ -3,12 +3,6 @@ import ImageBeeldFilter from './ImageBeeldFilter'
 
 
 export default class ImageBeeldFilterComponent extends Component {
-    static defaultProps = {
-        pause:false,
-        offset:0,
-        filters:[],
-        padding:0,
-    }
 	constructor(props){
 		super(props)
         this.filter =  new ImageBeeldFilter(props.padding)
@@ -50,4 +44,11 @@ export default class ImageBeeldFilterComponent extends Component {
         // console.log('(this.props.children',this.props.children)
 		return this.renderChidren(this.props.children)
 	}
+}
+
+ImageBeeldFilterComponent.defaultProps = {
+    pause:false,
+    offset:0,
+    filters:[],
+    padding:0,
 }

@@ -3,11 +3,6 @@ import ImageSlicerFilter from './ImageSlicerFilter'
 import * as PIXI from 'pixi.js'
 
 export default class ImageSlicerFilterComponent extends Component {
-    static defaultProps = {
-        pause:false,
-        offset:0,
-        filters:[],
-    }
 	constructor(props){
 		super(props)
 		this.filter =  new ImageSlicerFilter()
@@ -47,4 +42,10 @@ export default class ImageSlicerFilterComponent extends Component {
         // console.log('(this.props.children',this.props.children)
 		return this.renderChidren(this.props.children)
 	}
+}
+
+ImageSlicerFilterComponent.defaultProps = {
+    pause:false,
+    offset:0,
+    filters:[],
 }

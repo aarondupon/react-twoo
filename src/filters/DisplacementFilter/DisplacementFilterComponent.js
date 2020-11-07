@@ -14,13 +14,7 @@ import * as PIXI from 'pixi.js'
 var loader = PIXI.loader;
 
 
-export default class DisplacementFilterComponent extends Component {
-    static defaultProps = {
-        pause:false,
-        offset:0,
-        filters:[0],
-    }
-    
+export default class DisplacementFilterComponent extends Component {    
 	constructor(props){
         super(props)
         this.handleMouse.bind(this)
@@ -138,4 +132,10 @@ export default class DisplacementFilterComponent extends Component {
 	render() {
         return this.renderChidren(this.props.children)
 	}
+}
+
+DisplacementFilterComponent.defaultProps = {
+    pause:false,
+    offset:0,
+    filters:[0],
 }

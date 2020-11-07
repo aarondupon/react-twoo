@@ -163,10 +163,6 @@ PIXI.FluidShader = Shader;
 
 
 export default class ImageBeeldFilterComponent extends Component {
-  static defaultProps = {
-      pause:false,
-      offset:0,
-  }
 constructor(props){
   super(props)
   this.filter =  new Shader()
@@ -205,6 +201,11 @@ render() {
       // console.log('(this.props.children',this.props.children)
   return this.renderChidren(this.props.children)
 }
+}
+
+ImageBeeldFilterComponent.defaultProps = {
+  pause:false,
+  offset:0,
 }
 
 

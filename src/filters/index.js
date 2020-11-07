@@ -42,9 +42,6 @@ export class ScanLineFilter extends Component {
 	}
 }
 export class BlurFilter extends Component {
-	static defaultProps={
-		blur:0
-	}
 	constructor(props){
 		super(props)
 		this.filter =  new PIXI.filters.BlurFilter()
@@ -89,6 +86,10 @@ export class GaussianBlurFilter extends Component {
 	}
 }
 
+GaussianBlurFilter.defaultProps =  {
+	blur:0
+}
+
 
 export class DisplacementFilter extends Component {
 	constructor(props){
@@ -115,10 +116,6 @@ export class DisplacementFilter extends Component {
 }
 
 export class DepthPerspectiveFilter extends Component {
-
-	static defaultProps ={
-		quality:1,
-	};
 	static propTypes = {
     	sprite:PropTypes.instanceOf(PIXI.Sprite),
     	quality:PropTypes.oneOf([1,2,3]),
@@ -147,6 +144,9 @@ export class DepthPerspectiveFilter extends Component {
 		}
 	}
 }
+DepthPerspectiveFilter.defaultProps = {
+	quality:1,
+};
 //			return <Container filters={this.filter instanceof PIXI.AbstractFilter ? [this.filter] : null } >{childrenWithProps}</Container>;
 
 // add Multiple filters pros.filters =  [...PIXI.Filter.name]

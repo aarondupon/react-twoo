@@ -17,11 +17,6 @@ var loader = PIXI.loader;
 
 
 export default class ParrallaxHoverFilterComponent extends Component {
-    static defaultProps = {
-        pause:false,
-        offset:0,
-    }
-    
 	constructor(props){
         super(props)
         this.handleMouse.bind(this)
@@ -145,3 +140,8 @@ export default class ParrallaxHoverFilterComponent extends Component {
 		return this.renderChidren(this.props.children)
 	}
 }
+
+ParrallaxHoverFilterComponent.defaultProps = {
+    pause:false,
+    offset:0,
+    }

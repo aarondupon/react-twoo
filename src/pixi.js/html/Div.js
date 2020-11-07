@@ -250,31 +250,6 @@ const cleanupStyle = (style) =>
 const getStyle = (style) =>css(Object.keys(style).map((key)=>[key,String(style[key])]))
 
 export default class Div extends PIXI.Sprite {
-    static defaultProps = {
-        style:{
-            
-            color:'none',
-            paddingTop: 0,
-            paddingRight: 0,
-            paddingBottom: 0,
-            paddingLeft: 0,
-            height:'initial',
-            width:'initial',
-            overflow:'none',
-            overflowX: 'none',
-            overflowY:'none',
-            transform:'none',
-            border:'none',
-            opacity:'none',
-            zIndex:'none',
-            },
-        accessibleTitle:null,
-        accessibleHint:null,
-        accessible:null,
-        interactive:null,
-        button:null,
-        cursor:null,
-    }
     constructor(props) {
          super()
         super(props.texture)
@@ -581,6 +556,32 @@ export default class Div extends PIXI.Sprite {
          this._scaleY = scaleY;
          this.scale.set(this._scaleX,scaleY)
     }
+}
+
+Div.defaultProps = {
+    style:{
+        
+        color:'none',
+        paddingTop: 0,
+        paddingRight: 0,
+        paddingBottom: 0,
+        paddingLeft: 0,
+        height:'initial',
+        width:'initial',
+        overflow:'none',
+        overflowX: 'none',
+        overflowY:'none',
+        transform:'none',
+        border:'none',
+        opacity:'none',
+        zIndex:'none',
+        },
+    accessibleTitle:null,
+    accessibleHint:null,
+    accessible:null,
+    interactive:null,
+    button:null,
+    cursor:null,
 }
 
 PIXI.Div = Div;

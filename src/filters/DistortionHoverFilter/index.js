@@ -13,10 +13,6 @@ import * as PIXI from 'pixi.js'
 var loader = PIXI.loader;
 
 export default class DistortionHoverFilterComponent extends Component {
-    static defaultProps = {
-        pause:false,
-        offset:0,
-    }
 	constructor(props){
         super(props)
         
@@ -135,4 +131,9 @@ export default class DistortionHoverFilterComponent extends Component {
         console.log('(this.props.children',this.props.children)
 		return this.renderChidren(this.props.children)
 	}
+}
+
+DistortionHoverFilterComponent.defaultProps = {
+    pause:false,
+    offset:0,
 }
