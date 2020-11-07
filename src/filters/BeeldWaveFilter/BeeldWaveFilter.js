@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
-var Fragment = require('./BeeldWave2.frag');
-var Vertext = require('./BeeldWave.vert');
-var animate = require('animate');
+import Fragment from'./BeeldWave2.frag';
+import Vertext from'./BeeldWave.vert';
+import animate from 'animate';
 
 class TextureLoader{
     constructor(textures,uniforms,filter){

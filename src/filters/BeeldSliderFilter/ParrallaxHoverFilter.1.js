@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
-var Fragment = require('./ParrallaxHoverFilter.frag');
-var Vertext = require('./ParrallaxHoverFilter.vert');
+import Fragment from './ParrallaxHoverFilter.frag';
+import Vertext from './ParrallaxHoverFilter.vert';
 
 /**
  * The ParrallaxHoverFilter applies a Gaussian blur to an object.

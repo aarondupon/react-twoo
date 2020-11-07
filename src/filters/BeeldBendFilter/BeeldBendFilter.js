@@ -1,6 +1,9 @@
 import * as PIXI from 'pixi.js';
-var Fragment = require('./BeeldBend.frag');
-var Vertext = require('./BeeldBend.vert');
+// var Fragment = require('./BeeldBend.frag');
+// var Vertext = require('./BeeldBend.vert');
+import Fragment from './BeeldBend.frag';
+import Vertext from'./BeeldBend.vert';
+
 import  animate from 'animate';
 
 class TextureLoader{

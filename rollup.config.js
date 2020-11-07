@@ -4,7 +4,8 @@ import { DEFAULT_EXTENSIONS } from '@babel/core'
 import buble from "rollup-plugin-buble";
 import commonjs from "rollup-plugin-commonjs";
 import pkg from "./package.json";
-import resolve from "rollup-plugin-node-resolve";
+// import resolve from "rollup-plugin-node-resolve";
+import resolve from '@rollup/plugin-node-resolve';
 import uglify from "rollup-plugin-uglify";
 
 import typescript from 'rollup-plugin-typescript';
@@ -13,7 +14,14 @@ import esbuild from 'rollup-plugin-esbuild';
 
 // import path from 'path';
 // import babel from '@rollup/plugin-babel'
-import external from 'rollup-plugin-peer-deps-external'
+import external from 'rollup-plugin-peer-deps-external';
+
+
+import glslify from 'rollup-plugin-glslify';
+import { string } from "rollup-plugin-string";
+import shader from 'rollup-plugin-shader';
+
+
 // import postcss from 'rollup-plugin-postcss'
 
 
@@ -32,6 +40,16 @@ const banner =
  */
 `;
 
+const glsltypes = [
+  '**/*.vs',
+  '**/*.fs',
+  '**/*.vert',
+  '**/*.frag',
+  '**/*.glsl'
+]
+const GLSL_EXTENSIONS = ['.vs','.fs','.vert','.frag','.glsl']
+
+
 export const cjsBundle  = 
   {
     input: input,
@@ -43,7 +61,7 @@ export const cjsBundle  =
       // dir: './lib',
       name: outputName,
     //   format: "umd",
-      format: "umd",
+      format: "cjs",
       banner: banner,
       
       // preserveModulesRoot:'lib',
@@ -60,12 +78,35 @@ export const cjsBundle  =
         'react-dom',
         'pixi.js',
         'pixi',
-        'math',
         'prop-types',
     ],
     // external:external(),    
     plugins: [
       external(),
+      shader( {
+        // All match files will be parsed by default,
+        // but you can also specifically include/exclude files
+        include: [
+          '**/*.vs',
+          '**/*.fs',
+          '**/*.vert',
+          '**/*.frag',
+          '**/*.glsl'
+          ],
+        exclude: [ 'node_modules/foo/**', 'node_modules/bar/**' ],
+
+        // specify whether to remove comments
+        removeComments: true,   // default: true
+      } ),
+      // glslify({
+      //     // Default
+      //   include: glsltypes,
+      //     // Undefined by default
+      //     exclude: 'node_modules/**',
+
+      //     // Compress shader by default using logic from rollup-plugin-glsl
+      //     compress: true
+      // }),
        esbuild({
         include: /\.[jt]sx?$/,
         exclude: /node_modules/, // default
@@ -84,7 +125,7 @@ export const cjsBundle  =
           // require @rollup/plugin-commonjs
           '.json': 'json',
           // Enable JSX in .js files too
-          '.js': 'jsx'
+          '.js': 'jsx',
         }
         }),
         babel({
@@ -96,6 +137,7 @@ export const cjsBundle  =
               ],
             extensions: [
               ...DEFAULT_EXTENSIONS,
+              ...GLSL_EXTENSIONS,
               '.ts',
               '.jsx',
               '.tsx'
@@ -113,6 +155,15 @@ export const cjsBundle  =
           }),
           
           resolve({
+            
+          extensions:[
+            ...DEFAULT_EXTENSIONS,
+            ...GLSL_EXTENSIONS,
+            '.ts',
+            '.jsx',
+            '.tsx',
+            '.json'
+          ],
             // preferBuiltins:true,
             // browser: true,
             // resolveOnly: [

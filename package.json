@@ -22,7 +22,10 @@
     "react-dom": "^16.8.4",
     "react-scripts-ts": "3.1.0",
     "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-glslify": "^1.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-shader": "^0.0.3",
+    "rollup-plugin-string": "^3.0.0",
     "rollup-plugin-typescript": "^1.0.1"
   },
   "scripts": {

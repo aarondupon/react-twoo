@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
-var Fragment = require('./BeeldSlider2.frag');
-var Vertext = require('./BeeldSlider.vert');
-var animate = require('animate');
+import Fragment from './BeeldSlider2.frag';
+import Vertext from './BeeldSlider.vert';
+import animate from 'animate';
 // import plot from 'plot';
 
 

@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Fragment from './BeeldSlider2.frag';
 import Vertext  from './BeeldSlider.vert';
-var animate = require('animate');
+import animate  from 'animate';
 // import TextureLoader from './../core/TextureLoader';
 import TextureLoader from './../../pixi.js/core/loaders/TextureLoader';
 import EMPTY from './../core/Texture/EMPTY';

@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
-var Fragment = require('./CartoonBeeldFilter.frag');
-var Vertext = require('./CartoonBeeldFilter.vert');
+import Fragment from './CartoonBeeldFilter.frag';
+import Vertext from './CartoonBeeldFilter.vert';
 
 /**
  * The CartoonBeeldFilter applies a Gaussian blur to an object.

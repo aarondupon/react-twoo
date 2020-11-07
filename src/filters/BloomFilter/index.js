@@ -24,7 +24,7 @@
  */
 
 ////import PIXI from 'pixi.js';//'vendor/pixi';
-var Fragment = require('./BloomFilter.frag');
+import Fragment from './BloomFilter.frag';
 var core = PIXI;
 
 function Filter()

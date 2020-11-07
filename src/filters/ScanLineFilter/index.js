@@ -1,6 +1,7 @@
-var Fragment = require('./ScanLineFilter.frag');
-var Vertext = require('./ScanLineFilter.vert');
-
+// var Fragment = require('./ScanLineFilter.frag');
+// var Vertext = require('./ScanLineFilter.vert');
+import Fragment from './ScanLineFilter.frag';
+import Vertext from './ScanLineFilter.vert';
 ////import PIXI from 'pixi.js';//'vendor/pixi';
 import PropTypes from 'prop-types';
 
