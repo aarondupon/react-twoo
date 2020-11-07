@@ -1,0 +1,2 @@
+import * as Mesh from '../node_modules/pixi.js/lib/mesh/Mesh.js';
+export { Mesh as default };

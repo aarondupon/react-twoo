@@ -1,0 +1,2 @@
+import { __moduleExports as Matrix_1 } from '../node_modules/pixi.js/lib/core/math/Matrix.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/core/math/Matrix.js';

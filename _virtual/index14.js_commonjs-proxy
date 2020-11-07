@@ -1,0 +1,2 @@
+import { __moduleExports as particles } from '../node_modules/pixi.js/lib/particles/index.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/particles/index.js';

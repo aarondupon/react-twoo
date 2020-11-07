@@ -1,0 +1,2 @@
+import * as WebGLPrepare from '../node_modules/pixi.js/lib/prepare/webgl/WebGLPrepare.js';
+export { WebGLPrepare as default };

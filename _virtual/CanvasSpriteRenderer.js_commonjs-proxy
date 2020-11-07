@@ -1,0 +1,2 @@
+import { __moduleExports as CanvasSpriteRenderer_1 } from '../node_modules/pixi.js/lib/core/sprites/canvas/CanvasSpriteRenderer.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/core/sprites/canvas/CanvasSpriteRenderer.js';

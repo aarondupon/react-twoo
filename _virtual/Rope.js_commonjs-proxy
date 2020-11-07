@@ -1,0 +1,2 @@
+import * as Rope from '../node_modules/pixi.js/lib/mesh/Rope.js';
+export { Rope as default };

@@ -1,0 +1,2 @@
+import isMobile from '../node_modules/ismobilejs/isMobile.js';
+export { default } from '../node_modules/ismobilejs/isMobile.js';

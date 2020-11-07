@@ -1,0 +1,2 @@
+import { __moduleExports as prepare } from '../node_modules/pixi.js/lib/prepare/index.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/prepare/index.js';

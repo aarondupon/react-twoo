@@ -1,0 +1,2 @@
+import { __moduleExports as TextureUvs_1 } from '../node_modules/pixi.js/lib/core/textures/TextureUvs.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/core/textures/TextureUvs.js';

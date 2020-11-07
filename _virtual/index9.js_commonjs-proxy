@@ -1,0 +1,2 @@
+import { __moduleExports as extras } from '../node_modules/pixi.js/lib/extras/index.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/extras/index.js';

@@ -1,0 +1,2 @@
+import { __moduleExports as WebGLExtract_1 } from '../node_modules/pixi.js/lib/extract/webgl/WebGLExtract.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/extract/webgl/WebGLExtract.js';

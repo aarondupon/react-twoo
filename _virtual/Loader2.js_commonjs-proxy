@@ -1,0 +1,2 @@
+import * as Loader from '../node_modules/resource-loader/lib/Loader.js';
+export { Loader as default };

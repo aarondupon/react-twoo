@@ -1,0 +1,2 @@
+import * as Texture from '../node_modules/pixi.js/lib/core/textures/Texture.js';
+export { Texture as default };

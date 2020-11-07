@@ -1,0 +1,2 @@
+import * as SpriteMaskFilter from '../node_modules/pixi.js/lib/core/renderers/webgl/filters/spriteMask/SpriteMaskFilter.js';
+export { SpriteMaskFilter as default };

@@ -8,8 +8,8 @@
 
 'use strict';
 
-var index = require('../node_modules/pixi.js/lib/polyfill/index.js');
+var index = require('../node_modules/pixi.js/lib/filters/index.js');
 
 
 
-module.exports = index['default'];
+module.exports = index.__moduleExports;

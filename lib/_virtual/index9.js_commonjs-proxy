@@ -8,7 +8,7 @@
 
 'use strict';
 
-var index = require('../node_modules/pixi.js/lib/extras/index.js');
+var index = require('../node_modules/pixi.js/lib/mesh/index.js');
 
 
 

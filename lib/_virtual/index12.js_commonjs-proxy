@@ -8,8 +8,8 @@
 
 'use strict';
 
-var index = require('../node_modules/pixi.js/lib/loaders/index.js');
+var index = require('../node_modules/pixi-gl-core/src/shader/index.js');
 
 
 
-module.exports = index.__moduleExports;
+module.exports = index['default'];

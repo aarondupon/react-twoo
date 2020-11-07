@@ -1,0 +1,2 @@
+import * as DisplayObject from '../node_modules/pixi.js/lib/core/display/DisplayObject.js';
+export { DisplayObject as default };

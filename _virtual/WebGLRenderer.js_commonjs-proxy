@@ -1,0 +1,2 @@
+import * as WebGLRenderer from '../node_modules/pixi.js/lib/core/renderers/webgl/WebGLRenderer.js';
+export { WebGLRenderer as default };

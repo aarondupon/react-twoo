@@ -1,7 +1,7 @@
 
 export default class Ease {
 
-  static getEase(func: Func) {
+  static getEase(func) {
     // TODO: shitty I know... but want to get it going for now
     const text = Func[func];
     const fname = text.charAt(0).toLowerCase() + text.slice(1);

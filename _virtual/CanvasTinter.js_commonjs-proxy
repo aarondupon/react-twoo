@@ -1,0 +1,2 @@
+import { __moduleExports as CanvasTinter_1 } from '../node_modules/pixi.js/lib/core/sprites/canvas/CanvasTinter.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/core/sprites/canvas/CanvasTinter.js';

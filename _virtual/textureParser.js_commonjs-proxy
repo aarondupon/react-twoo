@@ -1,0 +1,2 @@
+import { __moduleExports as textureParser } from '../node_modules/pixi.js/lib/loaders/textureParser.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/loaders/textureParser.js';

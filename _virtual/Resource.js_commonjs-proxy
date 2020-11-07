@@ -1,0 +1,2 @@
+import { __moduleExports as Resource_1 } from '../node_modules/resource-loader/lib/Resource.js';
+export { __moduleExports as default } from '../node_modules/resource-loader/lib/Resource.js';

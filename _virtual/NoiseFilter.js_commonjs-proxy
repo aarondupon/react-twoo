@@ -1,0 +1,2 @@
+import * as NoiseFilter from '../node_modules/pixi.js/lib/filters/noise/NoiseFilter.js';
+export { NoiseFilter as default };

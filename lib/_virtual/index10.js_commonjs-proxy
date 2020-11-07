@@ -8,7 +8,7 @@
 
 'use strict';
 
-var index = require('../node_modules/pixi.js/lib/filters/index.js');
+var index = require('../node_modules/pixi.js/lib/particles/index.js');
 
 
 

@@ -1,0 +1,2 @@
+import * as TilingSpriteRenderer from '../node_modules/pixi.js/lib/extras/webgl/TilingSpriteRenderer.js';
+export { TilingSpriteRenderer as default };

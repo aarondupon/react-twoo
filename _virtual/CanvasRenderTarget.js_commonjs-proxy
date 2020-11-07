@@ -1,0 +1,2 @@
+import { __moduleExports as CanvasRenderTarget_1 } from '../node_modules/pixi.js/lib/core/renderers/canvas/utils/CanvasRenderTarget.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/core/renderers/canvas/utils/CanvasRenderTarget.js';

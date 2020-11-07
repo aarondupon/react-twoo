@@ -1,0 +1,2 @@
+import * as loader from '../node_modules/pixi.js/lib/loaders/loader.js';
+export { loader as default };

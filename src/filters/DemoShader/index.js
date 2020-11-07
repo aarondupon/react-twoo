@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import DemoShaderFilter from './DemoShaderFilter'
 import * as PIXI from 'pixi.js';
-import {getRender} from './../../../utils/mapRendererToStage'
 var animate = require('animate');
 
 

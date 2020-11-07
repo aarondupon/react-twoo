@@ -1,0 +1,2 @@
+import * as FXAAFilter from '../node_modules/pixi.js/lib/filters/fxaa/FXAAFilter.js';
+export { FXAAFilter as default };

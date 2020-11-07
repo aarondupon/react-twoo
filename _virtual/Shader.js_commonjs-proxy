@@ -1,0 +1,2 @@
+import * as Shader from '../node_modules/pixi.js/lib/core/Shader.js';
+export { Shader as default };

@@ -1,0 +1,2 @@
+import GLBuffer from '../node_modules/pixi-gl-core/src/GLBuffer.js';
+export { default } from '../node_modules/pixi-gl-core/src/GLBuffer.js';

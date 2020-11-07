@@ -1,0 +1,2 @@
+import * as InteractionManager from '../node_modules/pixi.js/lib/interaction/InteractionManager.js';
+export { InteractionManager as default };

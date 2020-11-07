@@ -1,0 +1,2 @@
+import { __moduleExports as CanvasMeshRenderer } from '../node_modules/pixi.js/lib/mesh/canvas/CanvasMeshRenderer.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/mesh/canvas/CanvasMeshRenderer.js';

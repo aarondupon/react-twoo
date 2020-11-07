@@ -1,0 +1,2 @@
+import { __moduleExports as spritesheetParser } from '../node_modules/pixi.js/lib/loaders/spritesheetParser.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/loaders/spritesheetParser.js';

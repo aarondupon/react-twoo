@@ -8,8 +8,8 @@
 
 'use strict';
 
-var index = require('../node_modules/remove-array-items/index.js');
+var index = require('../node_modules/pixi.js/lib/extras/index.js');
 
 
 
-module.exports = index['default'];
+module.exports = index.__moduleExports;

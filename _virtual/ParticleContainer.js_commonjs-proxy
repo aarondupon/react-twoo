@@ -1,0 +1,2 @@
+import * as ParticleContainer from '../node_modules/pixi.js/lib/particles/ParticleContainer.js';
+export { ParticleContainer as default };

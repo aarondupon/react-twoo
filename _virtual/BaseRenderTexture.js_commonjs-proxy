@@ -1,0 +1,2 @@
+import * as BaseRenderTexture from '../node_modules/pixi.js/lib/core/textures/BaseRenderTexture.js';
+export { BaseRenderTexture as default };

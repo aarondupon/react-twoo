@@ -1,0 +1,2 @@
+import * as Container from '../node_modules/pixi.js/lib/core/display/Container.js';
+export { Container as default };

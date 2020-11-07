@@ -1,0 +1,2 @@
+import shader from '../node_modules/pixi-gl-core/src/shader/index.js';
+export { default } from '../node_modules/pixi-gl-core/src/shader/index.js';

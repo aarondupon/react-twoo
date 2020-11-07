@@ -1,0 +1,2 @@
+import * as CanvasRenderer from '../node_modules/pixi.js/lib/core/renderers/canvas/CanvasRenderer.js';
+export { CanvasRenderer as default };

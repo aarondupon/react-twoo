@@ -1,0 +1,2 @@
+import GLFramebuffer from '../node_modules/pixi-gl-core/src/GLFramebuffer.js';
+export { default } from '../node_modules/pixi-gl-core/src/GLFramebuffer.js';

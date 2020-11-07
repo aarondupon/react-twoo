@@ -1,0 +1,2 @@
+import { __moduleExports as miniSignals } from '../node_modules/mini-signals/lib/mini-signals.js';
+export { __moduleExports as default } from '../node_modules/mini-signals/lib/mini-signals.js';

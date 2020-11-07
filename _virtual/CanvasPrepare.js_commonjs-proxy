@@ -1,0 +1,2 @@
+import * as CanvasPrepare from '../node_modules/pixi.js/lib/prepare/canvas/CanvasPrepare.js';
+export { CanvasPrepare as default };

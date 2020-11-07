@@ -1,0 +1,2 @@
+import { __moduleExports as ticker } from '../node_modules/pixi.js/lib/core/ticker/index.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/core/ticker/index.js';

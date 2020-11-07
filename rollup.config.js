@@ -9,15 +9,15 @@ import uglify from "rollup-plugin-uglify";
 
 import typescript from 'rollup-plugin-typescript';
 import babel from 'rollup-plugin-babel'
-
+// import path from 'path';
 // import babel from '@rollup/plugin-babel'
 // import external from 'rollup-plugin-peer-deps-external'
 // import postcss from 'rollup-plugin-postcss'
 
 
 
-const input = "src/main.js";
-const outputName = "MyProject";
+const input = "src/index.ts";
+const outputName = "react-twoo";
 const external = Object.keys(pkg.peerDependencies || {});
 const esExternal = external.concat(Object.keys(pkg.dependencies || {}));
 const banner =
@@ -34,12 +34,15 @@ export default [
   {
     input: input,
     output: {
-      dir: "lib",
+      file:'dist/bundle.js',
+      // preserveModules:true,
+      // dir: './lib',
       name: outputName,
     //   format: "umd",
       format: "cjs",
       banner: banner,
-      preserveModules:true,
+      
+      // preserveModulesRoot:'lib',
       global:{
         react: 'React',
         'react-dom': 'ReactDOM',
@@ -75,21 +78,24 @@ export default [
             ],
             plugins: [
               "@babel/plugin-transform-arrow-functions",
+              "@babel/plugin-syntax-class-properties",
               '@babel/plugin-proposal-class-properties',
-              '@babel/plugin-proposal-object-rest-spread',
-              '@babel/plugin-proposal-optional-chaining',
-              '@babel/plugin-syntax-dynamic-import',
+              // '@babel/plugin-proposal-object-rest-spread',
+              // '@babel/plugin-proposal-optional-chaining',
+              // '@babel/plugin-syntax-dynamic-import',
     
             ],
             exclude: 'node_modules/**',
           }),
+          
           resolve({
+            preferBuiltins:true,
             browser: true,
-            resolveOnly: [
-              /^(?!react$)/,
-              /^(?!react-dom$)/,
-              /^(?!prop-types)/,
-            ],
+            // resolveOnly: [
+            //   /^(?!react$)/,
+            //   /^(?!react-dom$)/,
+            //   /^(?!prop-types)/,
+            // ],
           }),
     //    typescript({  tsconfig: "tsconfig.json" }),
     //    babel({

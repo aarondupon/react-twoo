@@ -1,0 +1,2 @@
+import * as GraphicsRenderer from '../node_modules/pixi.js/lib/core/graphics/webgl/GraphicsRenderer.js';
+export { GraphicsRenderer as default };

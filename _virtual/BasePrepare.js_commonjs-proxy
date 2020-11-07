@@ -1,0 +1,2 @@
+import { __moduleExports as BasePrepare_1 } from '../node_modules/pixi.js/lib/prepare/BasePrepare.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/prepare/BasePrepare.js';

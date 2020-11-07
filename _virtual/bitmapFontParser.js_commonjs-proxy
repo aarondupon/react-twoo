@@ -1,0 +1,2 @@
+import { __moduleExports as bitmapFontParser } from '../node_modules/pixi.js/lib/loaders/bitmapFontParser.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/loaders/bitmapFontParser.js';

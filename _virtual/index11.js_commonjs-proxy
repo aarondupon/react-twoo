@@ -1,0 +1,2 @@
+import { __moduleExports as interaction } from '../node_modules/pixi.js/lib/interaction/index.js';
+export { __moduleExports as default } from '../node_modules/pixi.js/lib/interaction/index.js';

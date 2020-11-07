@@ -1,0 +1,2 @@
+import { __moduleExports as async } from '../node_modules/resource-loader/lib/async.js';
+export { __moduleExports as default } from '../node_modules/resource-loader/lib/async.js';

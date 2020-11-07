@@ -1,0 +1,2 @@
+import * as ColorMatrixFilter from '../node_modules/pixi.js/lib/filters/colormatrix/ColorMatrixFilter.js';
+export { ColorMatrixFilter as default };

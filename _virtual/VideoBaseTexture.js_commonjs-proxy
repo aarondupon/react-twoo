@@ -1,0 +1,2 @@
+import * as VideoBaseTexture from '../node_modules/pixi.js/lib/core/textures/VideoBaseTexture.js';
+export { VideoBaseTexture as default };
