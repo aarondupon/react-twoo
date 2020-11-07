@@ -1,2 +1,0 @@
-import removeArrayItems from '../node_modules/remove-array-items/index.js';
-export { default } from '../node_modules/remove-array-items/index.js';

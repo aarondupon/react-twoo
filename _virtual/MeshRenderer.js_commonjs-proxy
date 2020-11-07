@@ -1,2 +1,0 @@
-import * as MeshRenderer from '../node_modules/pixi.js/lib/mesh/webgl/MeshRenderer.js';
-export { MeshRenderer as default };

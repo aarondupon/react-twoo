@@ -1,2 +1,0 @@
-import { __moduleExports as TextMetrics_1 } from '../node_modules/pixi.js/lib/core/text/TextMetrics.js';
-export { __moduleExports as default } from '../node_modules/pixi.js/lib/core/text/TextMetrics.js';

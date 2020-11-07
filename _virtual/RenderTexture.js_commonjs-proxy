@@ -1,2 +1,0 @@
-import * as RenderTexture from '../node_modules/pixi.js/lib/core/textures/RenderTexture.js';
-export { RenderTexture as default };

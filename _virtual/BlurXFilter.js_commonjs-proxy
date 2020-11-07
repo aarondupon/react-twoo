@@ -1,2 +1,0 @@
-import * as BlurXFilter from '../node_modules/pixi.js/lib/filters/blur/BlurXFilter.js';
-export { BlurXFilter as default };

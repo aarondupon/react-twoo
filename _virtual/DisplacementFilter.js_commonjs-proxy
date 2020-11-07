@@ -1,2 +1,0 @@
-import * as DisplacementFilter from '../node_modules/pixi.js/lib/filters/displacement/DisplacementFilter.js';
-export { DisplacementFilter as default };

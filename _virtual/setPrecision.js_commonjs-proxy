@@ -1,2 +1,0 @@
-import setPrecision_1 from '../node_modules/pixi-gl-core/src/shader/setPrecision.js';
-export { default } from '../node_modules/pixi-gl-core/src/shader/setPrecision.js';

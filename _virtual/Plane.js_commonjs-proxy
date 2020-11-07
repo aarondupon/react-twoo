@@ -1,2 +1,0 @@
-import * as Plane from '../node_modules/pixi.js/lib/mesh/Plane.js';
-export { Plane as default };

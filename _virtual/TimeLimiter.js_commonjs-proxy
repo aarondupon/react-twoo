@@ -1,2 +1,0 @@
-import { __moduleExports as TimeLimiter_1 } from '../node_modules/pixi.js/lib/prepare/limiters/TimeLimiter.js';
-export { __moduleExports as default } from '../node_modules/pixi.js/lib/prepare/limiters/TimeLimiter.js';

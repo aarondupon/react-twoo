@@ -1,2 +1,0 @@
-import { __moduleExports as CountLimiter_1 } from '../node_modules/pixi.js/lib/prepare/limiters/CountLimiter.js';
-export { __moduleExports as default } from '../node_modules/pixi.js/lib/prepare/limiters/CountLimiter.js';

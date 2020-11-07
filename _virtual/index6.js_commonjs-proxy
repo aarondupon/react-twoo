@@ -1,2 +1,0 @@
-import polyfill from '../node_modules/pixi.js/lib/polyfill/index.js';
-export { default } from '../node_modules/pixi.js/lib/polyfill/index.js';

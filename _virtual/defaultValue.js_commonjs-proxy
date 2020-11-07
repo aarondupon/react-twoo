@@ -1,2 +1,0 @@
-import defaultValue_1 from '../node_modules/pixi-gl-core/src/shader/defaultValue.js';
-export { default } from '../node_modules/pixi-gl-core/src/shader/defaultValue.js';

@@ -1,2 +1,0 @@
-import * as BitmapText from '../node_modules/pixi.js/lib/extras/BitmapText.js';
-export { BitmapText as default };

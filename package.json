@@ -2,7 +2,8 @@
   "name": "react-twoo",
   "version": "0.1.0",
   "private": true,
-  "main": "main.js",
+  "main": "dist/main.cjs.js",
+  "module": "main.js",
   "repository": {
     "url": "https://github.com/aarondupon/react-twoo"
   },
@@ -38,9 +39,11 @@
     "@types/node": "^11.11.3",
     "@types/react": "^16.8.8",
     "@types/react-dom": "^16.8.2",
+    "esbuild": "^0.8.5",
     "rollup": "^2.33.1",
     "rollup-plugin-buble": "^0.19.8",
     "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-esbuild": "^2.5.2",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript2": "^0.29.0",
     "rollup-plugin-uglify": "^6.0.4",

@@ -1,2 +1,0 @@
-import { __moduleExports as TransformBase_1 } from '../node_modules/pixi.js/lib/core/display/TransformBase.js';
-export { __moduleExports as default } from '../node_modules/pixi.js/lib/core/display/TransformBase.js';

@@ -1,2 +1,0 @@
-import objectAssign from '../node_modules/pixi.js/node_modules/object-assign/index.js';
-export { default } from '../node_modules/pixi.js/node_modules/object-assign/index.js';

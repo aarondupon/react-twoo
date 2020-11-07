@@ -1,2 +1,0 @@
-import * as VoidFilter from '../node_modules/pixi.js/lib/filters/void/VoidFilter.js';
-export { VoidFilter as default };

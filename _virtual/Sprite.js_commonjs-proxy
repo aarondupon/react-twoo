@@ -1,2 +1,0 @@
-import * as Sprite from '../node_modules/pixi.js/lib/core/sprites/Sprite.js';
-export { Sprite as default };

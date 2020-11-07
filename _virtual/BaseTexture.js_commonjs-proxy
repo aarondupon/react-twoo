@@ -1,2 +1,0 @@
-import * as BaseTexture from '../node_modules/pixi.js/lib/core/textures/BaseTexture.js';
-export { BaseTexture as default };

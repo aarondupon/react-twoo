@@ -1,2 +1,0 @@
-import * as NineSlicePlane from '../node_modules/pixi.js/lib/mesh/NineSlicePlane.js';
-export { NineSlicePlane as default };

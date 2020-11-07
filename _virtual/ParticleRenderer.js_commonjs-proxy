@@ -1,2 +1,0 @@
-import * as ParticleRenderer from '../node_modules/pixi.js/lib/particles/webgl/ParticleRenderer.js';
-export { ParticleRenderer as default };

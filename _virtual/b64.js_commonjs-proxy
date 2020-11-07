@@ -1,2 +1,0 @@
-import { __moduleExports as b64 } from '../node_modules/resource-loader/lib/b64.js';
-export { __moduleExports as default } from '../node_modules/resource-loader/lib/b64.js';

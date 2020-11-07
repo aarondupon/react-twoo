@@ -1,2 +1,0 @@
-import mapSize_1 from '../node_modules/pixi-gl-core/src/shader/mapSize.js';
-export { default } from '../node_modules/pixi-gl-core/src/shader/mapSize.js';

@@ -1,2 +1,0 @@
-import { __moduleExports as TickerListener_1 } from '../node_modules/pixi.js/lib/core/ticker/TickerListener.js';
-export { __moduleExports as default } from '../node_modules/pixi.js/lib/core/ticker/TickerListener.js';

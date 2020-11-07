@@ -36753,9 +36753,6 @@ module.exports = exports['default'];
 
 unwrapExports(miniSignals);
 
-// main entry point for commonjs, exports MiniSignal
-var miniSignals$1 = miniSignals;
-
 var Resource_1 = createCommonjsModule(function (module, exports) {
 
 exports.__esModule = true;
@@ -36784,7 +36781,7 @@ var _parseUri2 = _interopRequireDefault(parseUri);
 
 
 
-var _miniSignals2 = _interopRequireDefault(miniSignals$1);
+var _miniSignals2 = _interopRequireDefault(miniSignals);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : {
@@ -44256,7 +44253,8 @@ var register = function register() {// noop
         host: host,
         // Read the optional global variable for backward compatibility.
         // It was added in https://github.com/facebook/react-native/commit/bf2b435322e89d0aeee8792b1c6e04656c2719a0.
-        port: window.__REACT_DEVTOOLS_PORT__
+        port: window.__REACT_DEVTOOLS_PORT__ //resolveRNStyle: require('flattenStyle'),
+
       });
     }
   };
@@ -44264,8 +44262,8 @@ var register = function register() {// noop
   register(reactDevTools);
 
   window.__REACT_DEVTOOLS_GLOBAL_HOOK__.on('react-devtools', function (agent) {
-    agent.addListener('showNativeHighlight', function (_a) {
-      var node = _a.node; // UIManager.setBoundingBoxVisible(node, true);
+    agent.addListener('showNativeHighlight', function (_ref) {
+      var node = _ref.node;
     });
     agent.addListener('hideNativeHighlight', function () {
     });

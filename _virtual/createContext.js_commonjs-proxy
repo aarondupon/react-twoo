@@ -1,2 +1,0 @@
-import createContext_1 from '../node_modules/pixi-gl-core/src/createContext.js';
-export { default } from '../node_modules/pixi-gl-core/src/createContext.js';

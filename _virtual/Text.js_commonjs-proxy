@@ -1,2 +1,0 @@
-import * as Text from '../node_modules/pixi.js/lib/core/text/Text.js';
-export { Text as default };

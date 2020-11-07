@@ -1,2 +1,0 @@
-import * as Transform from '../node_modules/pixi.js/lib/core/display/Transform.js';
-export { Transform as default };

@@ -1,2 +1,0 @@
-import generateUniformAccessObject_1 from '../node_modules/pixi-gl-core/src/shader/generateUniformAccessObject.js';
-export { default } from '../node_modules/pixi-gl-core/src/shader/generateUniformAccessObject.js';

@@ -1,2 +1,0 @@
-import * as ObjectRenderer from '../node_modules/pixi.js/lib/core/renderers/webgl/utils/ObjectRenderer.js';
-export { ObjectRenderer as default };

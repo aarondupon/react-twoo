@@ -1,2 +1,0 @@
-import * as AnimatedSprite from '../node_modules/pixi.js/lib/extras/AnimatedSprite.js';
-export { AnimatedSprite as default };

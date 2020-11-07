@@ -1,2 +1,0 @@
-import { __moduleExports as interactiveTarget } from '../node_modules/pixi.js/lib/interaction/interactiveTarget.js';
-export { __moduleExports as default } from '../node_modules/pixi.js/lib/interaction/interactiveTarget.js';

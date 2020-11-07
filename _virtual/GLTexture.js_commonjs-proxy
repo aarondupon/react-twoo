@@ -1,2 +1,0 @@
-import GLTexture from '../node_modules/pixi-gl-core/src/GLTexture.js';
-export { default } from '../node_modules/pixi-gl-core/src/GLTexture.js';

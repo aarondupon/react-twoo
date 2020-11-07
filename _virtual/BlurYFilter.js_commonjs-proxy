@@ -1,2 +1,0 @@
-import * as BlurYFilter from '../node_modules/pixi.js/lib/filters/blur/BlurYFilter.js';
-export { BlurYFilter as default };

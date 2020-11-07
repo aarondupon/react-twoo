@@ -1,2 +1,0 @@
-import setVertexAttribArrays_1 from '../node_modules/pixi-gl-core/src/setVertexAttribArrays.js';
-export { default } from '../node_modules/pixi-gl-core/src/setVertexAttribArrays.js';

@@ -1,2 +1,0 @@
-import { __moduleExports as InteractionData_1 } from '../node_modules/pixi.js/lib/interaction/InteractionData.js';
-export { __moduleExports as default } from '../node_modules/pixi.js/lib/interaction/InteractionData.js';

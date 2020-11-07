@@ -1,2 +1,0 @@
-import VertexArrayObject_1 from '../node_modules/pixi-gl-core/src/VertexArrayObject.js';
-export { default } from '../node_modules/pixi-gl-core/src/VertexArrayObject.js';

@@ -1,2 +1,0 @@
-import * as Graphics from '../node_modules/pixi.js/lib/core/graphics/Graphics.js';
-export { Graphics as default };

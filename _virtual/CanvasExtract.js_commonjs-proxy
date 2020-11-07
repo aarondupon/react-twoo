@@ -1,2 +1,0 @@
-import { __moduleExports as CanvasExtract_1 } from '../node_modules/pixi.js/lib/extract/canvas/CanvasExtract.js';
-export { __moduleExports as default } from '../node_modules/pixi.js/lib/extract/canvas/CanvasExtract.js';

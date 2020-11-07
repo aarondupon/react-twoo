@@ -8,7 +8,9 @@ import resolve from "rollup-plugin-node-resolve";
 import uglify from "rollup-plugin-uglify";
 
 import typescript from 'rollup-plugin-typescript';
-import babel from 'rollup-plugin-babel'
+import babel from 'rollup-plugin-babel';
+import esbuild from 'rollup-plugin-esbuild';
+
 // import path from 'path';
 // import babel from '@rollup/plugin-babel'
 // import external from 'rollup-plugin-peer-deps-external'
@@ -16,7 +18,7 @@ import babel from 'rollup-plugin-babel'
 
 
 
-const input = "src/index.ts";
+const input = "src/main.js";
 const outputName = "react-twoo";
 const external = Object.keys(pkg.peerDependencies || {});
 const esExternal = external.concat(Object.keys(pkg.dependencies || {}));
@@ -30,11 +32,11 @@ const banner =
  */
 `;
 
-export default [
+export const cjsBundle  = 
   {
     input: input,
     output: {
-      file:'dist/bundle.js',
+      file:pkg.main,
       // preserveModules:true,
       // dir: './lib',
       name: outputName,
@@ -49,20 +51,33 @@ export default [
         'prop-types': 'PropTypes',
       }
     },
-    // input: 'src/index.ts',
-    // output: {
-    //   file: 'dist/bundle.js',
-    //   format: 'cjs'
-    // },
     external:[
         'react',
         'react-dom',
         'prop-types',
-    ],
-    // external: external,
-    
+    ],    
     plugins: [
-        typescript({lib: ["es5", "es6", "dom"], target: "es5"}),
+       esbuild({
+        include: /\.[jt]sx?$/,
+        exclude: /node_modules/, // default
+        sourceMap: false, // default
+        minify: process.env.NODE_ENV === 'production',
+        target: 'es2017', // default, or 'es20XX', 'esnext'
+        jsxFactory: 'React.createElement',
+        jsxFragment: 'React.Fragment',
+        // Like @rollup/plugin-replace
+        define: {
+          __VERSION__: '"x.y.z"',
+        },
+        // Add extra loaders
+        loaders: {
+          // Add .json files support
+          // require @rollup/plugin-commonjs
+          // '.json': 'json',
+          // Enable JSX in .js files too
+          '.js': 'jsx'
+        }
+        }),
         babel({
             "presets": [
                 "@babel/preset-env",
@@ -97,25 +112,12 @@ export default [
             //   /^(?!prop-types)/,
             // ],
           }),
-    //    typescript({  tsconfig: "tsconfig.json" }),
-    //    babel({
-    //     babelrc: false,
-    //     exclude: [`node_modules/**`],
-    //     ignore: ['**/*.scss'],
-    //     plugins: [ "@babel/plugin-proposal-class-properties"],
-    //     // presets: ['@babel/react'],
-    //     "presets": [
-    //       "@babel/preset-env",
-    //       "@babel/preset-react",
-    //       "@babel/preset-typescript"
-    //     ]
-    //     // plugins: ['external-helpers'],
-    //   }),
-    //   resolve(),
       commonjs(),
       buble(),
       
       
     ]
-  },
-]
+  }
+
+
+export default [cjsBundle]

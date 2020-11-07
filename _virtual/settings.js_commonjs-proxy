@@ -1,2 +1,0 @@
-import { __moduleExports as settings } from '../node_modules/pixi.js/lib/core/settings.js';
-export { __moduleExports as default } from '../node_modules/pixi.js/lib/core/settings.js';

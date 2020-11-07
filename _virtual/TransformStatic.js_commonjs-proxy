@@ -1,2 +1,0 @@
-import * as TransformStatic from '../node_modules/pixi.js/lib/core/display/TransformStatic.js';
-export { TransformStatic as default };
