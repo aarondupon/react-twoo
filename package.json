@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "main": "dist/main.cjs.js",
-  "module": "main.js",
+  "module": "dist/main.cjs.js",
   "repository": {
     "url": "https://github.com/aarondupon/react-twoo"
   },
