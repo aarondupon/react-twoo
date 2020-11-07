@@ -13,15 +13,15 @@ import esbuild from 'rollup-plugin-esbuild';
 
 // import path from 'path';
 // import babel from '@rollup/plugin-babel'
-// import external from 'rollup-plugin-peer-deps-external'
+import external from 'rollup-plugin-peer-deps-external'
 // import postcss from 'rollup-plugin-postcss'
 
 
 
 const input = "src/main.js";
 const outputName = "react-twoo";
-const external = Object.keys(pkg.peerDependencies || {});
-const esExternal = external.concat(Object.keys(pkg.dependencies || {}));
+// const external = Object.keys(pkg.peerDependencies || {});
+// const esExternal = external.concat(Object.keys(pkg.dependencies || {}));
 const banner =
 `/*
  * ${pkg.name}
@@ -35,28 +35,37 @@ const banner =
 export const cjsBundle  = 
   {
     input: input,
+    exclude: '**/node_modules/**',
+    runtimeHelpers: true,
     output: {
       file:pkg.main,
       // preserveModules:true,
       // dir: './lib',
       name: outputName,
     //   format: "umd",
-      format: "cjs",
+      format: "umd",
       banner: banner,
       
       // preserveModulesRoot:'lib',
-      global:{
+      globals:{
         react: 'React',
         'react-dom': 'ReactDOM',
         'prop-types': 'PropTypes',
+        'pixi.js': 'PIXI',
+        'pixi': 'PIXI',
       }
     },
     external:[
         'react',
         'react-dom',
+        'pixi.js',
+        'pixi',
+        'math',
         'prop-types',
-    ],    
+    ],
+    // external:external(),    
     plugins: [
+      external(),
        esbuild({
         include: /\.[jt]sx?$/,
         exclude: /node_modules/, // default
@@ -73,7 +82,7 @@ export const cjsBundle  =
         loaders: {
           // Add .json files support
           // require @rollup/plugin-commonjs
-          // '.json': 'json',
+          '.json': 'json',
           // Enable JSX in .js files too
           '.js': 'jsx'
         }
@@ -104,10 +113,11 @@ export const cjsBundle  =
           }),
           
           resolve({
-            preferBuiltins:true,
-            browser: true,
+            // preferBuiltins:true,
+            // browser: true,
             // resolveOnly: [
             //   /^(?!react$)/,
+            //   /^(?!pixi$)/,
             //   /^(?!react-dom$)/,
             //   /^(?!prop-types)/,
             // ],
