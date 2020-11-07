@@ -1,0 +1,15 @@
+// .babelrc
+{
+  "presets": [
+    "stage-1",
+    "react",
+    [
+      "latest", {
+        "es2015": {
+          "modules": false
+        }
+      }
+    ]
+  ],
+  "plugins": ["external-helpers"]
+}

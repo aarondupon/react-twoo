@@ -5,26 +5,14 @@ import {ReactPIXIFiberRoot} from './fiber/ReactPIXIFiberRoot';
 // import App from './App';
 
 export default class Canvas extends Component {
-    static defaultProps = {
-        children: null,
-        backgroundColor: '0xff0000',
-        clearBeforeRender: false, // true,
-        transparent: true,
-        preserveDrawingBuffer: false, // true,
-        autoResize: false, // true,
-        forceFXAA: false,
-        antialias: false, // true,
-        pause: false,
-        className: 'custom-render-canvas',
-        onRender: () => {},
-        width: window.innerWidth,
-        height: window.innerHeight,
-        autoRender: true,
-    };
+   
     constructor(){
         super();
         console.log('constructor:canvas:created and stage!')
         // this.resize = throttle(this.resize,200)
+        this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+        this.resize = this.resize.bind(this);
+        this.renderInner = this.renderInner.bind(this);
     }
     componentWillUnmount(){
         if(this._reactPIXIFiberRoot && typeof this._reactPIXIFiberRoot.cancel  ===  'function' ){
@@ -32,7 +20,7 @@ export default class Canvas extends Component {
         }
         console.log('componentWillUnmount:')
     }
-    componentWillReceiveProps = (nextProps) => {
+    componentWillReceiveProps (nextProps) {
         console.log('renderInner3:canvas: created and stage')//,Date.now(),this.props, this.container)
  
           // console.log('_reactPIXIFiberRoot',this._reactPIXIFiberRoot)
@@ -42,7 +30,7 @@ export default class Canvas extends Component {
             this.resize(nextProps)
         }
     }
-    resize=(nextProps)=>{
+    resize(nextProps){
         const {renderer,view,state} = this._reactPIXIFiberRoot;
         const parent = view.parentNode;
         const w = parent.clientWidth;
@@ -61,7 +49,7 @@ export default class Canvas extends Component {
         this.renderInner()
        
     }
-    renderInner = ()=>{
+    renderInner(){
         const reactPIXIFiberRoot = new ReactPIXIFiberRoot(this.props, this.container);
         this._reactPIXIFiberRoot = reactPIXIFiberRoot
         
@@ -93,4 +81,21 @@ export default class Canvas extends Component {
         });
         return container;
     }
+}
+
+Cavans.defaultProps  = {
+    children: null,
+    backgroundColor: '0xff0000',
+    clearBeforeRender: false, // true,
+    transparent: true,
+    preserveDrawingBuffer: false, // true,
+    autoResize: false, // true,
+    forceFXAA: false,
+    antialias: false, // true,
+    pause: false,
+    className: 'custom-render-canvas',
+    onRender: () => {},
+    width: window.innerWidth,
+    height: window.innerHeight,
+    autoRender: true,
 }

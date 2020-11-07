@@ -1,0 +1,15 @@
+/*
+ * react-twoo
+ * undefined
+ * https://github.com/aarondupon/react-twoo
+ * v0.1.0
+ * undefined License
+ */
+
+'use strict';
+
+var BasePrepare = require('../node_modules/pixi.js/lib/prepare/BasePrepare.js');
+
+
+
+module.exports = BasePrepare.__moduleExports;

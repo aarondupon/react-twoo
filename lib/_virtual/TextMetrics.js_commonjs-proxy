@@ -1,0 +1,15 @@
+/*
+ * react-twoo
+ * undefined
+ * https://github.com/aarondupon/react-twoo
+ * v0.1.0
+ * undefined License
+ */
+
+'use strict';
+
+var TextMetrics = require('../node_modules/pixi.js/lib/core/text/TextMetrics.js');
+
+
+
+module.exports = TextMetrics.__moduleExports;

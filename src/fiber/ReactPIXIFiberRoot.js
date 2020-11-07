@@ -15,14 +15,18 @@ export class ReactPIXIFiberRoot {
       this.props = props;
       this.fpsController = new FPSController();
 
+      this.cancel = this.cancel.bind(this)
+      this.autoRender =  this.autoRender.bind(this)
+      this._createPixiWebglRender = this._createPixiWebglRender.bind(this)
+      
       COUNT ++;
       this._createPixiWebglRender(props,domElement)
       return this;  
     }
-    cancel = () =>{
+    cancel(){
       (this.raf && typeof this.raf.cancel === "function") &&  this.raf.cancel()
     }
-    autoRender = (renderfunction) =>{
+    autoRender(renderfunction){
       
       this.raf = animate(()=>{
         renderfunction()
@@ -30,7 +34,7 @@ export class ReactPIXIFiberRoot {
 
     }
     // Resize function window
-    _createPixiWebglRender = (props,domElement) => {
+    _createPixiWebglRender(props,domElement){
         const {style = {},autoRender} =  props;
         
         let {targetName,preserveDrawingBuffer,transparent, target,width,height,backgroundColor,clearBeforeRender,autoResize,className} = props;

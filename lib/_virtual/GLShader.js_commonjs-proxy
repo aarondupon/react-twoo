@@ -1,0 +1,15 @@
+/*
+ * react-twoo
+ * undefined
+ * https://github.com/aarondupon/react-twoo
+ * v0.1.0
+ * undefined License
+ */
+
+'use strict';
+
+var GLShader = require('../node_modules/pixi-gl-core/src/GLShader.js');
+
+
+
+module.exports = GLShader['default'];

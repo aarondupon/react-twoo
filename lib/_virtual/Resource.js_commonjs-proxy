@@ -1,0 +1,15 @@
+/*
+ * react-twoo
+ * undefined
+ * https://github.com/aarondupon/react-twoo
+ * v0.1.0
+ * undefined License
+ */
+
+'use strict';
+
+var Resource = require('../node_modules/resource-loader/lib/Resource.js');
+
+
+
+module.exports = Resource.__moduleExports;

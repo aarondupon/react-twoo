@@ -1,0 +1,15 @@
+/*
+ * react-twoo
+ * undefined
+ * https://github.com/aarondupon/react-twoo
+ * v0.1.0
+ * undefined License
+ */
+
+'use strict';
+
+var FXAAFilter = require('../node_modules/pixi.js/lib/filters/fxaa/FXAAFilter.js');
+
+
+
+module.exports = FXAAFilter;
