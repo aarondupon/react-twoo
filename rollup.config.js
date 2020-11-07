@@ -4,8 +4,11 @@ import { DEFAULT_EXTENSIONS } from '@babel/core'
 import buble from "rollup-plugin-buble";
 import commonjs from "rollup-plugin-commonjs";
 import pkg from "./package.json";
+
 // import resolve from "rollup-plugin-node-resolve";
 import resolve from '@rollup/plugin-node-resolve';
+import json from '@rollup/plugin-json';
+
 import uglify from "rollup-plugin-uglify";
 
 import typescript from 'rollup-plugin-typescript';
@@ -83,6 +86,7 @@ export const cjsBundle  =
     // external:external(),    
     plugins: [
       external(),
+      json(),
       shader( {
         // All match files will be parsed by default,
         // but you can also specifically include/exclude files
