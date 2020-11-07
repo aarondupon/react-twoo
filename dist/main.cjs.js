@@ -7,10 +7,10 @@
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('pixi.js'), require('css-to-react-native'), require('parse-css-transition'), require('fbjs/lib/camelizeStyleName'), require('shallowequal'), require('pixi.js/lib/core'), require('animate')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'react', 'pixi.js', 'css-to-react-native', 'parse-css-transition', 'fbjs/lib/camelizeStyleName', 'shallowequal', 'pixi.js/lib/core', 'animate'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['react-twoo'] = {}, global.React, global.PIXI, global.css, null, null, global.shallowequal, global.core, global.animate));
-}(this, (function (exports, React, PIXI, css, parseCsstransition, camelizeStyleName, shallowequal, core, animate) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('pixi.js'), require('css-to-react-native'), require('parse-css-transition'), require('fbjs/lib/camelizeStyleName'), require('shallowequal'), require('pixi.js/lib/core'), require('animate'), require('plot'), require('prop-types'), require('react-pixi-renderer')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'react', 'pixi.js', 'css-to-react-native', 'parse-css-transition', 'fbjs/lib/camelizeStyleName', 'shallowequal', 'pixi.js/lib/core', 'animate', 'plot', 'prop-types', 'react-pixi-renderer'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['react-twoo'] = {}, global.React, global.PIXI, global.css, null, null, global.shallowequal, global.core$2, global.animate$1, global.plot, global.PropTypes, global.reactPixiRenderer));
+}(this, (function (exports, React, PIXI$1, css, parseCsstransition, camelizeStyleName, shallowequal, core$2, animate$1, plot, propTypes, reactPixiRenderer) { 'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -35,10 +35,11 @@
   }
 
   var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
-  var PIXI__namespace = /*#__PURE__*/_interopNamespace(PIXI);
+  var PIXI__namespace = /*#__PURE__*/_interopNamespace(PIXI$1);
   var css__default = /*#__PURE__*/_interopDefaultLegacy(css);
   var shallowequal__default = /*#__PURE__*/_interopDefaultLegacy(shallowequal);
-  var animate__default = /*#__PURE__*/_interopDefaultLegacy(animate);
+  var animate__default = /*#__PURE__*/_interopDefaultLegacy(animate$1);
+  var plot__default = /*#__PURE__*/_interopDefaultLegacy(plot);
 
   function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -91,6 +92,40 @@
     }
 
     return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
   }
 
   function _inherits(subClass, superClass) {
@@ -8777,7 +8812,7 @@
     anchor: .0,
     renderable: true,
     rotation: 0,
-    scale: new PIXI.Point(1, 1),
+    scale: new PIXI$1.Point(1, 1),
     visible: true,
     width: null,
     height: null,
@@ -8909,7 +8944,7 @@
       _self.mask = null;
     }
 
-    var myMask = new PIXI.Graphics();
+    var myMask = new PIXI$1.Graphics();
     myMask.beginFill();
     myMask.drawRect(x, y, w, h);
     myMask.endFill();
@@ -8937,7 +8972,7 @@
         hex = _parseColor.hex,
         alpha = _parseColor.alpha;
 
-    var boundingbox = new PIXI.Graphics();
+    var boundingbox = new PIXI$1.Graphics();
     boundingbox.lineStyle(width, hex, alpha);
     boundingbox.drawRect(0, 0, w, h);
     boundingbox.endFill();
@@ -8954,7 +8989,7 @@
       this.removeChild(this.background);
     }
 
-    var background = new PIXI.Graphics();
+    var background = new PIXI$1.Graphics();
 
     var _parseColor2 = parseColor(color),
         hex = _parseColor2.hex,
@@ -9145,7 +9180,7 @@
           // if(this._clip){
           // console.log(this.transform.worldTransform.ty)
 
-          this.filterArea = new PIXI.Rectangle(this.transform.worldTransform.tx, this.transform.worldTransform.ty, width, height); //    / }
+          this.filterArea = new PIXI$1.Rectangle(this.transform.worldTransform.tx, this.transform.worldTransform.ty, width, height); //    / }
         }
       }
     }, {
@@ -9182,7 +9217,7 @@
           }
         }
 
-        var bounds = new PIXI.Bounds(); // calclulate size        
+        var bounds = new PIXI$1.Bounds(); // calclulate size        
 
         var maxX = Number.isInteger(width) ? this._bounds.minX + width : this._bounds.maxX;
         var maxY = Number.isInteger(height) ? this._bounds.minY + height : this._bounds.maxY;
@@ -9319,7 +9354,7 @@
     }]);
 
     return Div;
-  }(PIXI.Sprite);
+  }(PIXI$1.Sprite);
   Div.defaultProps = {
     style: {
       color: 'none',
@@ -9344,7 +9379,7 @@
     button: null,
     cursor: null
   };
-  PIXI.Div = Div;
+  PIXI$1.Div = Div;
 
   var AssetsLoader = /*#__PURE__*/function () {
     function AssetsLoader() {
@@ -9382,7 +9417,7 @@
       value: function loadResource(url, name, cb) {
         var _this = this;
 
-        var loader = new PIXI.loaders.Loader();
+        var loader = new PIXI$1.loaders.Loader();
         this.resouceQueu.push({
           url: url,
           name: name,
@@ -9462,9 +9497,9 @@
       var image;
 
       if (!_this2.props.enableMesh) {
-        image = new PIXI.Sprite(originalframe);
+        image = new PIXI$1.Sprite(originalframe);
       } else {
-        var mesh = new PIXI.mesh.Plane(originalframe, 20, 20);
+        var mesh = new PIXI$1.mesh.Plane(originalframe, 20, 20);
         image = mesh;
       }
 
@@ -9617,7 +9652,7 @@
       _self.mask = null;
     }
 
-    var myMask = new PIXI.Graphics();
+    var myMask = new PIXI$1.Graphics();
     myMask.beginFill();
     myMask.drawRect(x, y, w, h);
     myMask.endFill();
@@ -9645,7 +9680,7 @@
         hex = _parseColor.hex,
         alpha = _parseColor.alpha;
 
-    var boundingbox = new PIXI.Graphics();
+    var boundingbox = new PIXI$1.Graphics();
     boundingbox.lineStyle(width, hex, alpha);
     boundingbox.drawRect(0, 0, w, h);
     boundingbox.endFill();
@@ -9661,7 +9696,7 @@
       this.removeChild(this.background);
     }
 
-    var background = new PIXI.Graphics();
+    var background = new PIXI$1.Graphics();
 
     var _parseColor2 = parseColor$1(color),
         hex = _parseColor2.hex,
@@ -9841,7 +9876,7 @@
           // if(this._clip){
           // console.log(this.transform.worldTransform.ty)
 
-          this.filterArea = new PIXI.Rectangle(this.transform.worldTransform.tx, this.transform.worldTransform.ty, width, height); //    / }
+          this.filterArea = new PIXI$1.Rectangle(this.transform.worldTransform.tx, this.transform.worldTransform.ty, width, height); //    / }
         }
       }
     }, {
@@ -9878,7 +9913,7 @@
           }
         }
 
-        var bounds = new PIXI.Bounds(); // calclulate size        
+        var bounds = new PIXI$1.Bounds(); // calclulate size        
 
         var maxX = Number.isInteger(width) ? this._bounds.minX + width : this._bounds.maxX;
         var maxY = Number.isInteger(height) ? this._bounds.minY + height : this._bounds.maxY;
@@ -10017,7 +10052,7 @@
     }]);
 
     return Img;
-  }(PIXI.Sprite);
+  }(PIXI$1.Sprite);
   Img.defaultProps = {
     style: {
       color: 'none',
@@ -10037,45 +10072,45 @@
     },
     src: null
   };
-  PIXI.Img = Img;
+  PIXI$1.Img = Img;
 
   var COMPONENTS = {
     TEXT: function TEXT(props) {
-      return new PIXI.Text(props.text || props, props.textStyleOptions, props.canvas);
+      return new PIXI$1.Text(props.text || props, props.textStyleOptions, props.canvas);
     },
     // display
     displayobject: function displayobject(props) {
-      return new PIXI.DisplayObject();
+      return new PIXI$1.DisplayObject();
     },
     container: function container(props) {
-      return new PIXI.Container();
+      return new PIXI$1.Container();
     },
     // grapics
     graphics: function graphics(props) {
-      return new PIXI.Graphics(props.nativeLines);
+      return new PIXI$1.Graphics(props.nativeLines);
     },
     // sprite
     sprite: function sprite(props) {
-      return new PIXI.Sprite(props.baseTexture);
+      return new PIXI$1.Sprite(props.baseTexture);
     },
     'sprite-fromImage': function spriteFromImage(props) {
-      var image = PIXI.Div.fromImage(props.url);
+      var image = PIXI$1.Div.fromImage(props.url);
       image.x = props.x;
       image.y = props.y;
       return image;
     },
     baseRenderTexture: function baseRenderTexture(props) {
-      return new PIXI.BaseRenderTexture(props.width, props.height);
+      return new PIXI$1.BaseRenderTexture(props.width, props.height);
     },
     // html mapping MAP HTML
     div: function div(props) {
-      return new PIXI.Div(props);
+      return new PIXI$1.Div(props);
     },
     img: function img(props) {
-      return new PIXI.Img(props);
+      return new PIXI$1.Img(props);
     },
     slider: function slider(props) {
-      return new PIXI.Slider(props);
+      return new PIXI$1.Slider(props);
     },
     //text elements
     // textContent: (props) => new TextContent(props),
@@ -10086,12 +10121,12 @@
     },
     illuminate: function illuminate(props) {
       console.log('propspropspropsprops', props);
-      return new PIXI.Illuminate(props);
+      return new PIXI$1.Illuminate(props);
     },
     //slider: (props) => new PIXI.Sprite(props.baseTexture),
     // 'div-animated': (props) => new PIXI.DivAnimated(props),
     "default": function _default(props) {
-      return new PIXI.Container();
+      return new PIXI$1.Container();
     }
   };
 
@@ -10169,7 +10204,7 @@
     return component;
   };
   var createTextElement = function createTextElement(text, style) {
-    return new PIXI.Text(text, style);
+    return new PIXI$1.Text(text, style);
   };
   var appendChild = function appendChild(parent, node) {
     if (node !== null) { parent.addChild(node); }
@@ -10191,7 +10226,7 @@
 
     for (var propname in allPropsTotransfer) {
       if (typeof newProps[propname] !== 'undefined') {
-        if (node[propname] instanceof PIXI.ObservablePoint) {
+        if (node[propname] instanceof PIXI$1.ObservablePoint) {
           // console.log("setObservable",`node[${propname}].set(${newProps[propname]})`,node,newProps[propname])
           if (Array.isArray(newProps[propname])) {
             var _node$propname;
@@ -10516,7 +10551,7 @@
     /**
      * LARED
      */
-    var newRenderLayer = new PIXI.Sprite();
+    var newRenderLayer = new PIXI$1.Sprite();
     node.addChild(newRenderLayer);
     /**
      * DIRECT ON STAGE
@@ -10683,7 +10718,7 @@
 
   var fpsController$1 = new FPSController$1(); // add some extra variables to the container..
 
-  core.utils.mixins.delayMixin(core.DisplayObject.prototype, accessibleTarget$1);
+  core$2.utils.mixins.delayMixin(core$2.DisplayObject.prototype, accessibleTarget$1);
   var KEY_CODE_TAB = 9;
   var DIV_TOUCH_SIZE = 100;
   var DIV_TOUCH_POS_X = 0;
@@ -10935,7 +10970,7 @@
 
           if (child.renderId !== this.renderId) {
             child._accessibleActive = false;
-            core.utils.removeItems(this.children, i, 1);
+            core$2.utils.removeItems(this.children, i, 1);
             this.div.removeChild(child._accessibleDiv);
             this.pool.push(child._accessibleDiv);
             child._accessibleDiv = null;
@@ -11200,11 +11235,11 @@
 
     return AccessibilityManager;
   }();
-  core.WebGLRenderer.registerPlugin('accessibility', AccessibilityManager); // core.CanvasRenderer.registerPlugin('accessibility', AccessibilityManager);
+  core$2.WebGLRenderer.registerPlugin('accessibility', AccessibilityManager); // core.CanvasRenderer.registerPlugin('accessibility', AccessibilityManager);
 
   var PIXI_RENDERS = [];
   var COUNT = 0;
-  PIXI.settings.FILTER_RESOLUTION = 1;
+  PIXI$1.settings.FILTER_RESOLUTION = 1;
   var ReactPIXIFiberRoot = /*#__PURE__*/function () {
     function ReactPIXIFiberRoot(props, domElement) {
       _classCallCheck(this, ReactPIXIFiberRoot);
@@ -11254,7 +11289,7 @@
             clearBeforeRender = props.clearBeforeRender,
             autoResize = props.autoResize,
             className = props.className;
-        var stage = new PIXI.Sprite();
+        var stage = new PIXI$1.Sprite();
         stage.CANVAS_ID = COUNT; // stage.UID = this.UID
         // stage.filters = [new PIXI.filters.AlphaFilter()];
         // stage.filters = [];
@@ -11268,7 +11303,7 @@
         // const COUNT = Date.now();//Snew Date().getUTCMilliseconds();
 
         if (!document.getElementById(target) || target === undefined) {
-          renderer = new PIXI.WebGLRenderer(width, height + paddig * 2, {
+          renderer = new PIXI$1.WebGLRenderer(width, height + paddig * 2, {
             forceFXAA: true,
             //this.props.forceFXAA,
             antialias: true,
@@ -11279,7 +11314,7 @@
             preserveDrawingBuffer: preserveDrawingBuffer,
             // this.props.preserveDrawingBuffer,
             autoResize: autoResize,
-            resolution: PIXI.settings.RESOLUTION,
+            resolution: PIXI$1.settings.RESOLUTION,
             view: domElement
           });
           console.log('autoResize', autoResize);
@@ -11301,14 +11336,14 @@
           renderer.view.className = "".concat(className); // domElement.appendChild(renderer.view);
         } else if (target === undefined) {
           renderer.view.id = "stage_".concat(COUNT);
-          PIXI.TARGET_FPMS = 0.06; // domElement.appendChild(renderer.view);
+          PIXI$1.TARGET_FPMS = 0.06; // domElement.appendChild(renderer.view);
         }
 
         renderer.view.__PIXI__ = {
           renderer: renderer,
           stage: stage
         };
-        var ticker = PIXI.ticker.shared; // Set this to prevent starting this ticker when listeners are added to it
+        var ticker = PIXI$1.ticker.shared; // Set this to prevent starting this ticker when listeners are added to it
         // By default this is true only on the PIXI.ticker.shared instance
 
         ticker.autoStart = false; // Call this to ensure the ticker is stopped right now
@@ -11478,7 +11513,5644 @@
     autoRender: true
   };
 
+  function createAnimate() {
+    var shedular = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {
+      return true;
+    };
+    return function animate(fps, render, repeat) {
+      var count = 0;
+
+      function loop() {
+        if (shedular(fps)) {
+          render(count);
+          count += 1;
+        }
+
+        if (repeat === undefined || count !== repeat) {
+          window.requestAnimationFrame(loop);
+        }
+      }
+
+      window.requestAnimationFrame(loop);
+    };
+  }
+
+  var Fragment = require('./BeeldBend.frag');
+
+  var Vertext = require('./BeeldBend.vert');
+
+  var TextureLoader = function TextureLoader(_textures, uniforms, filter) {
+    var _this = this;
+
+    _classCallCheck(this, TextureLoader);
+
+    _defineProperty(this, "allTextures", {});
+
+    _defineProperty(this, "addTextTures", function (textures) {
+      textures.forEach(function (file, i) {
+        var name = Object.keys(file)[0];
+        var url = file[name];
+        console.log('texture', name, url, i);
+        var sprite = new PIXI$1.Sprite.fromImage(url);
+        var texture = sprite.texture;
+        _this.uniforms[name] = {
+          type: 'sampler2D',
+          value: texture
+        };
+        _this.allTextures = _objectSpread2(_objectSpread2({}, _this.allTextures), {}, _defineProperty({}, name, url));
+
+        if (texture && texture.baseTexture.hasLoaded) ; else {
+          texture.baseTexture.wrapMode = PIXI$1.WRAP_MODES.REPEAT;
+          texture && texture.baseTexture.on('loaded', function () {
+            return _this.onTextureLoaded(texture, name);
+          });
+        }
+      });
+    });
+
+    _defineProperty(this, "onTextureLoaded", function (texture, name) {
+      // this.uniforms.width = texture.baseTexture.width
+      // this.uniforms[name].baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
+      // this.uniforms[name].baseTexture.off('loaded', this.boundLoadedFunction);
+      texture.baseTexture.wrapMode = PIXI$1.WRAP_MODES.REPEAT;
+      texture.baseTexture.off('loaded', _this.boundLoadedFunction);
+    });
+
+    this.filter = filter;
+    this.uniforms = uniforms;
+    this.addTextTures(_textures);
+  };
+  /**
+   *
+   * The BeeldWaveFilter class uses the pixel values from the specified texture (called the displacement map) to perform a displacement of an object.
+   * You can use this filter to apply all manor of crazy warping effects
+   * Currently the r property of the texture is used offset the x and the g propery of the texture is used to offset the y.
+   * @class BeeldWaveFilter
+   * @contructor
+   * @param texture {Texture} The texture used for the displacemtent map * must be power of 2 texture at the moment
+   */
+
+
+  var BeeldBendFilter = /*#__PURE__*/function (_PIXI$Filter) {
+    _inherits(BeeldBendFilter, _PIXI$Filter);
+
+    var _super = _createSuper(BeeldBendFilter);
+
+    /**
+     * Creates an instance of DisplacementFilter.
+     * @param {*} speed
+     * @param {*} resolution
+     * @memberof DisplacementFilter
+     */
+    function BeeldBendFilter() {
+      var _this2;
+
+      var textures = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var resolution = arguments.length > 1 ? arguments[1] : undefined;
+
+      _classCallCheck(this, BeeldBendFilter);
+
+      _this2 = _super.call(this);
+      /* defaullt pixi implementation 
+       Object.assign(this.uniforms,{
+           dimensions:new Float32Array(4),
+           scale:0.015,
+           offet:0,
+           mapDimensions:new Float32Array(2),
+           focus:.5,
+           iTime:0,
+           displacementMap:texture,
+       });
+       */
+
+      _defineProperty(_assertThisInitialized(_this2), "update", function (t) {
+        _this2.uniforms.iTime = performance.now() / 1000;
+      });
+
+      _this2.padding = 200;
+      _this2.passes = 0;
+      _this2.resolution = resolution || PIXI$1.settings.RESOLUTION;
+      _this2.autoFit = false;
+      /* Bypassing fucking pixi check if webgl input is in use  */
+
+      var uniforms = {
+        iResolution: {
+          type: '4fv',
+          value: [0, 0]
+        },
+        // scale:           {type: '1f', value:0.015},
+        scale: {
+          type: '2f',
+          value: [1, 1]
+        },
+        tension: {
+          type: '1f',
+          value: 0
+        },
+        padding: {
+          type: '1f',
+          value: _this2.padding
+        },
+        offset: {
+          type: '2f',
+          value: {
+            x: 1,
+            y: 1
+          }
+        },
+        mapDimensions: {
+          type: '2f',
+          value: {
+            x: 1,
+            y: 5112
+          }
+        },
+        dimensions: {
+          type: '4fv',
+          value: [0, 0, 0, 0]
+        },
+        focus: {
+          type: '1f',
+          value: 0.5
+        },
+        iTime: {
+          type: '1f',
+          value: 0.0
+        },
+        iMouse: {
+          type: '2f',
+          value: [.5, .5]
+        }
+      };
+      _this2.loader = new TextureLoader(textures, uniforms, _assertThisInitialized(_this2));
+      PIXI$1.Filter.call(_assertThisInitialized(_this2), Vertext, Fragment, uniforms);
+      /* end hack */
+      // PIXI.ticker.shared.add(this.update)
+      // PIXI.ticker.shared.start();
+      // PIXI.ticker.shared.speed = .0015;
+
+      _this2.animation = animate__default['default'](_this2.update, 24);
+      _this2.animate = true;
+      return _this2;
+    }
+    /**
+     * Applies the filter.
+     *
+     * @param {PIXI.FilterManager} filterManager - The manager.
+     * @param {PIXI.RenderTarget} input - The input target.
+     * @param {PIXI.RenderTarget} output - The output target.
+     */
+
+
+    _createClass(BeeldBendFilter, [{
+      key: "apply",
+      value: function apply(filterManager, input, output, clear) {
+        var width = input.sourceFrame.width;
+        var height = input.sourceFrame.height;
+        var x = input.sourceFrame.x;
+        var y = input.sourceFrame.y;
+        this.uniforms.dimensions[1] = x;
+        this.uniforms.dimensions[2] = y;
+        this.uniforms.dimensions[2] = width;
+        this.uniforms.dimensions[3] = height;
+        this.uniforms.aspect = height / width;
+        this.uniforms.padding = this.padding;
+        this.uniforms.iResolution[0] = input.size.width; //*resolution;
+
+        this.uniforms.iResolution[1] = input.size.height; //*resolution;
+
+        var mouse = this.mouse; // remember texture are square sized!!
+
+        var mx = (mouse.x - x) / input.size.width; //window.innerWidth ;
+
+        var my = (mouse.y - y) / input.size.height; // map to filter; .6
+
+        this.uniforms.iMouse = [mx, my]; //console.log(this.uniformData)
+        //  console.log('mx',mx)
+        // console.log('x',mouse.x,mx,this.uniforms.iMouse[1])
+        // this.uniforms.iMouse = [(mouse.x - x) / width+this.padding*2,(mouse.y - y) / height+this.padding*2]
+        // this.transform.updateTransform(this.parent.transform);
+        // draw the filter...
+
+        filterManager.applyFilter(this, input, output, clear);
+      }
+    }, {
+      key: "mouse",
+      get: function get() {
+        return this._mouse || {
+          x: 0,
+          y: 0
+        };
+      },
+      set: function set(value) {
+        this._mouse = value;
+      }
+    }, {
+      key: "scale",
+      get: function get() {
+        return {
+          x: this.uniforms.scale[0],
+          y: this.uniforms.scale[1]
+        };
+      },
+      set: function set(value) {
+        this.uniforms.scale = [value.x, value.y];
+      }
+    }, {
+      key: "offset",
+      get: function get() {
+        return this.uniforms.offset;
+      },
+      set: function set(value) {
+        this.uniforms.offset = value;
+      }
+    }, {
+      key: "time",
+      get: function get() {
+        return this.uniforms.iTime;
+      },
+      set: function set(value) {
+        this.uniforms.iTime = value;
+      }
+    }, {
+      key: "animate",
+      set: function set(bool) {
+        this._animate = bool;
+        bool ? this.animation.resume() : this.animation.pause();
+      },
+      get: function get() {
+        return this._animate;
+      }
+    }, {
+      key: "tension",
+      set: function set(value) {
+        this.uniforms.tension = value;
+      },
+      get: function get() {
+        return this.uniforms.tension;
+      }
+    }]);
+
+    return BeeldBendFilter;
+  }(PIXI$1.Filter);
+
+  var Fragment$1 = require('./BeeldFlagMouse.frag');
+
+  var Vertext$1 = require('./BeeldFlag.vert');
+  var allTextures = {};
+  /**
+   *
+   * The BeeldFlagFilter class uses the pixel values from the specified texture (called the displacement map) to perform a displacement of an object.
+   * You can use this filter to apply all manor of crazy warping effects
+   * Currently the r property of the texture is used offset the x and the g propery of the texture is used to offset the y.
+   * @class BeeldFlagFilter
+   * @contructor
+   * @param texture {Texture} The texture used for the displacemtent map * must be power of 2 texture at the moment
+   */
+
+  var BeeldFlagFilter = /*#__PURE__*/function (_PIXI$Filter) {
+    _inherits(BeeldFlagFilter, _PIXI$Filter);
+
+    var _super = _createSuper(BeeldFlagFilter);
+
+    /**
+     * Creates an instance of DisplacementFilter.
+     * @param {*} speed
+     * @param {*} resolution
+     * @memberof DisplacementFilter
+     */
+    function BeeldFlagFilter() {
+      var _this;
+
+      var textures = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var resolution = arguments.length > 1 ? arguments[1] : undefined;
+
+      _classCallCheck(this, BeeldFlagFilter);
+
+      _this = _super.call(this);
+      /* defaullt pixi implementation 
+       Object.assign(this.uniforms,{
+           dimensions:new Float32Array(4),
+           scale:0.015,
+           offet:0,
+           mapDimensions:new Float32Array(2),
+           focus:.5,
+           iTime:0,
+           displacementMap:texture,
+       });
+       */
+
+      /* Bypassing fucking pixi check if webgl input is in use  */
+
+      _defineProperty(_assertThisInitialized(_this), "animation", animate__default['default'](_this.update, 24));
+
+      _defineProperty(_assertThisInitialized(_this), "onTextureLoaded", function (texture, name) {
+        // this.uniforms.mapDimensions.x = this.uniforms.texture.width;
+        // this.uniforms.mapDimensions.y = this.uniforms.texture.height;
+        // this.uniforms.iResolution[0] = texture.width;
+        // this.uniforms.iResolution[1] = texture.height;
+        _this.uniforms[name].baseTexture.wrapMode = PIXI$1.WRAP_MODES.REPEAT;
+
+        _this.uniforms[name].baseTexture.off('loaded', _this.boundLoadedFunction);
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "update", function () {
+        _this.uniforms.iTime += .1;
+      });
+
+      var uniforms = {
+        iResolution: {
+          type: '4fv',
+          value: [0, 0]
+        },
+        scale: {
+          type: '1f',
+          value: 0.015
+        },
+        offset: {
+          type: '2f',
+          value: {
+            x: 1,
+            y: 1
+          }
+        },
+        mapDimensions: {
+          type: '2f',
+          value: {
+            x: 1,
+            y: 5112
+          }
+        },
+        dimensions: {
+          type: '4fv',
+          value: [0, 0, 0, 0]
+        },
+        focus: {
+          type: '1f',
+          value: 0.5
+        },
+        iTime: {
+          type: '1f',
+          value: 0.0
+        } //uv:             {type: '2f', value:[.5,.5]},
+
+      };
+      textures.forEach(function (file, i) {
+        var name = Object.keys(file)[0];
+        var url = file[name];
+        console.log('texture', name, url, i);
+        var sprite = new PIXI$1.Sprite.fromImage(url);
+        var texture = sprite.texture;
+        uniforms[name] = {
+          type: 'sampler2D',
+          value: texture
+        };
+        allTextures = _objectSpread2(_objectSpread2({}, allTextures), {}, _defineProperty({}, name, url));
+
+        if (texture && texture.baseTexture.hasLoaded) ; else {
+          texture.baseTexture.wrapMode = PIXI$1.WRAP_MODES.REPEAT;
+          texture && texture.baseTexture.on('loaded', function () {
+            return _this.onTextureLoaded(texture, name);
+          });
+        }
+      });
+      PIXI$1.Filter.call(_assertThisInitialized(_this), Vertext$1, Fragment$1, uniforms);
+      /* end hack */
+
+      _this.padding = 0;
+      _this.passes = 0;
+      _this.resolution = resolution || PIXI$1.settings.RESOLUTION;
+      _this.autoFit = false; // PIXI.ticker.shared.add(this.update)
+      // PIXI.ticker.shared.start();
+      // PIXI.ticker.shared.speed = .0015;
+
+      _this.animation.pause();
+
+      return _this;
+    }
+
+    _createClass(BeeldFlagFilter, [{
+      key: "apply",
+
+      /**
+       * Applies the filter.
+       *
+       * @param {PIXI.FilterManager} filterManager - The manager.
+       * @param {PIXI.RenderTarget} input - The input target.
+       * @param {PIXI.RenderTarget} output - The output target.
+       */
+      value: function apply(filterManager, input, output, clear) {
+        var width = input.sourceFrame.width;
+        var height = input.sourceFrame.height;
+        var x = input.sourceFrame.x;
+        var y = input.sourceFrame.y;
+        this.uniforms.dimensions[0] = x;
+        this.uniforms.dimensions[1] = y;
+        this.uniforms.dimensions[2] = width;
+        this.uniforms.dimensions[3] = height;
+        this.uniforms.aspect = height / width;
+        this.uniforms.padding = this.padding;
+        this.uniforms.mapDimensions[0] = width;
+        this.uniforms.mapDimensions[1] = height; // this.uniforms.iResolution.x = width;
+        this.uniforms.iResolution[0] = width; //*resolution;
+
+        this.uniforms.iResolution[1] = height; //*resolution;
+
+        var mouse = this.mouse; // this.uniforms.iMouse = [(mouse.x - x) / width,(mouse.y - y) / height]
+        // this.transform.updateTransform(this.parent.transform);
+        // draw the filter...
+
+        filterManager.applyFilter(this, input, output, clear);
+      }
+    }, {
+      key: "mouse",
+      get: function get() {
+        return this._mouse || {
+          x: 0,
+          y: 0
+        };
+      },
+      set: function set(value) {
+        this._mouse = value;
+      }
+    }, {
+      key: "offset",
+      get: function get() {
+        return this.uniforms.offset;
+      },
+      set: function set(value) {
+        this.uniforms.offset = value;
+      }
+    }, {
+      key: "time",
+      get: function get() {
+        return this.uniforms.iTime;
+      },
+      set: function set(value) {
+        this.uniforms.iTime = value;
+      }
+    }, {
+      key: "animate",
+      set: function set(bool) {
+        this._animate = bool;
+        bool ? this.animation.resume() : this.animation.pause();
+      },
+      get: function get() {
+        return this._animate;
+      }
+    }]);
+
+    return BeeldFlagFilter;
+  }(PIXI$1.Filter);
+
+  var Fragment$2 = require('./BeeldWave2.frag');
+
+  var Vertext$2 = require('./BeeldWave.vert');
+
+  var animate = require('animate');
+
+  var TextureLoader$1 = function TextureLoader(_textures, uniforms, filter) {
+    var _this = this;
+
+    _classCallCheck(this, TextureLoader);
+
+    _defineProperty(this, "allTextures", {});
+
+    _defineProperty(this, "addTextTures", function (textures) {
+      textures.forEach(function (file, i) {
+        var name = Object.keys(file)[0];
+        var url = file[name];
+        console.log('texture', name, url, i);
+        var sprite = new PIXI$1.Sprite.fromImage(url);
+        var texture = sprite.texture;
+        _this.uniforms[name] = {
+          type: 'sampler2D',
+          value: texture
+        };
+        _this.allTextures = _objectSpread2(_objectSpread2({}, _this.allTextures), {}, _defineProperty({}, name, url));
+
+        if (texture && texture.baseTexture.hasLoaded) ; else {
+          texture.baseTexture.wrapMode = PIXI$1.WRAP_MODES.REPEAT;
+          texture && texture.baseTexture.on('loaded', function () {
+            return _this.onTextureLoaded(texture, name);
+          });
+        }
+      });
+    });
+
+    _defineProperty(this, "onTextureLoaded", function (texture, name) {
+      // this.uniforms.width = texture.baseTexture.width
+      // this.uniforms[name].baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
+      // this.uniforms[name].baseTexture.off('loaded', this.boundLoadedFunction);
+      texture.baseTexture.wrapMode = PIXI$1.WRAP_MODES.REPEAT;
+      texture.baseTexture.off('loaded', _this.boundLoadedFunction);
+    });
+
+    this.filter = filter;
+    this.uniforms = uniforms;
+    this.addTextTures(_textures);
+  };
+  /**
+   *
+   * The BeeldWaveFilter class uses the pixel values from the specified texture (called the displacement map) to perform a displacement of an object.
+   * You can use this filter to apply all manor of crazy warping effects
+   * Currently the r property of the texture is used offset the x and the g propery of the texture is used to offset the y.
+   * @class BeeldWaveFilter
+   * @contructor
+   * @param texture {Texture} The texture used for the displacemtent map * must be power of 2 texture at the moment
+   */
+
+
+  var BeeldWaveFilter = /*#__PURE__*/function (_PIXI$Filter) {
+    _inherits(BeeldWaveFilter, _PIXI$Filter);
+
+    var _super = _createSuper(BeeldWaveFilter);
+
+    /**
+     * Creates an instance of DisplacementFilter.
+     * @param {*} speed
+     * @param {*} resolution
+     * @memberof DisplacementFilter
+     */
+    function BeeldWaveFilter() {
+      var _this2;
+
+      var textures = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var resolution = arguments.length > 1 ? arguments[1] : undefined;
+
+      _classCallCheck(this, BeeldWaveFilter);
+
+      _this2 = _super.call(this);
+      /* defaullt pixi implementation 
+       Object.assign(this.uniforms,{
+           dimensions:new Float32Array(4),
+           scale:0.015,
+           offet:0,
+           mapDimensions:new Float32Array(2),
+           focus:.5,
+           iTime:0,
+           displacementMap:texture,
+       });
+       */
+
+      _defineProperty(_assertThisInitialized(_this2), "update", function (t) {
+        _this2.uniforms.iTime += 1; //performance.now()
+      });
+
+      _this2.padding = 0;
+      _this2.passes = 0;
+      _this2.resolution = resolution || PIXI$1.settings.RESOLUTION;
+      _this2.autoFit = false;
+      /* Bypassing fucking pixi check if webgl input is in use  */
+
+      var uniforms = {
+        iResolution: {
+          type: '4fv',
+          value: [0, 0]
+        },
+        scale: {
+          type: '1f',
+          value: 0.015
+        },
+        tension: {
+          type: '1f',
+          value: 0
+        },
+        offset: {
+          type: '2f',
+          value: {
+            x: 1,
+            y: 1
+          }
+        },
+        mapDimensions: {
+          type: '2f',
+          value: {
+            x: 1,
+            y: 5112
+          }
+        },
+        dimensions: {
+          type: '4fv',
+          value: [0, 0, 0, 0]
+        },
+        focus: {
+          type: '1f',
+          value: 0.5
+        },
+        iTime: {
+          type: '1f',
+          value: 0.0
+        },
+        iMouse: {
+          type: '2f',
+          value: [.5, .5]
+        }
+      };
+      _this2.loader = new TextureLoader$1(textures, uniforms, _assertThisInitialized(_this2));
+      PIXI$1.Filter.call(_assertThisInitialized(_this2), Vertext$2, Fragment$2, uniforms);
+      /* end hack */
+      // PIXI.ticker.shared.add(this.update)
+      // PIXI.ticker.shared.start();
+      // PIXI.ticker.shared.speed = .0015;
+
+      _this2.animation = animate(_this2.update, 24);
+      _this2.animate = true;
+      return _this2;
+    }
+    /**
+     * Applies the filter.
+     *
+     * @param {PIXI.FilterManager} filterManager - The manager.
+     * @param {PIXI.RenderTarget} input - The input target.
+     * @param {PIXI.RenderTarget} output - The output target.
+     */
+
+
+    _createClass(BeeldWaveFilter, [{
+      key: "apply",
+      value: function apply(filterManager, input, output, clear) {
+        var width = input.sourceFrame.width;
+        var height = input.sourceFrame.height;
+        var x = input.sourceFrame.x;
+        var y = input.sourceFrame.y;
+        this.uniforms.dimensions[1] = x;
+        this.uniforms.dimensions[2] = y;
+        this.uniforms.dimensions[2] = width;
+        this.uniforms.dimensions[3] = height;
+        this.uniforms.aspect = height / width;
+        this.uniforms.padding = this.padding;
+        this.uniforms.iResolution[0] = input.size.width; //*resolution;
+
+        this.uniforms.iResolution[1] = input.size.height; //*resolution;
+
+        var mouse = this.mouse; // remember texture are square sized!!
+
+        var mx = (mouse.x - x) / input.size.width; //window.innerWidth ;
+
+        var my = (mouse.y - y) / input.size.height; // map to filter; .6
+
+        this.uniforms.iMouse = [mx, my]; //console.log(this.uniformData)
+        //  console.log('mx',mx)
+        // console.log('x',mouse.x,mx,this.uniforms.iMouse[1])
+        // this.uniforms.iMouse = [(mouse.x - x) / width+this.padding*2,(mouse.y - y) / height+this.padding*2]
+        // this.transform.updateTransform(this.parent.transform);
+        // draw the filter...
+
+        filterManager.applyFilter(this, input, output, clear);
+      }
+    }, {
+      key: "mouse",
+      get: function get() {
+        return this._mouse || {
+          x: 0,
+          y: 0
+        };
+      },
+      set: function set(value) {
+        this._mouse = value;
+      }
+    }, {
+      key: "offset",
+      get: function get() {
+        return this.uniforms.offset;
+      },
+      set: function set(value) {
+        this.uniforms.offset = value;
+      }
+    }, {
+      key: "time",
+      get: function get() {
+        return this.uniforms.iTime;
+      },
+      set: function set(value) {
+        this.uniforms.iTime = value;
+      }
+    }, {
+      key: "animate",
+      set: function set(bool) {
+        this._animate = bool;
+        bool ? this.animation.resume() : this.animation.pause();
+      },
+      get: function get() {
+        return this._animate;
+      }
+    }, {
+      key: "tension",
+      set: function set(value) {
+        this.uniforms.tension = value;
+      },
+      get: function get() {
+        return this.uniforms.tension;
+      }
+    }]);
+
+    return BeeldWaveFilter;
+  }(PIXI$1.Filter);
+
+  ////import PIXI from 'pixi.js';//'vendor/pixi';
+  var Fragment$3 = require('./DepthPerspectiveFilter2.frag');
+
+  var Vertext$3 = require('./DepthPerspectiveFilter.vert');
+  /**
+   *
+   * The DepthDisplacementFilter class uses the pixel values from the specified texture (called the displacement map) to perform a displacement of an object.
+   * You can use this filter to apply all manor of crazy warping effects
+   * Currently the r property of the texture is used offset the x and the g propery of the texture is used to offset the y.
+   * @class DepthDisplacementFilter
+   * @contructor
+   * @param texture {Texture} The texture used for the displacemtent map * must be power of 2 texture at the moment
+   */
+
+
+  PIXI.DepthDisplacementFilter = function (sprite) {
+    var texture = sprite.texture;
+    var uniforms = {
+      displacementMap: {
+        type: 'sampler2D',
+        value: texture
+      },
+      scale: {
+        type: '1f',
+        value: 0.015
+      },
+      offset: {
+        type: '2f',
+        value: {
+          x: 1,
+          y: 1
+        }
+      },
+      mapDimensions: {
+        type: '2f',
+        value: {
+          x: 1,
+          y: 5112
+        }
+      },
+      dimensions: {
+        type: '4fv',
+        value: [0, 0, 0, 0]
+      },
+      focus: {
+        type: '1f',
+        value: 0.5
+      },
+      iTime: {
+        type: '1f',
+        value: 0.0
+      }
+    };
+    PIXI.AbstractFilter.call(this, Vertext$3, Fragment$3, uniforms);
+    sprite.alpha = 0; //sprite.renderable = false;
+    // this.passes = [this];
+    // texture.baseTexture._powerOf2 = true;
+    // set the uniforms
+
+    if (texture.baseTexture.hasLoaded) {
+      this.uniforms.mapDimensions.x = texture.width;
+      this.uniforms.mapDimensions.y = texture.height;
+    } else {
+      this.boundLoadedFunction = this.onTextureLoaded.bind(this);
+      texture.baseTexture.on('loaded', this.boundLoadedFunction);
+    } //console.log(this.uniforms.offset.value)
+
+  };
+
+  PIXI.DepthDisplacementFilter.prototype = Object.create(PIXI.AbstractFilter.prototype);
+  PIXI.DepthDisplacementFilter.prototype.constructor = PIXI.DepthDisplacementFilter;
+
+  PIXI.DepthDisplacementFilter.prototype.onTextureLoaded = function () {
+    this.uniforms.mapDimensions.x = this.uniforms.displacementMap.width;
+    this.uniforms.mapDimensions.y = this.uniforms.displacementMap.height;
+    this.uniforms.displacementMap.baseTexture.off('loaded', this.boundLoadedFunction);
+  };
+  /**
+   * The texture used for the displacemtent map * must be power of 2 texture at the moment
+   *
+   * @property map
+   * @type Texture
+   */
+
+
+  Object.defineProperty(PIXI.DepthDisplacementFilter.prototype, 'map', {
+    get: function get() {
+      return this.uniforms.displacementMap;
+    },
+    set: function set(value) {
+      this.uniforms.displacementMap = value;
+    }
+  });
+  /**
+   * The multiplier used to scale the displacement result from the map calculation.
+   *
+   * @property scale
+   * @type Point
+   */
+
+  Object.defineProperty(PIXI.DepthDisplacementFilter.prototype, 'scale', {
+    get: function get() {
+      return this.uniforms.scale;
+    },
+    set: function set(value) {
+      this.uniforms.scale = value;
+    }
+  });
+  /**
+   * Focus point in paralax
+   *
+   * @property focus
+   * @type float
+   */
+
+  Object.defineProperty(PIXI.DepthDisplacementFilter.prototype, 'focus', {
+    get: function get() {
+      return this.uniforms.focus;
+    },
+    set: function set(value) {
+      this.uniforms.focus = Math.min(1, Math.max(0, value));
+    }
+  });
+  /**
+   * The offset used to move the displacement map.
+   *
+   * @property offset
+   * @type Point
+   */
+
+  Object.defineProperty(PIXI.DepthDisplacementFilter.prototype, 'offset', {
+    get: function get() {
+      return this.uniforms.offset;
+    },
+    set: function set(value) {
+      this.uniforms.offset = value;
+    }
+  });
+  /**
+   * The offset used to move the displacement map.
+   *
+   * @property offset
+   * @type Point
+   */
+
+  Object.defineProperty(PIXI.DepthDisplacementFilter.prototype, 'time', {
+    get: function get() {
+      return this.uniforms.iTime;
+    },
+    set: function set(value) {
+      this.uniforms.iTime = value;
+    }
+  });
+  var index = PIXI.DepthDisplacementFilter;
+
+  var Fragment$4 = require('./DisplacementFilter.frag');
+
+  var Vertext$4 = require('./DisplacementFilter.vert');
+  /**
+   * The DisplacementFilter applies a Gaussian blur to an object.
+   * The strength of the blur can be set for x- and y-axis separately.
+   *
+   * @class
+   * @extends PIXI.Filter
+   * @memberof PIXI.filters
+   */
+
+
+  var DisplacementFilter = /*#__PURE__*/function (_PIXI$Filter) {
+    _inherits(DisplacementFilter, _PIXI$Filter);
+
+    var _super = _createSuper(DisplacementFilter);
+
+    /**
+     * Creates an instance of DisplacementFilter.
+     * @param {*} speed
+     * @param {*} resolution
+     * @memberof DisplacementFilter
+     */
+    function DisplacementFilter(resolution) {
+      var _this;
+
+      _classCallCheck(this, DisplacementFilter);
+
+      _this = _super.call(this, Vertext$4, Fragment$4);
+      _this.uniforms.dimensions = new Float32Array(2); //http://pixijs.download/dev/docs/core_renderers_webgl_managers_FilterManager.js.html#line51
+      // ---> check this to allow vertical padding onlu
+
+      _this.padding = 200;
+      _this.passes = 1;
+      _this.resolution = resolution || PIXI$1.settings.RESOLUTION;
+      _this.autoFit = false;
+      return _this;
+    }
+    /**
+     * Applies the filter.
+     *
+     * @param {PIXI.FilterManager} filterManager - The manager.
+     * @param {PIXI.RenderTarget} input - The input target.
+     * @param {PIXI.RenderTarget} output - The output target.
+     */
+
+
+    _createClass(DisplacementFilter, [{
+      key: "apply",
+      value: function apply(filterManager, input, output, clear) {
+        var width = input.sourceFrame.width;
+        var height = input.sourceFrame.height;
+        this.uniforms.dimensions[0] = width;
+        this.uniforms.dimensions[1] = height;
+        this.uniforms.aspect = height / width;
+        this.uniforms.padding = this.padding;
+        filterManager.applyFilter(this, input, output, clear); // const renderTarget = filterManager.getRenderTarget(true);
+        // filterManager.returnRenderTarget(renderTarget);
+      }
+    }, {
+      key: "addTexture",
+      value: function addTexture(texture, name) {
+        this.uniforms[name] = texture;
+      }
+    }, {
+      key: "mouse",
+      get: function get() {
+        return this.uniforms.uMouse;
+      },
+      set: function set(value) {
+        // console.log('mouseX',value)
+        // value[1] = value[1] *1
+        this.uniforms.uMouse = value;
+      }
+    }, {
+      key: "offset",
+      get: function get() {
+        return this.uniforms.offset;
+      },
+      set: function set(value) {
+        // console.log('offset',value)
+        // value[1] = value[1] *1
+        this.uniforms.offset = value;
+      }
+    }, {
+      key: "worldTransform",
+      set: function set(worldTransform) {
+        this._worldTransform = worldTransform;
+        this.uniforms.tx = worldTransform.tx;
+      },
+      get: function get() {
+        return this._.worldTransform;
+      }
+    }]);
+
+    return DisplacementFilter;
+  }(PIXI$1.Filter);
+
+  //http://www.lafamiliaxsiempre.cl/lookbook
+  //http://super16.dk/medlemmer/glen-bay-grant
+  //https://gl-transitions.com/editor/directionalwarp?direction=-1,0
+  //https://gl-transitions.com/editor/crosswarp
+  // !!!!
+  //https://videohive.net/item/handy-seamless-transitions-pack-script/18967340?irgwc=1&clickid=0giS-aX0JQ2eUc10bqVBhWPIUkgzyHwI-QdBQs0&iradid=275988&irpid=1143794&iradtype=ONLINE_TRACKING_LINK&irmptype=mediapartner&mp_value1=&utm_campaign=af_impact_radius_1143794&utm_medium=affiliate&utm_source=impact_radius
+
+  var loader = PIXI$1.loader;
+
+  var DisplacementFilterComponent = /*#__PURE__*/function (_Component) {
+    _inherits(DisplacementFilterComponent, _Component);
+
+    var _super = _createSuper(DisplacementFilterComponent);
+
+    function DisplacementFilterComponent(props) {
+      var _this;
+
+      _classCallCheck(this, DisplacementFilterComponent);
+
+      _this = _super.call(this, props);
+
+      _defineProperty(_assertThisInitialized(_this), "t", 0);
+
+      _defineProperty(_assertThisInitialized(_this), "handleMouse", function (e) {
+        // const {filter} = this;
+        var progress = e.clientX / _this.filter.uniforms.dimensions[0]; // plot('mousex',this.t,(parabola*100))
+        //plot('pasrabola',this.t,parabola*100,'#ffff00')
+
+        _this.filter.uniforms.progress = progress; // this.filter.uniforms.parabola = parabola ;
+
+        _this.filter.uniforms.effectFactor = e.clientX / 100; // this.filter.mouse =  [e.clientX/window.innerWidth,e.clientY/window.innerHeight];
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "_loader", []);
+
+      _defineProperty(_assertThisInitialized(_this), "_loaderQue", []);
+
+      _defineProperty(_assertThisInitialized(_this), "add", function (name, url, index) {
+        var hasAsset = _this._loader.find(function (x) {
+          return x.url === url;
+        }) ? true : false; // console.log('add',url,name,hasAsset)//
+
+        if (!hasAsset) {
+          if (!loader.isLoading) {
+            _this._loader.push({
+              url: url,
+              name: name,
+              index: index
+            });
+
+            loader.add(url, url, index);
+          } else {
+            _this._loaderQue.push({
+              url: url,
+              name: name,
+              index: index
+            });
+          }
+        }
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "handleError", function (error, loader) {
+        console.log('handleError', error, loader);
+        loader.isLoading = false;
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "handleLoaded", function (loader) {
+        _this._loader.forEach(function (_ref) {
+          var url = _ref.url,
+              name = _ref.name,
+              index = _ref.index;
+          console.log('handleLoaded', index);
+          var resource = loader.resources[url];
+
+          if (resource) {
+            var texture = resource.texture;
+
+            _this.filter.addTexture(texture, name);
+          } else {
+            console.alert("Texture does not exist: ".concat(url));
+          }
+        });
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "update", function (nextProps) {
+        _this.filter.offset = nextProps.offset;
+
+        if (nextProps.texture) {
+          loader = new PIXI$1.loaders.Loader();
+          nextProps.texture.forEach(function (file, i) {
+            var name = Object.keys(file)[0];
+            var url = file[name];
+            console.log('texture', name, url, i);
+
+            _this.add(name, url, i);
+          });
+        }
+
+        loader.once('complete', function () {
+          loader.isLoading = false;
+
+          if (_this._loaderQue.length > 0) {
+            _this._loaderQue.forEach(function (item) {
+              return _this.add(item.name, item.url, item.index);
+            });
+          }
+        });
+
+        if (!loader.isLoading) {
+          loader.isLoading = true;
+          loader.load(function (data) {
+            return _this.handleLoaded(data);
+          });
+        }
+      });
+
+      _this.handleMouse.bind(_assertThisInitialized(_this));
+
+      _this.filter = new DisplacementFilter();
+      return _this;
+    }
+
+    _createClass(DisplacementFilterComponent, [{
+      key: "componentWillMount",
+      value: function componentWillMount() {
+        window.addEventListener('mousemove', this.handleMouse);
+      }
+    }, {
+      key: "componentWillReceiveProps",
+      value: function componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        this.update(nextProps);
+      }
+    }, {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this.update(this.props);
+        loader.on('error', this.handleError, this); // this.container.anchor.set(0.5);
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {}
+    }, {
+      key: "renderChidren",
+      value: function renderChidren(children) {
+        var filters = [].concat(_toConsumableArray(this.props.filters), [this.filter]);
+        return React__default['default'].Children.map(children, function (child) {
+          return /*#__PURE__*/React__default['default'].cloneElement(child, _objectSpread2(_objectSpread2({}, child.props), {}, {
+            filters: filters
+          }), child.props.children);
+        });
+      } // render() {
+      // 	return <div ref={ref=>this.container=ref}  filters={[this.filter]}>{this.props.children}</div>
+      // }
+
+    }, {
+      key: "render",
+      value: function render() {
+        return this.renderChidren(this.props.children);
+      }
+    }]);
+
+    return DisplacementFilterComponent;
+  }(React.Component);
+  DisplacementFilterComponent.defaultProps = {
+    pause: false,
+    offset: 0,
+    filters: [0]
+  };
+
+  var Fragment$5 = require('./DistortionHoverFilter.frag');
+
+  var Vertext$5 = require('./DistortionHoverFilter.vert');
+  /**
+   * The DistortionHoverFilter applies a Gaussian blur to an object.
+   * The strength of the blur can be set for x- and y-axis separately.
+   *
+   * @class
+   * @extends PIXI.Filter
+   * @memberof PIXI.filters
+   */
+
+
+  var DistortionHoverFilter = /*#__PURE__*/function (_PIXI$Filter) {
+    _inherits(DistortionHoverFilter, _PIXI$Filter);
+
+    var _super = _createSuper(DistortionHoverFilter);
+
+    /**
+     * Creates an instance of DistortionHoverFilter.
+     * @param {*} speed
+     * @param {*} resolution
+     * @memberof DistortionHoverFilter
+     */
+    function DistortionHoverFilter(resolution) {
+      var _this;
+
+      _classCallCheck(this, DistortionHoverFilter);
+
+      _this = _super.call(this, Vertext$5, Fragment$5);
+      _this.uniforms.dimensions = new Float32Array(2); //http://pixijs.download/dev/docs/core_renderers_webgl_managers_FilterManager.js.html#line51
+      // ---> check this to allow vertical padding onlu
+
+      _this.padding = 10; //600;
+      // this.filterArea = [0,0,100,100]
+
+      _this.passes = 1;
+      _this.resolution = resolution || PIXI$1.settings.RESOLUTION; // this.autoFit = false;
+
+      return _this;
+    }
+    /**
+     * Applies the filter.
+     *
+     * @param {PIXI.FilterManager} filterManager - The manager.
+     * @param {PIXI.RenderTarget} input - The input target.
+     * @param {PIXI.RenderTarget} output - The output target.
+     */
+
+
+    _createClass(DistortionHoverFilter, [{
+      key: "apply",
+      value: function apply(filterManager, input, output, clear) {
+        /** removes padding x */
+        // input.sourceFrame.x = 0;
+        // input.sourceFrame.width = input.sourceFrame.width  - this.padding;
+
+        /** end removes padding x */
+        var width = input.sourceFrame.width;
+        var height = input.sourceFrame.height;
+        this.uniforms.dimensions[0] = width; // - (this.padding*2);
+
+        this.uniforms.dimensions[1] = height; //  - (this.padding*2);
+
+        this.uniforms.aspect = height / width;
+        this.uniforms.padding = this.padding; // in pixels
+        // this.uniforms.columnWidth = 25;//window.innerWidth
+        // this.uniforms.tx = input.sourceFrame.x;
+        //.39
+
+        this.uniforms.mapSampler = input.texture; // console.log('cacl:',input)
+        // var projectionMatrix = [0.0025380710139870644, 0, 0, 0, -0.0035587188322097063, 0, -1, 1, 1]
+        // this.transform.updateTransform(this.parent.transform);
+        // draw the filter...
+
+        filterManager.applyFilter(this, input, output, clear);
+        /*
+                dimension: 1500, 1400];
+        filterClap: [0, 0, 0.73193359375, 0.68310546875];
+        filterArea:
+            location: WebGLUniformLocation {}
+            size: 1
+            type: "vec4"
+            value: Float32Array(4) [2048, 2048, -600, -600]
+        */
+        // -0.20000000000000007
+        //this.uniforms.dimensions.x,filterManager.shaderCache[19].data);//,this.uniforms.aspect, this.padding,input.sourceFrame)
+        // const renderTarget = filterManager.getRenderTarget(true);
+        // filterManager.returnRenderTarget(renderTarget);
+      }
+    }, {
+      key: "disp",
+      set: function set(sprite) {
+        this.uniforms.disp = sprite._texture;
+      }
+    }, {
+      key: "texture",
+      set: function set(sprite) {
+        this.uniforms.texture = sprite._texture;
+      }
+    }, {
+      key: "texture2",
+      set: function set(sprite) {
+        // console.log('mouseX',value)
+        // value[1] = value[1] *1
+        this.uniforms.texture2 = sprite._texture;
+      }
+    }, {
+      key: "mouse",
+      get: function get() {
+        return this.uniforms.uMouse;
+      },
+      set: function set(value) {
+        // console.log('mouseX',value)
+        // value[1] = value[1] *1
+        this.uniforms.uMouse = value;
+      }
+    }, {
+      key: "offset",
+      get: function get() {
+        return this.uniforms.offset;
+      },
+      set: function set(value) {
+        // console.log('offset',value)
+        // value[1] = value[1] *1
+        this.uniforms.offset = value;
+      }
+    }, {
+      key: "worldTransform",
+      set: function set(worldTransform) {
+        // console.log('worldTransform',worldTransform.tx,worldTransform.toArray())   
+        this._worldTransform = worldTransform; //.toArray();
+
+        this.uniforms.tx = worldTransform.tx;
+      },
+      get: function get() {
+        return this._.worldTransform;
+      }
+    }]);
+
+    return DistortionHoverFilter;
+  }(PIXI$1.Filter);
+
+  //http://super16.dk/medlemmer/glen-bay-grant
+  //https://gl-transitions.com/editor/directionalwarp?direction=-1,0
+  //https://gl-transitions.com/editor/crosswarp
+  // !!!!
+  //https://videohive.net/item/handy-seamless-transitions-pack-script/18967340?irgwc=1&clickid=0giS-aX0JQ2eUc10bqVBhWPIUkgzyHwI-QdBQs0&iradid=275988&irpid=1143794&iradtype=ONLINE_TRACKING_LINK&irmptype=mediapartner&mp_value1=&utm_campaign=af_impact_radius_1143794&utm_medium=affiliate&utm_source=impact_radius
+
+  var loader$1 = PIXI$1.loader;
+
+  var DistortionHoverFilterComponent = /*#__PURE__*/function (_Component) {
+    _inherits(DistortionHoverFilterComponent, _Component);
+
+    var _super = _createSuper(DistortionHoverFilterComponent);
+
+    function DistortionHoverFilterComponent(props) {
+      var _this;
+
+      _classCallCheck(this, DistortionHoverFilterComponent);
+
+      _this = _super.call(this, props);
+
+      _defineProperty(_assertThisInitialized(_this), "handleMouse", function (e) {
+        _this.filter.uniforms.dispFactor = e.clientX / 100;
+        _this.filter.uniforms.effectFactor = e.clientX / 100;
+        _this.filter.mouse = [e.clientX / window.innerWidth, e.clientY / window.innerHeight];
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "_loader", []);
+
+      _defineProperty(_assertThisInitialized(_this), "_loaderQue", []);
+
+      _defineProperty(_assertThisInitialized(_this), "add", function (url, index) {
+        var hasAsset = _this._loader.find(function (x) {
+          return x.url === url;
+        }) ? true : false;
+        console.log('add', url, hasAsset);
+
+        if (!hasAsset) {
+          if (!loader$1.isLoading) {
+            _this._loader.push({
+              url: url,
+              index: index
+            });
+
+            loader$1.add(url, index);
+          } else {
+            _this._loaderQue.push({
+              url: url,
+              index: index
+            });
+          }
+        }
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "update", function (nextProps) {
+        _this.filter.offset = nextProps.offset;
+
+        if (nextProps.url) {
+          _this.add(nextProps.url, 0);
+        }
+
+        if (nextProps.url2) {
+          _this.add(nextProps.url2, 1);
+        }
+
+        if (nextProps.url3) {
+          console.log('nextProps.url3', nextProps.url3);
+
+          _this.add(nextProps.url3, 2);
+        }
+
+        loader$1.once('complete', function () {
+          loader$1.isLoading = false;
+
+          if (_this._loaderQue.length > 0) {
+            _this._loaderQue.forEach(function (item) {
+              return _this.add(item.url, item.index);
+            });
+          }
+        });
+
+        if (!loader$1.isLoading) {
+          loader$1.isLoading = true;
+          loader$1.load(function (data) {
+            return _this.handleLoaded(data);
+          });
+        }
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "handleError", function (error, loader) {
+        console.log('handleError', error, loader);
+        loader.isLoading = false;
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "handleLoaded", function (loader) {
+        _this._loader.forEach(function (_ref) {
+          var url = _ref.url,
+              index = _ref.index;
+          console.log('handleLoaded', index);
+          var resource = loader.resources[url];
+
+          if (resource) {
+            var texture = resource.texture;
+            var sprite = new PIXI$1.Sprite(texture);
+
+            if (index === 0) {
+              _this.filter.texture = sprite;
+              return;
+            }
+
+            if (index === 1) {
+              _this.filter.texture2 = sprite;
+              return;
+            }
+
+            if (index === 2) {
+              _this.filter.disp = sprite;
+              return;
+            }
+          } else {
+            console.alert("Texture does not exist: ".concat(url));
+          }
+        });
+      });
+
+      _this.filter = new DistortionHoverFilter();
+      return _this;
+    }
+
+    _createClass(DistortionHoverFilterComponent, [{
+      key: "componentWillMount",
+      value: function componentWillMount() {
+        window.addEventListener('mousemove', this.handleMouse);
+      }
+    }, {
+      key: "componentWillReceiveProps",
+      value: function componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        this.update(nextProps);
+      }
+    }, {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this.update(this.props);
+        loader$1.on('error', this.handleError, this); // this.container.anchor.set(0.5);
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {}
+    }, {
+      key: "renderChidren",
+      value: function renderChidren(children) {
+        var _this2 = this;
+
+        return React__default['default'].Children.map(children, function (child) {
+          return /*#__PURE__*/React__default['default'].cloneElement(child, _objectSpread2(_objectSpread2({}, child.props), {}, {
+            filters: [_this2.filter]
+          }), child.props.children);
+        });
+      }
+    }, {
+      key: "load",
+      value: function load(url, index) {
+        var _this3 = this;
+
+        PIXI$1.loader.add(url).load(function (data) {
+          return _this3.handleLoaded(data, index);
+        });
+      } // render() {
+      // 	return <div ref={ref=>this.container=ref}  filters={[this.filter]}>{this.props.children}</div>
+      // }
+
+    }, {
+      key: "render",
+      value: function render() {
+        console.log('(this.props.children', this.props.children);
+        return this.renderChidren(this.props.children);
+      }
+    }]);
+
+    return DistortionHoverFilterComponent;
+  }(React.Component);
+  DistortionHoverFilterComponent.defaultProps = {
+    pause: false,
+    offset: 0
+  };
+
+  var Fragment$6 = require('./ImageBeeldFilter.frag');
+
+  var Vertext$6 = require('./ImageBeeldFilter.vert');
+  /**
+   * The ImageBeeldFilter applies a Gaussian blur to an object.
+   * The strength of the blur can be set for x- and y-axis separately.
+   *
+   * @class
+   * @extends PIXI.Filter
+   * @memberof PIXI.filters
+   */
+
+
+  var ImageBeeldFilter = /*#__PURE__*/function (_PIXI$Filter) {
+    _inherits(ImageBeeldFilter, _PIXI$Filter);
+
+    var _super = _createSuper(ImageBeeldFilter);
+
+    /**
+     * Creates an instance of ImageBeeldFilter.
+     * @param {*} speed
+     * @param {*} resolution
+     * @memberof ImageBeeldFilter
+     */
+    function ImageBeeldFilter(padding, resolution) {
+      var _this;
+
+      _classCallCheck(this, ImageBeeldFilter);
+
+      _this = _super.call(this, Vertext$6, Fragment$6);
+      _this.uniforms.dimensions = new Float32Array(2);
+      _this.uniforms.columnWidth = 1;
+      _this.uniforms.uSpeed = 0; //http://pixijs.download/dev/docs/core_renderers_webgl_managers_FilterManager.js.html#line51
+      // ---> check this to allow vertical padding onlu
+
+      _this.padding = padding; // this.filterArea = [0,0,100,100]
+
+      _this.passes = 1;
+      _this.resolution = resolution || PIXI$1.settings.RESOLUTION; // this.autoFit = false;
+
+      return _this;
+    }
+    /**
+     * Applies the filter.
+     *
+     * @param {PIXI.FilterManager} filterManager - The manager.
+     * @param {PIXI.RenderTarget} input - The input target.
+     * @param {PIXI.RenderTarget} output - The output target.
+     */
+
+
+    _createClass(ImageBeeldFilter, [{
+      key: "apply",
+      value: function apply(filterManager, input, output, clear) {
+        /** removes padding x */
+        // input.sourceFrame.x = 0;
+        // input.sourceFrame.width = input.sourceFrame.width  - this.padding;
+
+        /** end removes padding x */
+        var width = input.sourceFrame.width;
+        var height = input.sourceFrame.height;
+        this.uniforms.dimensions[0] = width; // - (this.padding*2);
+
+        this.uniforms.dimensions[1] = height; //  - (this.padding*2);
+
+        this.uniforms.aspect = height / width;
+        this.uniforms.padding = this.padding; // A =  200;
+        // padding 50;
+        // total =  300;
+        // scale =  (A+padding*2)/B
+        // const scale = [outerWidth / width,outerHeight / height]
+
+        this.uniforms.uPadding = [this.padding, this.padding]; //,0,0,this.padding/outerWidth,height/outerHeight);
+        // console.log( this.uniforms.paddingMatrix);
+        // in pixels
+
+        this.uniforms.columnWidth = 20; //25;//window.innerWidth
+        // this.uniforms.tx = input.sourceFrame.x;
+        //.39
+
+        this.uniforms.mapSampler = input.texture; // console.log('cacl:',input)
+        // var projectionMatrix = [0.0025380710139870644, 0, 0, 0, -0.0035587188322097063, 0, -1, 1, 1]
+        // this.transform.updateTransform(this.parent.transform);
+        // draw the filter...
+
+        var f = filterManager.applyFilter(this, input, output, clear);
+        /*
+                dimension: 1500, 1400];
+        filterClap: [0, 0, 0.73193359375, 0.68310546875];
+        filterArea:
+            location: WebGLUniformLocation {}
+            size: 1
+            type: "vec4"
+            value: Float32Array(4) [2048, 2048, -600, -600]
+        */
+        // -0.20000000000000007
+        //this.uniforms.dimensions.x,filterManager.shaderCache[19].data);//,this.uniforms.aspect, this.padding,input.sourceFrame)
+        // const renderTarget = filterManager.getRenderTarget(true);
+        // filterManager.returnRenderTarget(renderTarget);
+      }
+    }, {
+      key: "speed",
+      get: function get() {
+        return this.uniforms.uSpeed;
+      },
+      set: function set(value) {
+        this.uniforms.uSpeed = value;
+      }
+    }, {
+      key: "mouse",
+      get: function get() {
+        return this.uniforms.uMouse;
+      },
+      set: function set(value) {
+        // console.log('mouseX',value)
+        // value[1] = value[1] *1
+        this.uniforms.uMouse = value;
+      }
+    }, {
+      key: "offset",
+      get: function get() {
+        return this.uniforms.offset;
+      },
+      set: function set(value) {
+        // console.log('offset',value)
+        // value[1] = value[1] *1
+        this.uniforms.offset = value;
+      }
+    }, {
+      key: "worldTransform",
+      set: function set(worldTransform) {
+        // console.log('worldTransform',worldTransform.tx,worldTransform.toArray())   
+        this._worldTransform = worldTransform; //.toArray();
+
+        this.uniforms.tx = worldTransform.tx;
+      },
+      get: function get() {
+        return this._.worldTransform;
+      }
+    }]);
+
+    return ImageBeeldFilter;
+  }(PIXI$1.Filter);
+
+  var ImageBeeldFilterComponent = /*#__PURE__*/function (_Component) {
+    _inherits(ImageBeeldFilterComponent, _Component);
+
+    var _super = _createSuper(ImageBeeldFilterComponent);
+
+    function ImageBeeldFilterComponent(props) {
+      var _this;
+
+      _classCallCheck(this, ImageBeeldFilterComponent);
+
+      _this = _super.call(this, props);
+
+      _defineProperty(_assertThisInitialized(_this), "handleMouse", function (e) {
+        _this.filter.mouse = [e.clientX / window.innerWidth, e.clientY / window.innerHeight];
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "update", function (nextProps) {
+        // console.log('nextProps.offset',nextProps.offset)
+        // if(this.props.pause) return;
+        // this.filter.mouse =  [0,nextProps.offset]
+        _this.filter.offset = nextProps.offset * .03; // console.log('offset',nextProps.offset)
+      });
+
+      _this.filter = new ImageBeeldFilter(props.padding);
+      return _this;
+    }
+
+    _createClass(ImageBeeldFilterComponent, [{
+      key: "componentWillMount",
+      value: function componentWillMount() {// window.addEventListener('mousemove',this.handleMouse)
+      }
+    }, {
+      key: "componentWillReceiveProps",
+      value: function componentWillReceiveProps(nextProps) {
+        this.update(nextProps);
+      }
+    }, {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this.update(this.props); // this.container.anchor.set(0.5);
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {}
+    }, {
+      key: "renderChidren",
+      value: function renderChidren(children) {
+        var filters = [this.filter].concat(_toConsumableArray(this.props.filters));
+        return React__default['default'].Children.map(children, function (child) {
+          return /*#__PURE__*/React__default['default'].cloneElement(child, _objectSpread2(_objectSpread2({}, child.props), {}, {
+            filters: filters
+          }), child.props.children);
+        });
+      } // render() {
+      // 	return <container ref={ref=>this.container=ref}  filters={[this.filter]}>{this.props.children}</container>
+      // }
+
+    }, {
+      key: "render",
+      value: function render() {
+        // console.log('(this.props.children',this.props.children)
+        return this.renderChidren(this.props.children);
+      }
+    }]);
+
+    return ImageBeeldFilterComponent;
+  }(React.Component);
+  ImageBeeldFilterComponent.defaultProps = {
+    pause: false,
+    offset: 0,
+    filters: [],
+    padding: 0
+  };
+
+  /**
+   * Helper class to create a webGL Context
+   *
+   * @class
+   * @memberof PIXI.glCore
+   * @param canvas {HTMLCanvasElement} the canvas element that we will get the context from
+   * @param options {Object} An options object that gets passed in to the canvas element containing the context attributes,
+   *                         see https://developer.mozilla.org/en/docs/Web/API/HTMLCanvasElement/getContext for the options available
+   * @return {WebGLRenderingContext} the WebGL context
+   */
+  var createContext = function createContext(canvas, options) {
+    var gl = canvas.getContext('webgl', options) || canvas.getContext('experimental-webgl', options);
+
+    if (!gl) {
+      // fail, not able to get a context
+      throw new Error('This browser does not support webGL. Try using the canvas renderer');
+    }
+
+    return gl;
+  };
+
+  var createContext_1 = createContext;
+
+  // var GL_MAP = {};
+
+  /**
+   * @param gl {WebGLRenderingContext} The current WebGL context
+   * @param attribs {*}
+   * @param state {*}
+   */
+  var setVertexAttribArrays = function setVertexAttribArrays(gl, attribs, state) {
+    var i;
+
+    if (state) {
+      var tempAttribState = state.tempAttribState,
+          attribState = state.attribState;
+
+      for (i = 0; i < tempAttribState.length; i++) {
+        tempAttribState[i] = false;
+      } // set the new attribs
+
+
+      for (i = 0; i < attribs.length; i++) {
+        tempAttribState[attribs[i].attribute.location] = true;
+      }
+
+      for (i = 0; i < attribState.length; i++) {
+        if (attribState[i] !== tempAttribState[i]) {
+          attribState[i] = tempAttribState[i];
+
+          if (state.attribState[i]) {
+            gl.enableVertexAttribArray(i);
+          } else {
+            gl.disableVertexAttribArray(i);
+          }
+        }
+      }
+    } else {
+      for (i = 0; i < attribs.length; i++) {
+        var attrib = attribs[i];
+        gl.enableVertexAttribArray(attrib.attribute.location);
+      }
+    }
+  };
+
+  var setVertexAttribArrays_1 = setVertexAttribArrays;
+
+  var EMPTY_ARRAY_BUFFER = new ArrayBuffer(0);
+  /**
+   * Helper class to create a webGL buffer
+   *
+   * @class
+   * @memberof PIXI.glCore
+   * @param gl {WebGLRenderingContext} The current WebGL rendering context
+   * @param type {gl.ARRAY_BUFFER | gl.ELEMENT_ARRAY_BUFFER} @mat
+   * @param data {ArrayBuffer| SharedArrayBuffer|ArrayBufferView} an array of data
+   * @param drawType {gl.STATIC_DRAW|gl.DYNAMIC_DRAW|gl.STREAM_DRAW}
+   */
+
+  var Buffer = function Buffer(gl, type, data, drawType) {
+    /**
+        * The current WebGL rendering context
+        *
+        * @member {WebGLRenderingContext}
+        */
+    this.gl = gl;
+    /**
+        * The WebGL buffer, created upon instantiation
+        *
+        * @member {WebGLBuffer}
+        */
+
+    this.buffer = gl.createBuffer();
+    /**
+        * The type of the buffer
+        *
+        * @member {gl.ARRAY_BUFFER|gl.ELEMENT_ARRAY_BUFFER}
+        */
+
+    this.type = type || gl.ARRAY_BUFFER;
+    /**
+        * The draw type of the buffer
+        *
+        * @member {gl.STATIC_DRAW|gl.DYNAMIC_DRAW|gl.STREAM_DRAW}
+        */
+
+    this.drawType = drawType || gl.STATIC_DRAW;
+    /**
+        * The data in the buffer, as a typed array
+        *
+        * @member {ArrayBuffer| SharedArrayBuffer|ArrayBufferView}
+        */
+
+    this.data = EMPTY_ARRAY_BUFFER;
+
+    if (data) {
+      this.upload(data);
+    }
+
+    this._updateID = 0;
+  };
+  /**
+   * Uploads the buffer to the GPU
+   * @param data {ArrayBuffer| SharedArrayBuffer|ArrayBufferView} an array of data to upload
+   * @param offset {Number} if only a subset of the data should be uploaded, this is the amount of data to subtract
+   * @param dontBind {Boolean} whether to bind the buffer before uploading it
+   */
+
+
+  Buffer.prototype.upload = function (data, offset, dontBind) {
+    // todo - needed?
+    if (!dontBind) { this.bind(); }
+    var gl = this.gl;
+    data = data || this.data;
+    offset = offset || 0;
+
+    if (this.data.byteLength >= data.byteLength) {
+      gl.bufferSubData(this.type, offset, data);
+    } else {
+      gl.bufferData(this.type, data, this.drawType);
+    }
+
+    this.data = data;
+  };
+  /**
+   * Binds the buffer
+   *
+   */
+
+
+  Buffer.prototype.bind = function () {
+    var gl = this.gl;
+    gl.bindBuffer(this.type, this.buffer);
+  };
+
+  Buffer.createVertexBuffer = function (gl, data, drawType) {
+    return new Buffer(gl, gl.ARRAY_BUFFER, data, drawType);
+  };
+
+  Buffer.createIndexBuffer = function (gl, data, drawType) {
+    return new Buffer(gl, gl.ELEMENT_ARRAY_BUFFER, data, drawType);
+  };
+
+  Buffer.create = function (gl, type, data, drawType) {
+    return new Buffer(gl, type, data, drawType);
+  };
+  /**
+   * Destroys the buffer
+   *
+   */
+
+
+  Buffer.prototype.destroy = function () {
+    this.gl.deleteBuffer(this.buffer);
+  };
+
+  var GLBuffer = Buffer;
+
+  /**
+   * Helper class to create a WebGL Texture
+   *
+   * @class
+   * @memberof PIXI.glCore
+   * @param gl {WebGLRenderingContext} The current WebGL context
+   * @param width {number} the width of the texture
+   * @param height {number} the height of the texture
+   * @param format {number} the pixel format of the texture. defaults to gl.RGBA
+   * @param type {number} the gl type of the texture. defaults to gl.UNSIGNED_BYTE
+   */
+  var Texture = function Texture(gl, width, height, format, type) {
+    /**
+     * The current WebGL rendering context
+     *
+     * @member {WebGLRenderingContext}
+     */
+    this.gl = gl;
+    /**
+     * The WebGL texture
+     *
+     * @member {WebGLTexture}
+     */
+
+    this.texture = gl.createTexture();
+    /**
+     * If mipmapping was used for this texture, enable and disable with enableMipmap()
+     *
+     * @member {Boolean}
+     */
+    // some settings..
+
+    this.mipmap = false;
+    /**
+     * Set to true to enable pre-multiplied alpha
+     *
+     * @member {Boolean}
+     */
+
+    this.premultiplyAlpha = false;
+    /**
+     * The width of texture
+     *
+     * @member {Number}
+     */
+
+    this.width = width || -1;
+    /**
+     * The height of texture
+     *
+     * @member {Number}
+     */
+
+    this.height = height || -1;
+    /**
+     * The pixel format of the texture. defaults to gl.RGBA
+     *
+     * @member {Number}
+     */
+
+    this.format = format || gl.RGBA;
+    /**
+     * The gl type of the texture. defaults to gl.UNSIGNED_BYTE
+     *
+     * @member {Number}
+     */
+
+    this.type = type || gl.UNSIGNED_BYTE;
+  };
+  /**
+   * Uploads this texture to the GPU
+   * @param source {HTMLImageElement|ImageData|HTMLVideoElement} the source image of the texture
+   */
+
+
+  Texture.prototype.upload = function (source) {
+    this.bind();
+    var gl = this.gl;
+    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, this.premultiplyAlpha);
+    var newWidth = source.videoWidth || source.width;
+    var newHeight = source.videoHeight || source.height;
+
+    if (newHeight !== this.height || newWidth !== this.width) {
+      gl.texImage2D(gl.TEXTURE_2D, 0, this.format, this.format, this.type, source);
+    } else {
+      gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, this.format, this.type, source);
+    } // if the source is a video, we need to use the videoWidth / videoHeight properties as width / height will be incorrect.
+
+
+    this.width = newWidth;
+    this.height = newHeight;
+  };
+
+  var FLOATING_POINT_AVAILABLE = false;
+  /**
+   * Use a data source and uploads this texture to the GPU
+   * @param data {TypedArray} the data to upload to the texture
+   * @param width {number} the new width of the texture
+   * @param height {number} the new height of the texture
+   */
+
+  Texture.prototype.uploadData = function (data, width, height) {
+    this.bind();
+    var gl = this.gl;
+
+    if (data instanceof Float32Array) {
+      if (!FLOATING_POINT_AVAILABLE) {
+        var ext = gl.getExtension("OES_texture_float");
+
+        if (ext) {
+          FLOATING_POINT_AVAILABLE = true;
+        } else {
+          throw new Error('floating point textures not available');
+        }
+      }
+
+      this.type = gl.FLOAT;
+    } else {
+      // TODO support for other types
+      this.type = this.type || gl.UNSIGNED_BYTE;
+    } // what type of data?
+
+
+    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, this.premultiplyAlpha);
+
+    if (width !== this.width || height !== this.height) {
+      gl.texImage2D(gl.TEXTURE_2D, 0, this.format, width, height, 0, this.format, this.type, data || null);
+    } else {
+      gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, width, height, this.format, this.type, data || null);
+    }
+
+    this.width = width;
+    this.height = height; //	texSubImage2D
+  };
+  /**
+   * Binds the texture
+   * @param  location
+   */
+
+
+  Texture.prototype.bind = function (location) {
+    var gl = this.gl;
+
+    if (location !== undefined) {
+      gl.activeTexture(gl.TEXTURE0 + location);
+    }
+
+    gl.bindTexture(gl.TEXTURE_2D, this.texture);
+  };
+  /**
+   * Unbinds the texture
+   */
+
+
+  Texture.prototype.unbind = function () {
+    var gl = this.gl;
+    gl.bindTexture(gl.TEXTURE_2D, null);
+  };
+  /**
+   * @param linear {Boolean} if we want to use linear filtering or nearest neighbour interpolation
+   */
+
+
+  Texture.prototype.minFilter = function (linear) {
+    var gl = this.gl;
+    this.bind();
+
+    if (this.mipmap) {
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, linear ? gl.LINEAR_MIPMAP_LINEAR : gl.NEAREST_MIPMAP_NEAREST);
+    } else {
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, linear ? gl.LINEAR : gl.NEAREST);
+    }
+  };
+  /**
+   * @param linear {Boolean} if we want to use linear filtering or nearest neighbour interpolation
+   */
+
+
+  Texture.prototype.magFilter = function (linear) {
+    var gl = this.gl;
+    this.bind();
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, linear ? gl.LINEAR : gl.NEAREST);
+  };
+  /**
+   * Enables mipmapping
+   */
+
+
+  Texture.prototype.enableMipmap = function () {
+    var gl = this.gl;
+    this.bind();
+    this.mipmap = true;
+    gl.generateMipmap(gl.TEXTURE_2D);
+  };
+  /**
+   * Enables linear filtering
+   */
+
+
+  Texture.prototype.enableLinearScaling = function () {
+    this.minFilter(true);
+    this.magFilter(true);
+  };
+  /**
+   * Enables nearest neighbour interpolation
+   */
+
+
+  Texture.prototype.enableNearestScaling = function () {
+    this.minFilter(false);
+    this.magFilter(false);
+  };
+  /**
+   * Enables clamping on the texture so WebGL will not repeat it
+   */
+
+
+  Texture.prototype.enableWrapClamp = function () {
+    var gl = this.gl;
+    this.bind();
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  };
+  /**
+   * Enable tiling on the texture
+   */
+
+
+  Texture.prototype.enableWrapRepeat = function () {
+    var gl = this.gl;
+    this.bind();
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+  };
+
+  Texture.prototype.enableWrapMirrorRepeat = function () {
+    var gl = this.gl;
+    this.bind();
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.MIRRORED_REPEAT);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
+  };
+  /**
+   * Destroys this texture
+   */
+
+
+  Texture.prototype.destroy = function () {
+    var gl = this.gl; //TODO
+
+    gl.deleteTexture(this.texture);
+  };
+  /**
+   * @static
+   * @param gl {WebGLRenderingContext} The current WebGL context
+   * @param source {HTMLImageElement|ImageData} the source image of the texture
+   * @param premultiplyAlpha {Boolean} If we want to use pre-multiplied alpha
+   */
+
+
+  Texture.fromSource = function (gl, source, premultiplyAlpha) {
+    var texture = new Texture(gl);
+    texture.premultiplyAlpha = premultiplyAlpha || false;
+    texture.upload(source);
+    return texture;
+  };
+  /**
+   * @static
+   * @param gl {WebGLRenderingContext} The current WebGL context
+   * @param data {TypedArray} the data to upload to the texture
+   * @param width {number} the new width of the texture
+   * @param height {number} the new height of the texture
+   */
+
+
+  Texture.fromData = function (gl, data, width, height) {
+    //console.log(data, width, height);
+    var texture = new Texture(gl);
+    texture.uploadData(data, width, height);
+    return texture;
+  };
+
+  var GLTexture = Texture;
+
+  /**
+   * Helper class to create a webGL Framebuffer
+   *
+   * @class
+   * @memberof PIXI.glCore
+   * @param gl {WebGLRenderingContext} The current WebGL rendering context
+   * @param width {Number} the width of the drawing area of the frame buffer
+   * @param height {Number} the height of the drawing area of the frame buffer
+   */
+
+
+  var Framebuffer = function Framebuffer(gl, width, height) {
+    /**
+     * The current WebGL rendering context
+     *
+     * @member {WebGLRenderingContext}
+     */
+    this.gl = gl;
+    /**
+     * The frame buffer
+     *
+     * @member {WebGLFramebuffer}
+     */
+
+    this.framebuffer = gl.createFramebuffer();
+    /**
+     * The stencil buffer
+     *
+     * @member {WebGLRenderbuffer}
+     */
+
+    this.stencil = null;
+    /**
+     * The stencil buffer
+     *
+     * @member {PIXI.glCore.GLTexture}
+     */
+
+    this.texture = null;
+    /**
+     * The width of the drawing area of the buffer
+     *
+     * @member {Number}
+     */
+
+    this.width = width || 100;
+    /**
+     * The height of the drawing area of the buffer
+     *
+     * @member {Number}
+     */
+
+    this.height = height || 100;
+  };
+  /**
+   * Adds a texture to the frame buffer
+   * @param texture {PIXI.glCore.GLTexture}
+   */
+
+
+  Framebuffer.prototype.enableTexture = function (texture) {
+    var gl = this.gl;
+    this.texture = texture || new GLTexture(gl);
+    this.texture.bind(); //gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA,  this.width, this.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+
+    this.bind();
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.texture.texture, 0);
+  };
+  /**
+   * Initialises the stencil buffer
+   */
+
+
+  Framebuffer.prototype.enableStencil = function () {
+    if (this.stencil) { return; }
+    var gl = this.gl;
+    this.stencil = gl.createRenderbuffer();
+    gl.bindRenderbuffer(gl.RENDERBUFFER, this.stencil); // TODO.. this is depth AND stencil?
+
+    gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_STENCIL_ATTACHMENT, gl.RENDERBUFFER, this.stencil);
+    gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_STENCIL, this.width, this.height);
+  };
+  /**
+   * Erases the drawing area and fills it with a colour
+   * @param  r {Number} the red value of the clearing colour
+   * @param  g {Number} the green value of the clearing colour
+   * @param  b {Number} the blue value of the clearing colour
+   * @param  a {Number} the alpha value of the clearing colour
+   */
+
+
+  Framebuffer.prototype.clear = function (r, g, b, a) {
+    this.bind();
+    var gl = this.gl;
+    gl.clearColor(r, g, b, a);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  };
+  /**
+   * Binds the frame buffer to the WebGL context
+   */
+
+
+  Framebuffer.prototype.bind = function () {
+    var gl = this.gl;
+    gl.bindFramebuffer(gl.FRAMEBUFFER, this.framebuffer);
+  };
+  /**
+   * Unbinds the frame buffer to the WebGL context
+   */
+
+
+  Framebuffer.prototype.unbind = function () {
+    var gl = this.gl;
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  };
+  /**
+   * Resizes the drawing area of the buffer to the given width and height
+   * @param  width  {Number} the new width
+   * @param  height {Number} the new height
+   */
+
+
+  Framebuffer.prototype.resize = function (width, height) {
+    var gl = this.gl;
+    this.width = width;
+    this.height = height;
+
+    if (this.texture) {
+      this.texture.uploadData(null, width, height);
+    }
+
+    if (this.stencil) {
+      // update the stencil buffer width and height
+      gl.bindRenderbuffer(gl.RENDERBUFFER, this.stencil);
+      gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_STENCIL, width, height);
+    }
+  };
+  /**
+   * Destroys this buffer
+   */
+
+
+  Framebuffer.prototype.destroy = function () {
+    var gl = this.gl; //TODO
+
+    if (this.texture) {
+      this.texture.destroy();
+    }
+
+    gl.deleteFramebuffer(this.framebuffer);
+    this.gl = null;
+    this.stencil = null;
+    this.texture = null;
+  };
+  /**
+   * Creates a frame buffer with a texture containing the given data
+   * @static
+   * @param gl {WebGLRenderingContext} The current WebGL rendering context
+   * @param width {Number} the width of the drawing area of the frame buffer
+   * @param height {Number} the height of the drawing area of the frame buffer
+   * @param data {ArrayBuffer| SharedArrayBuffer|ArrayBufferView} an array of data
+   */
+
+
+  Framebuffer.createRGBA = function (gl, width, height, data) {
+    var texture = GLTexture.fromData(gl, null, width, height);
+    texture.enableNearestScaling();
+    texture.enableWrapClamp(); //now create the framebuffer object and attach the texture to it.
+
+    var fbo = new Framebuffer(gl, width, height);
+    fbo.enableTexture(texture); //fbo.enableStencil(); // get this back on soon!
+
+    fbo.unbind();
+    return fbo;
+  };
+  /**
+   * Creates a frame buffer with a texture containing the given data
+   * @static
+   * @param gl {WebGLRenderingContext} The current WebGL rendering context
+   * @param width {Number} the width of the drawing area of the frame buffer
+   * @param height {Number} the height of the drawing area of the frame buffer
+   * @param data {ArrayBuffer| SharedArrayBuffer|ArrayBufferView} an array of data
+   */
+
+
+  Framebuffer.createFloat32 = function (gl, width, height, data) {
+    // create a new texture..
+    var texture = new GLTexture.fromData(gl, data, width, height);
+    texture.enableNearestScaling();
+    texture.enableWrapClamp(); //now create the framebuffer object and attach the texture to it.
+
+    var fbo = new Framebuffer(gl, width, height);
+    fbo.enableTexture(texture);
+    fbo.unbind();
+    return fbo;
+  };
+
+  var GLFramebuffer = Framebuffer;
+
+  /**
+   * @class
+   * @memberof PIXI.glCore.shader
+   * @param gl {WebGLRenderingContext} The current WebGL context {WebGLProgram}
+   * @param vertexSrc {string|string[]} The vertex shader source as an array of strings.
+   * @param fragmentSrc {string|string[]} The fragment shader source as an array of strings.
+   * @param attributeLocations {Object} An attribute location map that lets you manually set the attribute locations
+   * @return {WebGLProgram} the shader program
+   */
+  var compileProgram = function compileProgram(gl, vertexSrc, fragmentSrc, attributeLocations) {
+    var glVertShader = compileShader(gl, gl.VERTEX_SHADER, vertexSrc);
+    var glFragShader = compileShader(gl, gl.FRAGMENT_SHADER, fragmentSrc);
+    var program = gl.createProgram();
+    gl.attachShader(program, glVertShader);
+    gl.attachShader(program, glFragShader); // optionally, set the attributes manually for the program rather than letting WebGL decide..
+
+    if (attributeLocations) {
+      for (var i in attributeLocations) {
+        gl.bindAttribLocation(program, attributeLocations[i], i);
+      }
+    }
+
+    gl.linkProgram(program); // if linking fails, then log and cleanup
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.error('Pixi.js Error: Could not initialize shader.');
+      console.error('gl.VALIDATE_STATUS', gl.getProgramParameter(program, gl.VALIDATE_STATUS));
+      console.error('gl.getError()', gl.getError()); // if there is a program info log, log it
+
+      if (gl.getProgramInfoLog(program) !== '') {
+        console.warn('Pixi.js Warning: gl.getProgramInfoLog()', gl.getProgramInfoLog(program));
+      }
+
+      gl.deleteProgram(program);
+      program = null;
+    } // clean up some shaders
+
+
+    gl.deleteShader(glVertShader);
+    gl.deleteShader(glFragShader);
+    return program;
+  };
+  /**
+   * @private
+   * @param gl {WebGLRenderingContext} The current WebGL context {WebGLProgram}
+   * @param type {Number} the type, can be either VERTEX_SHADER or FRAGMENT_SHADER
+   * @param vertexSrc {string|string[]} The vertex shader source as an array of strings.
+   * @return {WebGLShader} the shader
+   */
+
+
+  var compileShader = function compileShader(gl, type, src) {
+    var shader = gl.createShader(type);
+    gl.shaderSource(shader, src);
+    gl.compileShader(shader);
+
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      console.log(gl.getShaderInfoLog(shader));
+      return null;
+    }
+
+    return shader;
+  };
+
+  var compileProgram_1 = compileProgram;
+
+  var mapSize = function mapSize(gl, type) {
+    if (!GL_TABLE) {
+      var typeNames = Object.keys(GL_TO_GLSL_TYPES);
+      GL_TABLE = {};
+
+      for (var i = 0; i < typeNames.length; ++i) {
+        var tn = typeNames[i];
+        GL_TABLE[gl[tn]] = GL_TO_GLSL_TYPES[tn];
+      }
+    }
+
+    return GL_TABLE[type];
+  };
+
+  var GL_TABLE = null;
+  var GL_TO_GLSL_TYPES = {
+    'FLOAT': 'float',
+    'FLOAT_VEC2': 'vec2',
+    'FLOAT_VEC3': 'vec3',
+    'FLOAT_VEC4': 'vec4',
+    'INT': 'int',
+    'INT_VEC2': 'ivec2',
+    'INT_VEC3': 'ivec3',
+    'INT_VEC4': 'ivec4',
+    'BOOL': 'bool',
+    'BOOL_VEC2': 'bvec2',
+    'BOOL_VEC3': 'bvec3',
+    'BOOL_VEC4': 'bvec4',
+    'FLOAT_MAT2': 'mat2',
+    'FLOAT_MAT3': 'mat3',
+    'FLOAT_MAT4': 'mat4',
+    'SAMPLER_2D': 'sampler2D'
+  };
+  var mapType = mapSize;
+
+  /**
+   * @class
+   * @memberof PIXI.glCore.shader
+   * @param type {String}
+   * @return {Number}
+   */
+  var mapSize$1 = function mapSize(type) {
+    return GLSL_TO_SIZE[type];
+  };
+
+  var GLSL_TO_SIZE = {
+    'float': 1,
+    'vec2': 2,
+    'vec3': 3,
+    'vec4': 4,
+    'int': 1,
+    'ivec2': 2,
+    'ivec3': 3,
+    'ivec4': 4,
+    'bool': 1,
+    'bvec2': 2,
+    'bvec3': 3,
+    'bvec4': 4,
+    'mat2': 4,
+    'mat3': 9,
+    'mat4': 16,
+    'sampler2D': 1
+  };
+  var mapSize_1 = mapSize$1;
+
+  /**
+   * Extracts the attributes
+   * @class
+   * @memberof PIXI.glCore.shader
+   * @param gl {WebGLRenderingContext} The current WebGL rendering context
+   * @param program {WebGLProgram} The shader program to get the attributes from
+   * @return attributes {Object}
+   */
+
+
+  var extractAttributes = function extractAttributes(gl, program) {
+    var attributes = {};
+    var totalAttributes = gl.getProgramParameter(program, gl.ACTIVE_ATTRIBUTES);
+
+    for (var i = 0; i < totalAttributes; i++) {
+      var attribData = gl.getActiveAttrib(program, i);
+      var type = mapType(gl, attribData.type);
+      attributes[attribData.name] = {
+        type: type,
+        size: mapSize_1(type),
+        location: gl.getAttribLocation(program, attribData.name),
+        //TODO - make an attribute object
+        pointer: pointer
+      };
+    }
+
+    return attributes;
+  };
+
+  var pointer = function pointer(type, normalized, stride, start) {
+    // console.log(this.location)
+    gl.vertexAttribPointer(this.location, this.size, type || gl.FLOAT, normalized || false, stride || 0, start || 0);
+  };
+
+  var extractAttributes_1 = extractAttributes;
+
+  /**
+   * @class
+   * @memberof PIXI.glCore.shader
+   * @param type {String} Type of value
+   * @param size {Number}
+   */
+  var defaultValue = function defaultValue(type, size) {
+    switch (type) {
+      case 'float':
+        return 0;
+
+      case 'vec2':
+        return new Float32Array(2 * size);
+
+      case 'vec3':
+        return new Float32Array(3 * size);
+
+      case 'vec4':
+        return new Float32Array(4 * size);
+
+      case 'int':
+      case 'sampler2D':
+        return 0;
+
+      case 'ivec2':
+        return new Int32Array(2 * size);
+
+      case 'ivec3':
+        return new Int32Array(3 * size);
+
+      case 'ivec4':
+        return new Int32Array(4 * size);
+
+      case 'bool':
+        return false;
+
+      case 'bvec2':
+        return booleanArray(2 * size);
+
+      case 'bvec3':
+        return booleanArray(3 * size);
+
+      case 'bvec4':
+        return booleanArray(4 * size);
+
+      case 'mat2':
+        return new Float32Array([1, 0, 0, 1]);
+
+      case 'mat3':
+        return new Float32Array([1, 0, 0, 0, 1, 0, 0, 0, 1]);
+
+      case 'mat4':
+        return new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+    }
+  };
+
+  var booleanArray = function booleanArray(size) {
+    var array = new Array(size);
+
+    for (var i = 0; i < array.length; i++) {
+      array[i] = false;
+    }
+
+    return array;
+  };
+
+  var defaultValue_1 = defaultValue;
+
+  /**
+   * Extracts the uniforms
+   * @class
+   * @memberof PIXI.glCore.shader
+   * @param gl {WebGLRenderingContext} The current WebGL rendering context
+   * @param program {WebGLProgram} The shader program to get the uniforms from
+   * @return uniforms {Object}
+   */
+
+
+  var extractUniforms = function extractUniforms(gl, program) {
+    var uniforms = {};
+    var totalUniforms = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+
+    for (var i = 0; i < totalUniforms; i++) {
+      var uniformData = gl.getActiveUniform(program, i);
+      var name = uniformData.name.replace(/\[.*?\]/, "");
+      var type = mapType(gl, uniformData.type);
+      uniforms[name] = {
+        type: type,
+        size: uniformData.size,
+        location: gl.getUniformLocation(program, name),
+        value: defaultValue_1(type, uniformData.size)
+      };
+    }
+
+    return uniforms;
+  };
+
+  var extractUniforms_1 = extractUniforms;
+
+  /**
+   * Sets the float precision on the shader. If the precision is already present this function will do nothing
+   * @param {string} src       the shader source
+   * @param {string} precision The float precision of the shader. Options are 'lowp', 'mediump' or 'highp'.
+   *
+   * @return {string} modified shader source
+   */
+  var setPrecision = function setPrecision(src, precision) {
+    if (src.substring(0, 9) !== 'precision') {
+      return 'precision ' + precision + ' float;\n' + src;
+    }
+
+    return src;
+  };
+
+  var setPrecision_1 = setPrecision;
+
+  /**
+   * Extracts the attributes
+   * @class
+   * @memberof PIXI.glCore.shader
+   * @param gl {WebGLRenderingContext} The current WebGL rendering context
+   * @param uniforms {Array} @mat ?
+   * @return attributes {Object}
+   */
+  var generateUniformAccessObject = function generateUniformAccessObject(gl, uniformData) {
+    // this is the object we will be sending back.
+    // an object hierachy will be created for structs
+    var uniforms = {
+      data: {}
+    };
+    uniforms.gl = gl;
+    var uniformKeys = Object.keys(uniformData);
+
+    for (var i = 0; i < uniformKeys.length; i++) {
+      var fullName = uniformKeys[i];
+      var nameTokens = fullName.split('.');
+      var name = nameTokens[nameTokens.length - 1];
+      var uniformGroup = getUniformGroup(nameTokens, uniforms);
+      var uniform = uniformData[fullName];
+      uniformGroup.data[name] = uniform;
+      uniformGroup.gl = gl;
+      Object.defineProperty(uniformGroup, name, {
+        get: generateGetter(name),
+        set: generateSetter(name, uniform)
+      });
+    }
+
+    return uniforms;
+  };
+
+  var generateGetter = function generateGetter(name) {
+    var template = getterTemplate.replace('%%', name);
+    return new Function(template); // jshint ignore:line
+  };
+
+  var generateSetter = function generateSetter(name, uniform) {
+    var template = setterTemplate.replace(/%%/g, name);
+    var setTemplate;
+
+    if (uniform.size === 1) {
+      setTemplate = GLSL_TO_SINGLE_SETTERS[uniform.type];
+    } else {
+      setTemplate = GLSL_TO_ARRAY_SETTERS[uniform.type];
+    }
+
+    if (setTemplate) {
+      template += "\nthis.gl." + setTemplate + ";";
+    }
+
+    return new Function('value', template); // jshint ignore:line
+  };
+
+  var getUniformGroup = function getUniformGroup(nameTokens, uniform) {
+    var cur = uniform;
+
+    for (var i = 0; i < nameTokens.length - 1; i++) {
+      var o = cur[nameTokens[i]] || {
+        data: {}
+      };
+      cur[nameTokens[i]] = o;
+      cur = o;
+    }
+
+    return cur;
+  };
+
+  var getterTemplate = ['return this.data.%%.value;'].join('\n');
+  var setterTemplate = ['this.data.%%.value = value;', 'var location = this.data.%%.location;'].join('\n');
+  var GLSL_TO_SINGLE_SETTERS = {
+    'float': 'uniform1f(location, value)',
+    'vec2': 'uniform2f(location, value[0], value[1])',
+    'vec3': 'uniform3f(location, value[0], value[1], value[2])',
+    'vec4': 'uniform4f(location, value[0], value[1], value[2], value[3])',
+    'int': 'uniform1i(location, value)',
+    'ivec2': 'uniform2i(location, value[0], value[1])',
+    'ivec3': 'uniform3i(location, value[0], value[1], value[2])',
+    'ivec4': 'uniform4i(location, value[0], value[1], value[2], value[3])',
+    'bool': 'uniform1i(location, value)',
+    'bvec2': 'uniform2i(location, value[0], value[1])',
+    'bvec3': 'uniform3i(location, value[0], value[1], value[2])',
+    'bvec4': 'uniform4i(location, value[0], value[1], value[2], value[3])',
+    'mat2': 'uniformMatrix2fv(location, false, value)',
+    'mat3': 'uniformMatrix3fv(location, false, value)',
+    'mat4': 'uniformMatrix4fv(location, false, value)',
+    'sampler2D': 'uniform1i(location, value)'
+  };
+  var GLSL_TO_ARRAY_SETTERS = {
+    'float': 'uniform1fv(location, value)',
+    'vec2': 'uniform2fv(location, value)',
+    'vec3': 'uniform3fv(location, value)',
+    'vec4': 'uniform4fv(location, value)',
+    'int': 'uniform1iv(location, value)',
+    'ivec2': 'uniform2iv(location, value)',
+    'ivec3': 'uniform3iv(location, value)',
+    'ivec4': 'uniform4iv(location, value)',
+    'bool': 'uniform1iv(location, value)',
+    'bvec2': 'uniform2iv(location, value)',
+    'bvec3': 'uniform3iv(location, value)',
+    'bvec4': 'uniform4iv(location, value)',
+    'sampler2D': 'uniform1iv(location, value)'
+  };
+  var generateUniformAccessObject_1 = generateUniformAccessObject;
+
+  /**
+   * Helper class to create a webGL Shader
+   *
+   * @class
+   * @memberof PIXI.glCore
+   * @param gl {WebGLRenderingContext}
+   * @param vertexSrc {string|string[]} The vertex shader source as an array of strings.
+   * @param fragmentSrc {string|string[]} The fragment shader source as an array of strings.
+   * @param precision {precision]} The float precision of the shader. Options are 'lowp', 'mediump' or 'highp'.
+   * @param attributeLocations {object} A key value pair showing which location eact attribute should sit eg {position:0, uvs:1}
+   */
+
+
+  var Shader = function Shader(gl, vertexSrc, fragmentSrc, precision, attributeLocations) {
+    /**
+     * The current WebGL rendering context
+     *
+     * @member {WebGLRenderingContext}
+     */
+    this.gl = gl;
+
+    if (precision) {
+      vertexSrc = setPrecision_1(vertexSrc, precision);
+      fragmentSrc = setPrecision_1(fragmentSrc, precision);
+    }
+    /**
+     * The shader program
+     *
+     * @member {WebGLProgram}
+     */
+    // First compile the program..
+
+
+    this.program = compileProgram_1(gl, vertexSrc, fragmentSrc, attributeLocations);
+    /**
+     * The attributes of the shader as an object containing the following properties
+     * {
+     * 	type,
+     * 	size,
+     * 	location,
+     * 	pointer
+     * }
+     * @member {Object}
+     */
+    // next extract the attributes
+
+    this.attributes = extractAttributes_1(gl, this.program);
+    this.uniformData = extractUniforms_1(gl, this.program);
+    /**
+     * The uniforms of the shader as an object containing the following properties
+     * {
+     * 	gl,
+     * 	data
+     * }
+     * @member {Object}
+     */
+
+    this.uniforms = generateUniformAccessObject_1(gl, this.uniformData);
+  };
+  /**
+   * Uses this shader
+   */
+
+
+  Shader.prototype.bind = function () {
+    this.gl.useProgram(this.program);
+  };
+  /**
+   * Destroys this shader
+   * TODO
+   */
+
+
+  Shader.prototype.destroy = function () {
+    this.attributes = null;
+    this.uniformData = null;
+    this.uniforms = null;
+    var gl = this.gl;
+    gl.deleteProgram(this.program);
+  };
+
+  var GLShader = Shader;
+
+  // state object//
+
+  /**
+   * Helper class to work with WebGL VertexArrayObjects (vaos)
+   * Only works if WebGL extensions are enabled (they usually are)
+   *
+   * @class
+   * @memberof PIXI.glCore
+   * @param gl {WebGLRenderingContext} The current WebGL rendering context
+   */
+
+
+  function VertexArrayObject(gl, state) {
+    this.nativeVaoExtension = null;
+
+    if (!VertexArrayObject.FORCE_NATIVE) {
+      this.nativeVaoExtension = gl.getExtension('OES_vertex_array_object') || gl.getExtension('MOZ_OES_vertex_array_object') || gl.getExtension('WEBKIT_OES_vertex_array_object');
+    }
+
+    this.nativeState = state;
+
+    if (this.nativeVaoExtension) {
+      this.nativeVao = this.nativeVaoExtension.createVertexArrayOES();
+      var maxAttribs = gl.getParameter(gl.MAX_VERTEX_ATTRIBS); // VAO - overwrite the state..
+
+      this.nativeState = {
+        tempAttribState: new Array(maxAttribs),
+        attribState: new Array(maxAttribs)
+      };
+    }
+    /**
+     * The current WebGL rendering context
+     *
+     * @member {WebGLRenderingContext}
+     */
+
+
+    this.gl = gl;
+    /**
+     * An array of attributes
+     *
+     * @member {Array}
+     */
+
+    this.attributes = [];
+    /**
+     * @member {PIXI.glCore.GLBuffer}
+     */
+
+    this.indexBuffer = null;
+    /**
+     * A boolean flag
+     *
+     * @member {Boolean}
+     */
+
+    this.dirty = false;
+  }
+
+  VertexArrayObject.prototype.constructor = VertexArrayObject;
+  var VertexArrayObject_1 = VertexArrayObject;
+  /**
+  * Some devices behave a bit funny when using the newer extensions (im looking at you ipad 2!)
+  * If you find on older devices that things have gone a bit weird then set this to true.
+  */
+
+  /**
+   * Lets the VAO know if you should use the WebGL extension or the native methods.
+   * Some devices behave a bit funny when using the newer extensions (im looking at you ipad 2!)
+   * If you find on older devices that things have gone a bit weird then set this to true.
+   * @static
+   * @property {Boolean} FORCE_NATIVE
+   */
+
+  VertexArrayObject.FORCE_NATIVE = false;
+  /**
+   * Binds the buffer
+   */
+
+  VertexArrayObject.prototype.bind = function () {
+    if (this.nativeVao) {
+      this.nativeVaoExtension.bindVertexArrayOES(this.nativeVao);
+
+      if (this.dirty) {
+        this.dirty = false;
+        this.activate();
+      }
+    } else {
+      this.activate();
+    }
+
+    return this;
+  };
+  /**
+   * Unbinds the buffer
+   */
+
+
+  VertexArrayObject.prototype.unbind = function () {
+    if (this.nativeVao) {
+      this.nativeVaoExtension.bindVertexArrayOES(null);
+    }
+
+    return this;
+  };
+  /**
+   * Uses this vao
+   */
+
+
+  VertexArrayObject.prototype.activate = function () {
+    var gl = this.gl;
+    var lastBuffer = null;
+
+    for (var i = 0; i < this.attributes.length; i++) {
+      var attrib = this.attributes[i];
+
+      if (lastBuffer !== attrib.buffer) {
+        attrib.buffer.bind();
+        lastBuffer = attrib.buffer;
+      }
+
+      gl.vertexAttribPointer(attrib.attribute.location, attrib.attribute.size, attrib.type || gl.FLOAT, attrib.normalized || false, attrib.stride || 0, attrib.start || 0);
+    }
+
+    setVertexAttribArrays_1(gl, this.attributes, this.nativeState);
+
+    if (this.indexBuffer) {
+      this.indexBuffer.bind();
+    }
+
+    return this;
+  };
+  /**
+   *
+   * @param buffer     {PIXI.gl.GLBuffer}
+   * @param attribute  {*}
+   * @param type       {String}
+   * @param normalized {Boolean}
+   * @param stride     {Number}
+   * @param start      {Number}
+   */
+
+
+  VertexArrayObject.prototype.addAttribute = function (buffer, attribute, type, normalized, stride, start) {
+    this.attributes.push({
+      buffer: buffer,
+      attribute: attribute,
+      location: attribute.location,
+      type: type || this.gl.FLOAT,
+      normalized: normalized || false,
+      stride: stride || 0,
+      start: start || 0
+    });
+    this.dirty = true;
+    return this;
+  };
+  /**
+   *
+   * @param buffer   {PIXI.gl.GLBuffer}
+   */
+
+
+  VertexArrayObject.prototype.addIndex = function (buffer
+  /*, options*/
+  ) {
+    this.indexBuffer = buffer;
+    this.dirty = true;
+    return this;
+  };
+  /**
+   * Unbinds this vao and disables it
+   */
+
+
+  VertexArrayObject.prototype.clear = function () {
+    // var gl = this.gl;
+    // TODO - should this function unbind after clear?
+    // for now, no but lets see what happens in the real world!
+    if (this.nativeVao) {
+      this.nativeVaoExtension.bindVertexArrayOES(this.nativeVao);
+    }
+
+    this.attributes.length = 0;
+    this.indexBuffer = null;
+    return this;
+  };
+  /**
+   * @param type  {Number}
+   * @param size  {Number}
+   * @param start {Number}
+   */
+
+
+  VertexArrayObject.prototype.draw = function (type, size, start) {
+    var gl = this.gl;
+
+    if (this.indexBuffer) {
+      gl.drawElements(type, size || this.indexBuffer.data.length, gl.UNSIGNED_SHORT, (start || 0) * 2);
+    } else {
+      // TODO need a better way to calculate size..
+      gl.drawArrays(type, start, size || this.getSize());
+    }
+
+    return this;
+  };
+  /**
+   * Destroy this vao
+   */
+
+
+  VertexArrayObject.prototype.destroy = function () {
+    // lose references
+    this.gl = null;
+    this.indexBuffer = null;
+    this.attributes = null;
+    this.nativeState = null;
+
+    if (this.nativeVao) {
+      this.nativeVaoExtension.deleteVertexArrayOES(this.nativeVao);
+    }
+
+    this.nativeVaoExtension = null;
+    this.nativeVao = null;
+  };
+
+  VertexArrayObject.prototype.getSize = function () {
+    var attrib = this.attributes[0];
+    return attrib.buffer.data.length / (attrib.stride / 4 || attrib.attribute.size);
+  };
+
+  var shader = {
+    compileProgram: compileProgram_1,
+    defaultValue: defaultValue_1,
+    extractAttributes: extractAttributes_1,
+    extractUniforms: extractUniforms_1,
+    generateUniformAccessObject: generateUniformAccessObject_1,
+    setPrecision: setPrecision_1,
+    mapSize: mapSize_1,
+    mapType: mapType
+  };
+
+  var src = createCommonjsModule(function (module) {
+  var gl = {
+    createContext: createContext_1,
+    setVertexAttribArrays: setVertexAttribArrays_1,
+    GLBuffer: GLBuffer,
+    GLFramebuffer: GLFramebuffer,
+    GLShader: GLShader,
+    GLTexture: GLTexture,
+    VertexArrayObject: VertexArrayObject_1,
+    shader: shader
+  }; // Export for Node-compatible environments
+
+  if ( module.exports) {
+    // Export the module
+    module.exports = gl;
+  } // Add to the browser window pixi.gl
+
+
+  if (typeof window !== 'undefined') {
+    // add the window object
+    window.PIXI = window.PIXI || {};
+    window.PIXI.glCore = gl;
+  }
+  });
+
+  ////import PIXI from 'pixi.js';//'vendor/pixi';
+  var Fragment$7 = require('./NoiseFilter.frag');
+
+  var DEFAULT_VERTEX_PROGRAM = require('./_defaultProgram.vert');
+  var core = PIXI;
+  var ticker = PIXI.ticker.shared;
+
+  function Filter() {
+    var uniforms = {};
+    uniforms.resolution = {
+      type: '2f',
+      value: {
+        x: 8,
+        y: 2
+      }
+    };
+    uniforms.nIntensity = {
+      type: '1f',
+      value: 0.005
+    };
+    uniforms.shift = {
+      type: '1f',
+      value: 0
+    };
+    uniforms.time = {
+      type: '1f',
+      value: 0
+    };
+    uniforms.speed = {
+      type: '1f',
+      value: 0.2
+    };
+    uniforms.noiseSampler = {
+      type: 'sampler2D',
+      value: null
+    };
+    core.Filter.call(this, DEFAULT_VERTEX_PROGRAM, Fragment$7, uniforms);
+    this.passes = 1; //  var time = (10+PIXI.ticker.shared.elapsedMS);
+    //this.noise = 1
+  }
+
+  Filter.prototype = Object.create(core.Filter.prototype); //Object.create(core.AbstractFilter.prototype);
+
+  Filter.prototype.constructor = Filter;
+  Object.defineProperties(Filter.prototype, {
+    time: {
+      get: function get() {
+        return this.uniforms.time; //.value;
+      },
+      set: function set(value) {
+        //this.uniformData.noise.value = value + 0.0;
+        this.uniforms.time = value;
+      }
+    },
+    noiseSampler: {
+      get: function get() {
+        return this.uniforms.noiseSampler; //.value;
+      },
+      set: function set(value) {
+        //this.uniformData.noise.value = value + 0.0;
+        this.uniforms.noiseSampler = value;
+      }
+    }
+  });
+  var filter = new Filter(); //let filter2 = new GLCore.GLShader(gl,DEFAULT_VERTEX_PROGRAM,Fragment);
+
+  var i = 0;
+
+  var NoiseFilter = /*#__PURE__*/function (_Component) {
+    _inherits(NoiseFilter, _Component);
+
+    var _super = _createSuper(NoiseFilter);
+
+    function NoiseFilter(props) {
+      var _this;
+
+      _classCallCheck(this, NoiseFilter);
+
+      _this = _super.call(this, props);
+
+      _defineProperty(_assertThisInitialized(_this), "animateFilter", function () {
+        var container = _this.refs.filter; //  console.log('pause3:',this.props.pause)
+
+        if (_this.props.pause) { return; }
+
+        if (i > 6) {
+          //if(i> 6){
+          //filter.noise = ticker.lastTime;
+          container.filters[0].time = ticker.lastTime; //console.log('noise',filter.noise)
+
+          i = 0;
+        }
+
+        i++;
+      });
+
+      _this.filter = filter; // new Filter()
+
+      return _this;
+    }
+
+    _createClass(NoiseFilter, [{
+      key: "componentWillMount",
+      value: function componentWillMount() {}
+    }, {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        var _this2 = this;
+
+        var container = this.refs.filter;
+        var texture = new PIXI.Texture.fromImage('/assets/noise/tex1.png'); //  texture.renderable = false;
+
+        texture.baseTexture.on('loaded', function () {
+          console.log('texture', texture.width, texture.height);
+          container.filters = [filter];
+          container.filters[0].noiseSampler = texture;
+          PIXI.ticker.shared.add(_this2.animateFilter);
+        });
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        PIXI.ticker.shared.remove(this.animateFilter);
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        //this.filter.time = ticker.lastTime;
+        return /*#__PURE__*/React__default['default'].createElement("container", {
+          ref: 'filter'
+        }, this.props.children);
+      }
+    }]);
+
+    return NoiseFilter;
+  }(React.Component);
+  //   //chromaFilter.size  = 1;
+  //   var time = PIXI.ticker.shared.elapsedMS
+  // 	noiseFilter.time = time;
+  //
+  //     console.log('NOISE TIME',time)
+  //     let filters =	[noiseFilter ];
+  // 	return  <Container  filters={ filters } >{props.children}</Container>
+  // }
+
+  var Fragment$8 = require('./ParrallaxHoverFilter.frag');
+
+  var Vertext$7 = require('./ParrallaxHoverFilter.vert');
+  /**
+   * The ParrallaxHoverFilter applies a Gaussian blur to an object.
+   * The strength of the blur can be set for x- and y-axis separately.
+   *
+   * @class
+   * @extends PIXI.Filter
+   * @memberof PIXI.filters
+   */
+
+
+  var ParrallaxHoverFilter = /*#__PURE__*/function (_PIXI$Filter) {
+    _inherits(ParrallaxHoverFilter, _PIXI$Filter);
+
+    var _super = _createSuper(ParrallaxHoverFilter);
+
+    /**
+     * Creates an instance of ParrallaxHoverFilter.
+     * @param {*} speed
+     * @param {*} resolution
+     * @memberof ParrallaxHoverFilter
+     */
+    function ParrallaxHoverFilter(resolution) {
+      var _this;
+
+      _classCallCheck(this, ParrallaxHoverFilter);
+
+      _this = _super.call(this, Vertext$7, Fragment$8);
+      _this.uniforms.dimensions = new Float32Array(2); //http://pixijs.download/dev/docs/core_renderers_webgl_managers_FilterManager.js.html#line51
+      // ---> check this to allow vertical padding onlu
+
+      _this.padding = 10; //600;
+      // this.filterArea = [0,0,100,100]
+
+      _this.passes = 1;
+      _this.resolution = resolution || PIXI$1.settings.RESOLUTION; // this.autoFit = false;
+
+      return _this;
+    }
+    /**
+     * Applies the filter.
+     *
+     * @param {PIXI.FilterManager} filterManager - The manager.
+     * @param {PIXI.RenderTarget} input - The input target.
+     * @param {PIXI.RenderTarget} output - The output target.
+     */
+
+
+    _createClass(ParrallaxHoverFilter, [{
+      key: "apply",
+      value: function apply(filterManager, input, output, clear) {
+        /** removes padding x */
+        // input.sourceFrame.x = 0;
+        // input.sourceFrame.width = input.sourceFrame.width  - this.padding;
+
+        /** end removes padding x */
+        var width = input.sourceFrame.width;
+        var height = input.sourceFrame.height;
+        this.uniforms.dimensions[0] = width; // - (this.padding*2);
+
+        this.uniforms.dimensions[1] = height; //  - (this.padding*2);
+
+        this.uniforms.aspect = height / width;
+        this.uniforms.padding = this.padding; // in pixels
+        // this.uniforms.columnWidth = 25;//window.innerWidth
+        // this.uniforms.tx = input.sourceFrame.x;
+        //.39
+
+        this.uniforms.mapSampler = input.texture; // console.log('cacl:',input)
+        // var projectionMatrix = [0.0025380710139870644, 0, 0, 0, -0.0035587188322097063, 0, -1, 1, 1]
+        // this.transform.updateTransform(this.parent.transform);
+        // draw the filter...
+
+        filterManager.applyFilter(this, input, output, clear);
+        /*
+                dimension: 1500, 1400];
+        filterClap: [0, 0, 0.73193359375, 0.68310546875];
+        filterArea:
+            location: WebGLUniformLocation {}
+            size: 1
+            type: "vec4"
+            value: Float32Array(4) [2048, 2048, -600, -600]
+        */
+        // -0.20000000000000007
+        //this.uniforms.dimensions.x,filterManager.shaderCache[19].data);//,this.uniforms.aspect, this.padding,input.sourceFrame)
+        // const renderTarget = filterManager.getRenderTarget(true);
+        // filterManager.returnRenderTarget(renderTarget);
+      }
+    }, {
+      key: "addTexture",
+      value: function addTexture(texture, name) {
+        // console.log('addTexture',sprite,name)
+        this.uniforms[name] = texture; //sprite._texture   
+      }
+    }, {
+      key: "disp",
+      set: function set(sprite) {
+        this.uniforms['disp'] = sprite._texture;
+      }
+    }, {
+      key: "texture",
+      set: function set(sprite) {
+        this.uniforms['texture'] = sprite._texture;
+      }
+    }, {
+      key: "texture2",
+      set: function set(sprite) {
+        // console.log('mouseX',value)
+        // value[1] = value[1] *1
+        this.uniforms['texture2'] = sprite._texture;
+      }
+    }, {
+      key: "mouse",
+      get: function get() {
+        return this.uniforms.uMouse;
+      },
+      set: function set(value) {
+        // console.log('mouseX',value)
+        // value[1] = value[1] *1
+        this.uniforms.uMouse = value;
+      }
+    }, {
+      key: "offset",
+      get: function get() {
+        return this.uniforms.offset;
+      },
+      set: function set(value) {
+        // console.log('offset',value)
+        // value[1] = value[1] *1
+        this.uniforms.offset = value;
+      }
+    }, {
+      key: "worldTransform",
+      set: function set(worldTransform) {
+        // console.log('worldTransform',worldTransform.tx,worldTransform.toArray())   
+        this._worldTransform = worldTransform; //.toArray();
+
+        this.uniforms.tx = worldTransform.tx;
+      },
+      get: function get() {
+        return this._.worldTransform;
+      }
+    }]);
+
+    return ParrallaxHoverFilter;
+  }(PIXI$1.Filter);
+
+  //http://super16.dk/medlemmer/glen-bay-grant
+  //https://gl-transitions.com/editor/directionalwarp?direction=-1,0
+  //https://gl-transitions.com/editor/crosswarp
+  // !!!!
+  //https://videohive.net/item/handy-seamless-transitions-pack-script/18967340?irgwc=1&clickid=0giS-aX0JQ2eUc10bqVBhWPIUkgzyHwI-QdBQs0&iradid=275988&irpid=1143794&iradtype=ONLINE_TRACKING_LINK&irmptype=mediapartner&mp_value1=&utm_campaign=af_impact_radius_1143794&utm_medium=affiliate&utm_source=impact_radius
+
+  var loader$2 = PIXI$1.loader;
+
+  var ParrallaxHoverFilterComponent = /*#__PURE__*/function (_Component) {
+    _inherits(ParrallaxHoverFilterComponent, _Component);
+
+    var _super = _createSuper(ParrallaxHoverFilterComponent);
+
+    function ParrallaxHoverFilterComponent(props) {
+      var _this;
+
+      _classCallCheck(this, ParrallaxHoverFilterComponent);
+
+      _this = _super.call(this, props);
+
+      _defineProperty(_assertThisInitialized(_this), "t", 0);
+
+      _defineProperty(_assertThisInitialized(_this), "handleMouse", function (e) {
+        var _assertThisInitialize = _assertThisInitialized(_this),
+            filter = _assertThisInitialize.filter;
+
+        var progress = e.clientX / _this.filter.uniforms.dimensions[0];
+        var k = 2;
+        var x = progress; //(progress * 2) % 1;//Math.abs(0.5 - progress);
+
+        _this.t += 3;
+        var parabola = Math.pow(4.0 * x * (1.0 - x), k);
+        plot__default['default']('mousex', _this.t, parabola * 100);
+        plot__default['default']('pasrabola', _this.t, parabola * 100, '#ffff00');
+        console.log('progress', progress, 'parabola', parabola);
+        _this.filter.uniforms.progress = progress;
+        _this.filter.uniforms.parabola = parabola;
+        _this.filter.uniforms.effectFactor = e.clientX / 100; // this.filter.mouse =  [e.clientX/window.innerWidth,e.clientY/window.innerHeight];
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "_loader", []);
+
+      _defineProperty(_assertThisInitialized(_this), "_loaderQue", []);
+
+      _defineProperty(_assertThisInitialized(_this), "add", function (name, url, index) {
+        var hasAsset = _this._loader.find(function (x) {
+          return x.name === name;
+        }) ? true : false; // console.log('add',url,name,hasAsset)//
+
+        if (!hasAsset) {
+          if (!loader$2.isLoading) {
+            _this._loader.push({
+              url: url,
+              name: name,
+              index: index
+            });
+
+            loader$2.add(url, url, index);
+          } else {
+            _this._loaderQue.push({
+              url: url,
+              name: name,
+              index: index
+            });
+          }
+        }
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "update", function (nextProps) {
+        _this.filter.offset = nextProps.offset;
+
+        if (nextProps.texture) {
+          loader$2 = new PIXI$1.loaders.Loader();
+          nextProps.texture.forEach(function (file, i) {
+            var name = Object.keys(file)[0];
+            var url = file[name];
+            console.log('texture', name, url, i);
+
+            _this.add(name, url, i);
+          });
+        }
+
+        loader$2.once('complete', function () {
+          loader$2.isLoading = false;
+
+          if (_this._loaderQue.length > 0) {
+            _this._loaderQue.forEach(function (item) {
+              return _this.add(item.name, item.url, item.index);
+            });
+          }
+        });
+
+        if (!loader$2.isLoading) {
+          loader$2.isLoading = true;
+          loader$2.load(function (data) {
+            return _this.handleLoaded(data);
+          });
+        }
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "handleError", function (error, loader) {
+        console.log('handleError', error, loader);
+        loader.isLoading = false;
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "handleLoaded", function (loader) {
+        _this._loader.forEach(function (_ref) {
+          var url = _ref.url,
+              name = _ref.name,
+              index = _ref.index;
+          console.log('handleLoaded', index);
+          var resource = loader.resources[url];
+
+          if (resource) {
+            var texture = resource.texture;
+
+            _this.filter.addTexture(texture, name);
+          } else {
+            console.alert("Texture does not exist: ".concat(url));
+          }
+        });
+      });
+
+      _this.handleMouse.bind(_assertThisInitialized(_this));
+
+      _this.filter = new ParrallaxHoverFilter();
+      return _this;
+    }
+
+    _createClass(ParrallaxHoverFilterComponent, [{
+      key: "componentWillMount",
+      value: function componentWillMount() {
+        window.addEventListener('mousemove', this.handleMouse);
+      }
+    }, {
+      key: "componentWillReceiveProps",
+      value: function componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        this.update(nextProps);
+      }
+    }, {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this.update(this.props);
+        loader$2.on('error', this.handleError, this); // this.container.anchor.set(0.5);
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {}
+    }, {
+      key: "renderChidren",
+      value: function renderChidren(children) {
+        var _this2 = this;
+
+        return React__default['default'].Children.map(children, function (child) {
+          return /*#__PURE__*/React__default['default'].cloneElement(child, _objectSpread2(_objectSpread2({}, child.props), {}, {
+            filters: [_this2.filter]
+          }), child.props.children);
+        });
+      }
+    }, {
+      key: "render",
+      // render() {
+      // 	return <div ref={ref=>this.container=ref}  filters={[this.filter]}>{this.props.children}</div>
+      // }
+      value: function render() {
+        console.log('(this.props.children', this.props.children);
+        return this.renderChidren(this.props.children);
+      }
+    }]);
+
+    return ParrallaxHoverFilterComponent;
+  }(React.Component);
+  ParrallaxHoverFilterComponent.defaultProps = {
+    pause: false,
+    offset: 0
+  };
+
+  var Fragment$9 = require('./ScanLineFilter.frag');
+
+  var Vertext$8 = require('./ScanLineFilter.vert'); ////import PIXI from 'pixi.js';//'vendor/pixi';
+  var ticker$1 = PIXI.ticker.shared;
+
+  function Filter$1(sprite) {
+    //var maskMatrix = new core.Matrix();
+    //sprite.renderable = false;
+    PIXI.Filter.call(this, null, Fragment$9, {
+      //tDiffuse:   { type: 't', value: null },
+      // time:       { type: '1f', value: 0.0 },
+      // nIntensity: { type: '1f', value: 0.15 },  // default value 0.15
+      // sIntensity: { type: '1f', value: 0.0 },
+      // sCount:     { type: '1f', value: 10 },
+      // grayscale:  { type: 'i', value: 0 }
+      time: {
+        type: '1f',
+        value: 0.0
+      },
+      nIntensity: {
+        type: '1f',
+        value: 0.5
+      },
+      // default value 0.15
+      sIntensity: {
+        type: '1f',
+        value: 0.5
+      },
+      sCount: {
+        type: '1f',
+        value: 1
+      },
+      grayscale: {
+        type: 'i',
+        value: 1
+      }
+    }); //this.maskSprite = sprite;
+    //this.maskMatrix = maskMatrix;
+
+    this.passes = 1;
+    this._time = 1;
+  }
+
+  Filter$1.prototype = Object.create(PIXI.Filter.prototype);
+  Filter$1.prototype.constructor = Filter$1;
+  module.exports = Filter$1;
+  Object.defineProperties(Filter$1.prototype, {
+    time: {
+      get: function get() {
+        return this.uniforms.time.value;
+      },
+      set: function set(value) {
+        this.uniforms.time.value = value;
+      }
+    },
+    nIntensity: {
+      get: function get() {
+        return this.uniforms.nIntensity.value;
+      },
+      set: function set(value) {
+        this.uniforms.nIntensity.value = value;
+      }
+    },
+    sIntensity: {
+      get: function get() {
+        return this.uniforms.sIntensity.value;
+      },
+      set: function set(value) {
+        this.uniforms.sIntensity.value = value;
+      }
+    }
+  });
+
+  var ScanLineFilter = /*#__PURE__*/function (_Component) {
+    _inherits(ScanLineFilter, _Component);
+
+    var _super = _createSuper(ScanLineFilter);
+
+    function ScanLineFilter(props) {
+      var _this;
+
+      _classCallCheck(this, ScanLineFilter);
+
+      _this = _super.call(this, props);
+
+      _defineProperty(_assertThisInitialized(_this), "animateFilter", function () {
+        var container = _this.refs.filter; //  console.log('pause3:',this.props.pause)
+
+        if (_this.props.pause) { return; }
+        _this.filter.time = ticker$1.lastTime;
+        container.filters = [_this.filter];
+      });
+
+      _this.filter = new Filter$1();
+      return _this;
+    }
+
+    _createClass(ScanLineFilter, [{
+      key: "componentWillMount",
+      value: function componentWillMount() {}
+    }, {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        PIXI.ticker.shared.add(this.animateFilter);
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        PIXI.ticker.shared.remove(this.animateFilter);
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        this.filter.time = ticker$1.lastTime;
+        return /*#__PURE__*/React__default['default'].createElement(reactPixiRenderer.Container, {
+          ref: 'filter'
+        }, this.props.children);
+      }
+    }]);
+
+    return ScanLineFilter;
+  }(React.Component);
+  ScanLineFilter.defaultProps = {
+    pause: false
+  };
+
+  var Fragment$a = require('./VHSFilter.frag');
+
+  var Vertext$9 = require('./VHSFilter.vert');
+
+  var ticker$2 = PIXI$1.ticker.shared;
+  var core$1 = PIXI__namespace;
+
+  function Filter$2(sprite) {
+    //var maskMatrix = new core.Matrix();
+    //sprite.renderable = false;
+    core$1.AbstractFilter.call(this, Vertext$9, Fragment$a, {
+      //mapSampler:     { type: 'sampler2D', value: sprite.texture },
+      //otherMatrix:    { type: 'mat3', value: maskMatrix.toArray(true) },
+      scale: {
+        type: 'v2',
+        value: {
+          x: 100,
+          y: 100
+        }
+      },
+      time: {
+        type: '1f',
+        value: 1
+      },
+      speed: {
+        type: '1f',
+        value: 0.0004
+      },
+      distortion: {
+        type: '1f',
+        value: 0.21
+      },
+      distortion2: {
+        type: '1f',
+        value: 10.10
+      },
+      rollSpeed: {
+        type: '1f',
+        value: 0.000
+      },
+      waveHeight: {
+        type: '1f',
+        value: 1
+      }
+    }); //this.maskSprite = sprite;
+    //this.maskMatrix = maskMatrix;
+
+    this.passes = 3;
+    this._time = 10;
+  }
+
+  Filter$2.prototype = Object.create(core$1.AbstractFilter.prototype);
+  Filter$2.prototype.constructor = Filter$2;
+  Object.defineProperties(Filter$2.prototype, {
+    time: {
+      get: function get() {
+        return this.uniforms.time;
+      },
+      set: function set(value) {
+        this.uniforms.time = value;
+      }
+    },
+    distortion2: {
+      get: function get() {
+        return this.uniforms.distortion2;
+      },
+      set: function set(value) {
+        this.uniforms.distortion2 = value;
+      }
+    },
+    waveHeight: {
+      get: function get() {
+        return this.uniforms.waveHeight;
+      },
+      set: function set(value) {
+        this.uniforms.waveHeight = value;
+      }
+    },
+    distortion: {
+      get: function get() {
+        return this.uniforms.distortion;
+      },
+      set: function set(value) {
+        this.uniforms.distortion = value;
+      }
+    },
+    rollSpeed: {
+      get: function get() {
+        return this.uniforms.rollSpeed;
+      },
+      set: function set(value) {
+        this.uniforms.rollSpeed = value;
+      }
+    }
+  }); // module.exports = Filter;
+
+  var VHSFilter = /*#__PURE__*/function (_Component) {
+    _inherits(VHSFilter, _Component);
+
+    var _super = _createSuper(VHSFilter);
+
+    function VHSFilter(props) {
+      var _this;
+
+      _classCallCheck(this, VHSFilter);
+
+      _this = _super.call(this, props);
+
+      _defineProperty(_assertThisInitialized(_this), "animateFilter", function () {
+        var container = _this.container; //  console.log('pause3:',this.props.pause)
+
+        if (_this.props.pause) { return; }
+        _this.filter.time = ticker$2.lastTime;
+        _this.filter.distortion2 = _this.props.distortion2;
+        _this.filter.waveHeight = _this.props.waveHeight;
+        _this.filter.distortion = _this.props.distortion;
+        _this.filter.rollSpeed = _this.props.rollSpeed; //console.log(this.props,ticker.lastTime)
+      });
+
+      _this.filter = new Filter$2();
+      return _this;
+    }
+
+    _createClass(VHSFilter, [{
+      key: "componentWillMount",
+      value: function componentWillMount() {}
+    }, {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        PIXI$1.ticker.shared.add(this.animateFilter);
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        PIXI$1.ticker.shared.remove(this.animateFilter);
+      }
+    }, {
+      key: "renderChidren",
+      value: function renderChidren(children) {
+        var _this2 = this;
+
+        return React__default['default'].Children.map(children, function (child) {
+          return /*#__PURE__*/React__default['default'].cloneElement(child, _objectSpread2(_objectSpread2({}, child.props), {}, {
+            filters: [_this2.filter]
+          }), child.children);
+        });
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        console.log('(this.props.children', this.props.children);
+        return this.renderChidren(this.props.children);
+      }
+    }]);
+
+    return VHSFilter;
+  }(React.Component); // _self.vhs_filter.distortion2 = 5;
+  VHSFilter.defaultProps = {
+    pause: false,
+    distortion: 5,
+    distortion2: 20,
+    waveHeight: 50,
+    rollSpeed: .000009,
+    amount: .02
+  };
+
+  var Fragment$b = require('./WaterBeeldFilter.frag');
+
+  var Vertext$a = require('./WaterBeeldFilter.vert');
+  /**
+   * The WaterBeeldFilter applies a Gaussian blur to an object.
+   * The strength of the blur can be set for x- and y-axis separately.
+   *
+   * @class
+   * @extends PIXI.Filter
+   * @memberof PIXI.filters
+   */
+
+
+  var WaterBeeldFilter = /*#__PURE__*/function (_PIXI$Filter) {
+    _inherits(WaterBeeldFilter, _PIXI$Filter);
+
+    var _super = _createSuper(WaterBeeldFilter);
+
+    /**
+     * Creates an instance of WaterBeeldFilter.
+     * @param {*} speed
+     * @param {*} resolution
+     * @memberof WaterBeeldFilter
+     */
+    function WaterBeeldFilter(resolution) {
+      var _this;
+
+      _classCallCheck(this, WaterBeeldFilter);
+
+      _this = _super.call(this, Vertext$a, Fragment$b);
+      _this.uniforms.dimensions = new Float32Array(2); //http://pixijs.download/dev/docs/core_renderers_webgl_managers_FilterManager.js.html#line51
+      // ---> check this to allow vertical padding onlu
+
+      _this.padding = 200;
+      _this.passes = 1;
+      _this.resolution = resolution || PIXI$1.settings.RESOLUTION;
+      _this.autoFit = false;
+      return _this;
+    }
+    /**
+     * Applies the filter.
+     *
+     * @param {PIXI.FilterManager} filterManager - The manager.
+     * @param {PIXI.RenderTarget} input - The input target.
+     * @param {PIXI.RenderTarget} output - The output target.
+     */
+
+
+    _createClass(WaterBeeldFilter, [{
+      key: "apply",
+      value: function apply(filterManager, input, output, clear) {
+        var width = input.sourceFrame.width;
+        var height = input.sourceFrame.height;
+        this.uniforms.dimensions[0] = width;
+        this.uniforms.dimensions[1] = height;
+        this.uniforms.aspect = height / width;
+        this.uniforms.padding = this.padding;
+        filterManager.applyFilter(this, input, output, clear); // const renderTarget = filterManager.getRenderTarget(true);
+        // filterManager.returnRenderTarget(renderTarget);
+      }
+    }, {
+      key: "addTexture",
+      value: function addTexture(texture, name) {
+        this.uniforms[name] = texture;
+      }
+    }, {
+      key: "mouse",
+      get: function get() {
+        return this.uniforms.uMouse;
+      },
+      set: function set(value) {
+        // console.log('mouseX',value)
+        // value[1] = value[1] *1
+        this.uniforms.uMouse = value;
+      }
+    }, {
+      key: "offset",
+      get: function get() {
+        return this.uniforms.offset;
+      },
+      set: function set(value) {
+        // console.log('offset',value)
+        // value[1] = value[1] *1
+        this.uniforms.offset = value;
+      }
+    }, {
+      key: "worldTransform",
+      set: function set(worldTransform) {
+        this._worldTransform = worldTransform;
+        this.uniforms.tx = worldTransform.tx;
+      },
+      get: function get() {
+        return this._.worldTransform;
+      }
+    }]);
+
+    return WaterBeeldFilter;
+  }(PIXI$1.Filter);
+
+  //http://www.lafamiliaxsiempre.cl/lookbook
+  //http://super16.dk/medlemmer/glen-bay-grant
+  //https://gl-transitions.com/editor/directionalwarp?direction=-1,0
+  //https://gl-transitions.com/editor/crosswarp
+  // !!!!
+  //https://videohive.net/item/handy-seamless-transitions-pack-script/18967340?irgwc=1&clickid=0giS-aX0JQ2eUc10bqVBhWPIUkgzyHwI-QdBQs0&iradid=275988&irpid=1143794&iradtype=ONLINE_TRACKING_LINK&irmptype=mediapartner&mp_value1=&utm_campaign=af_impact_radius_1143794&utm_medium=affiliate&utm_source=impact_radius
+
+  var loader$3 = PIXI$1.loader;
+
+  var ReactWaterBeeldFilter = /*#__PURE__*/function (_Component) {
+    _inherits(ReactWaterBeeldFilter, _Component);
+
+    var _super = _createSuper(ReactWaterBeeldFilter);
+
+    function ReactWaterBeeldFilter(props) {
+      var _this;
+
+      _classCallCheck(this, ReactWaterBeeldFilter);
+
+      _this = _super.call(this, props);
+
+      _defineProperty(_assertThisInitialized(_this), "t", 0);
+
+      _defineProperty(_assertThisInitialized(_this), "handleMouse", function (e) {
+        // const {filter} = this;
+        var progress = e.clientX / _this.filter.uniforms.dimensions[0]; // plot('mousex',this.t,(parabola*100))
+        //plot('pasrabola',this.t,parabola*100,'#ffff00')
+
+        _this.filter.uniforms.progress = progress; // this.filter.uniforms.parabola = parabola ;
+
+        _this.filter.uniforms.effectFactor = e.clientX / 100; // this.filter.mouse =  [e.clientX/window.innerWidth,e.clientY/window.innerHeight];
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "_loader", []);
+
+      _defineProperty(_assertThisInitialized(_this), "_loaderQue", []);
+
+      _defineProperty(_assertThisInitialized(_this), "add", function (name, url, index) {
+        var hasAsset = _this._loader.find(function (x) {
+          return x.url === url;
+        }) ? true : false; // console.log('add',url,name,hasAsset)//
+
+        if (!hasAsset) {
+          if (!loader$3.isLoading) {
+            _this._loader.push({
+              url: url,
+              name: name,
+              index: index
+            });
+
+            loader$3.add(url, url, index);
+          } else {
+            _this._loaderQue.push({
+              url: url,
+              name: name,
+              index: index
+            });
+          }
+        }
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "handleError", function (error, loader) {
+        console.log('handleError', error, loader);
+        loader.isLoading = false;
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "handleLoaded", function (loader) {
+        _this._loader.forEach(function (_ref) {
+          var url = _ref.url,
+              name = _ref.name,
+              index = _ref.index;
+          console.log('handleLoaded', index);
+          var resource = loader.resources[url];
+
+          if (resource) {
+            var texture = resource.texture;
+
+            _this.filter.addTexture(texture, name);
+          } else {
+            console.alert("Texture does not exist: ".concat(url));
+          }
+        });
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "update", function (nextProps) {
+        _this.filter.offset = nextProps.offset;
+
+        if (nextProps.texture) {
+          loader$3 = new PIXI$1.loaders.Loader();
+          nextProps.texture.forEach(function (file, i) {
+            var name = Object.keys(file)[0];
+            var url = file[name];
+            console.log('texture', name, url, i);
+
+            _this.add(name, url, i);
+          });
+        }
+
+        loader$3.once('complete', function () {
+          loader$3.isLoading = false;
+
+          if (_this._loaderQue.length > 0) {
+            _this._loaderQue.forEach(function (item) {
+              return _this.add(item.name, item.url, item.index);
+            });
+          }
+        });
+
+        if (!loader$3.isLoading) {
+          loader$3.isLoading = true;
+          loader$3.load(function (data) {
+            return _this.handleLoaded(data);
+          });
+        }
+      });
+
+      _this.handleMouse.bind(_assertThisInitialized(_this));
+
+      _this.filter = new WaterBeeldFilter();
+      return _this;
+    }
+
+    _createClass(ReactWaterBeeldFilter, [{
+      key: "componentWillMount",
+      value: function componentWillMount() {
+        window.addEventListener('mousemove', this.handleMouse);
+      }
+    }, {
+      key: "componentWillReceiveProps",
+      value: function componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        this.update(nextProps);
+      }
+    }, {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this.update(this.props);
+        loader$3.on('error', this.handleError, this); // this.container.anchor.set(0.5);
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {}
+    }, {
+      key: "renderChidren",
+      value: function renderChidren(children) {
+        var filters = [].concat(_toConsumableArray(this.props.filters), [this.filter]);
+        return React__default['default'].Children.map(children, function (child) {
+          return /*#__PURE__*/React__default['default'].cloneElement(child, _objectSpread2(_objectSpread2({}, child.props), {}, {
+            filters: filters
+          }), child.props.children);
+        });
+      } // render() {
+      // 	return <div ref={ref=>this.container=ref}  filters={[this.filter]}>{this.props.children}</div>
+      // }
+
+    }, {
+      key: "render",
+      value: function render() {
+        return this.renderChidren(this.props.children);
+      }
+    }]);
+
+    return ReactWaterBeeldFilter;
+  }(React.Component);
+  ReactWaterBeeldFilter.defaultProps = {
+    pause: false,
+    offset: 0,
+    filters: [0]
+  };
+
+  function EMPTY() {
+    var baseTexture = new PIXI.BaseTexture();
+    return new PIXI.Texture(baseTexture);
+  }
+
+  EMPTY.prototype.constructor = EMPTY;
+
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+
+    return color;
+  }
+  var ColorUtils = {
+    getRandomColor: getRandomColor,
+    hex2rgba: function hex2rgba(hex, opacity) {
+      var r, g, b, result;
+      hex = hex.replace('#', '');
+      if (hex.length === 3) { hex = hex + hex; }
+      r = parseInt(hex.substring(0, 2), 16);
+      g = parseInt(hex.substring(2, 4), 16);
+      b = parseInt(hex.substring(4, 6), 16);
+      result = 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')';
+      return result;
+    }
+  }; //alias
+
+  ColorUtils.random = ColorUtils.getRandomColor;
+
+  var DeviceUtil = {
+    isTouchDevice: function isTouchDevice() {
+      return 'ontouchstart' in window // works on most browsers 
+      || navigator.maxTouchPoints; // works on IE10/11 and Surface
+    }
+  };
+
+  var Ease = /*#__PURE__*/function () {
+    function Ease() {
+      _classCallCheck(this, Ease);
+    }
+
+    _createClass(Ease, null, [{
+      key: "getEase",
+      value: function getEase(func) {
+        // TODO: shitty I know... but want to get it going for now
+        var text = Func[func];
+        var fname = text.charAt(0).toLowerCase() + text.slice(1);
+        return Ease[fname];
+      }
+    }, {
+      key: "backIn",
+      value: function backIn(time, begin, change, duration) {
+        var overshoot = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1.70158;
+        return change * (time /= duration) * time * ((overshoot + 1) * time - overshoot) + begin;
+      }
+    }, {
+      key: "backOut",
+      value: function backOut(time, begin, change, duration) {
+        var overshoot = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1.70158;
+        return change * ((time = time / duration - 1) * time * ((overshoot + 1) * time + overshoot) + 1) + begin;
+      }
+    }, {
+      key: "backInOut",
+      value: function backInOut(time, begin, change, duration) {
+        var overshoot = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1.70158;
+
+        if ((time = time / (duration / 2)) < 1) {
+          return change / 2 * (time * time * (((overshoot *= 1.525) + 1) * time - overshoot)) + begin;
+        } else {
+          return change / 2 * ((time -= 2) * time * (((overshoot *= 1.525) + 1) * time + overshoot) + 2) + begin;
+        }
+      }
+    }, {
+      key: "bounceOut",
+      value: function bounceOut(time, begin, change, duration) {
+        if ((time /= duration) < 1 / 2.75) {
+          return change * (7.5625 * time * time) + begin;
+        } else if (time < 2 / 2.75) {
+          return change * (7.5625 * (time -= 1.5 / 2.75) * time + 0.75) + begin;
+        } else if (time < 2.5 / 2.75) {
+          return change * (7.5625 * (time -= 2.25 / 2.75) * time + 0.9375) + begin;
+        } else {
+          return change * (7.5625 * (time -= 2.625 / 2.75) * time + 0.984375) + begin;
+        }
+      }
+    }, {
+      key: "bounceIn",
+      value: function bounceIn(time, begin, change, duration) {
+        return change - Ease.bounceOut(duration - time, 0, change, duration) + begin;
+      }
+    }, {
+      key: "bounceInOut",
+      value: function bounceInOut(time, begin, change, duration) {
+        if (time < duration / 2) {
+          return Ease.bounceIn(time * 2, 0, change, duration) * 0.5 + begin;
+        } else {
+          return Ease.bounceOut(time * 2 - duration, 0, change, duration) * 0.5 + change * 0.5 + begin;
+        }
+      }
+    }, {
+      key: "circIn",
+      value: function circIn(time, begin, change, duration) {
+        return -change * (Math.sqrt(1 - (time = time / duration) * time) - 1) + begin;
+      }
+    }, {
+      key: "circOut",
+      value: function circOut(time, begin, change, duration) {
+        return change * Math.sqrt(1 - (time = time / duration - 1) * time) + begin;
+      }
+    }, {
+      key: "circInOut",
+      value: function circInOut(time, begin, change, duration) {
+        if ((time = time / (duration / 2)) < 1) {
+          return -change / 2 * (Math.sqrt(1 - time * time) - 1) + begin;
+        } else {
+          return change / 2 * (Math.sqrt(1 - (time -= 2) * time) + 1) + begin;
+        }
+      }
+    }, {
+      key: "cubicIn",
+      value: function cubicIn(time, begin, change, duration) {
+        return change * (time /= duration) * time * time + begin;
+      }
+    }, {
+      key: "cubicOut",
+      value: function cubicOut(time, begin, change, duration) {
+        return change * ((time = time / duration - 1) * time * time + 1) + begin;
+      }
+    }, {
+      key: "cubicInOut",
+      value: function cubicInOut(time, begin, change, duration) {
+        if ((time = time / (duration / 2)) < 1) {
+          return change / 2 * time * time * time + begin;
+        } else {
+          return change / 2 * ((time -= 2) * time * time + 2) + begin;
+        }
+      }
+    }, {
+      key: "elasticOut",
+      value: function elasticOut(time, begin, change, duration) {
+        var amplitude = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+        var period = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
+        var overshoot;
+
+        if (time === 0) {
+          return begin;
+        } else if ((time = time / duration) === 1) {
+          return begin + change;
+        } else {
+          if (!(period != null)) {
+            period = duration * 0.3;
+          }
+
+          if (!(amplitude != null) || amplitude < Math.abs(change)) {
+            amplitude = change;
+            overshoot = period / 4;
+          } else {
+            overshoot = period / (2 * Math.PI) * Math.asin(change / amplitude);
+          }
+
+          return amplitude * Math.pow(2, -10 * time) * Math.sin((time * duration - overshoot) * (2 * Math.PI) / period) + change + begin;
+        }
+      }
+    }, {
+      key: "elasticIn",
+      value: function elasticIn(time, begin, change, duration) {
+        var amplitude = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+        var period = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
+        var overshoot;
+
+        if (time === 0) {
+          return begin;
+        } else if ((time = time / duration) === 1) {
+          return begin + change;
+        } else {
+          if (!(period != null)) {
+            period = duration * 0.3;
+          }
+
+          if (!(amplitude != null) || amplitude < Math.abs(change)) {
+            amplitude = change;
+            overshoot = period / 4;
+          } else {
+            overshoot = period / (2 * Math.PI) * Math.asin(change / amplitude);
+          }
+
+          time -= 1;
+          return -(amplitude * Math.pow(2, 10 * time)) * Math.sin((time * duration - overshoot) * (2 * Math.PI) / period) + begin;
+        }
+      }
+    }, {
+      key: "elasticInOut",
+      value: function elasticInOut(time, begin, change, duration) {
+        var amplitude = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+        var period = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
+        var overshoot;
+
+        if (time === 0) {
+          return begin;
+        } else if ((time = time / (duration / 2)) === 2) {
+          return begin + change;
+        } else {
+          if (!(period != null)) {
+            period = duration * (0.3 * 1.5);
+          }
+
+          if (!(amplitude != null) || amplitude < Math.abs(change)) {
+            amplitude = change;
+            overshoot = period / 4;
+          } else {
+            overshoot = period / (2 * Math.PI) * Math.asin(change / amplitude);
+          }
+
+          if (time < 1) {
+            return -0.5 * (amplitude * Math.pow(2, 10 * (time -= 1))) * Math.sin((time * duration - overshoot) * (2 * Math.PI / period)) + begin;
+          } else {
+            return amplitude * Math.pow(2, -10 * (time -= 1)) * Math.sin((time * duration - overshoot) * (2 * Math.PI) / period) + change + begin;
+          }
+        }
+      }
+    }, {
+      key: "expoIn",
+      value: function expoIn(time, begin, change, duration) {
+        if (time === 0) {
+          return begin;
+        }
+
+        return change * Math.pow(2, 10 * (time / duration - 1)) + begin;
+      }
+    }, {
+      key: "expoOut",
+      value: function expoOut(time, begin, change, duration) {
+        if (time === duration) {
+          return begin + change;
+        }
+
+        return change * (-Math.pow(2, -10 * time / duration) + 1) + begin;
+      }
+    }, {
+      key: "expoInOut",
+      value: function expoInOut(time, begin, change, duration) {
+        if (time === 0) {
+          return begin;
+        } else if (time === duration) {
+          return begin + change;
+        } else if ((time = time / (duration / 2)) < 1) {
+          return change / 2 * Math.pow(2, 10 * (time - 1)) + begin;
+        } else {
+          return change / 2 * (-Math.pow(2, -10 * (time - 1)) + 2) + begin;
+        }
+      }
+    }, {
+      key: "linear",
+      value: function linear(time, begin, change, duration) {
+        return change * time / duration + begin;
+      }
+    }, {
+      key: "quadIn",
+      value: function quadIn(time, begin, change, duration) {
+        return change * (time = time / duration) * time + begin;
+      }
+    }, {
+      key: "quadOut",
+      value: function quadOut(time, begin, change, duration) {
+        return -change * (time = time / duration) * (time - 2) + begin;
+      }
+    }, {
+      key: "quadInOut",
+      value: function quadInOut(time, begin, change, duration) {
+        if ((time = time / (duration / 2)) < 1) {
+          return change / 2 * time * time + begin;
+        } else {
+          return -change / 2 * ((time -= 1) * (time - 2) - 1) + begin;
+        }
+      }
+    }, {
+      key: "quartIn",
+      value: function quartIn(time, begin, change, duration) {
+        return change * (time = time / duration) * time * time * time + begin;
+      }
+    }, {
+      key: "quartOut",
+      value: function quartOut(time, begin, change, duration) {
+        return -change * ((time = time / duration - 1) * time * time * time - 1) + begin;
+      }
+    }, {
+      key: "quartInOut",
+      value: function quartInOut(time, begin, change, duration) {
+        if ((time = time / (duration / 2)) < 1) {
+          return change / 2 * time * time * time * time + begin;
+        } else {
+          return -change / 2 * ((time -= 2) * time * time * time - 2) + begin;
+        }
+      }
+    }, {
+      key: "quintIn",
+      value: function quintIn(time, begin, change, duration) {
+        return change * (time = time / duration) * time * time * time * time + begin;
+      }
+    }, {
+      key: "quintOut",
+      value: function quintOut(time, begin, change, duration) {
+        return change * ((time = time / duration - 1) * time * time * time * time + 1) + begin;
+      }
+    }, {
+      key: "quintInOut",
+      value: function quintInOut(time, begin, change, duration) {
+        if ((time = time / (duration / 2)) < 1) {
+          return change / 2 * time * time * time * time * time + begin;
+        } else {
+          return change / 2 * ((time -= 2) * time * time * time * time + 2) + begin;
+        }
+      }
+    }, {
+      key: "sineIn",
+      value: function sineIn(time, begin, change, duration) {
+        return -change * Math.cos(time / duration * (Math.PI / 2)) + change + begin;
+      }
+    }, {
+      key: "sineOut",
+      value: function sineOut(time, begin, change, duration) {
+        return change * Math.sin(time / duration * (Math.PI / 2)) + begin;
+      }
+    }, {
+      key: "sineInOut",
+      value: function sineInOut(time, begin, change, duration) {
+        return -change / 2 * (Math.cos(Math.PI * time / duration) - 1) + begin;
+      }
+    }, {
+      key: "quadraticBezier",
+      value: function quadraticBezier(time, begin, change, duration, p1y) {
+        var t = time / duration;
+
+        var _1t = 1 - t;
+
+        return _1t * _1t * begin + 2 * _1t * t * p1y + t * t * (begin + change);
+      }
+    }, {
+      key: "cubicBezier",
+      value: function cubicBezier(time, begin, change, duration, p1y, p2y) {
+        var t = time / duration;
+
+        var _1t = 1 - t;
+
+        return _1t * _1t * _1t * begin + 3 * _1t * _1t * t * p1y + 3 * _1t * t * t * p2y + t * t * t * (begin + change);
+      }
+    }, {
+      key: "bezier",
+      value: function bezier(time, begin, change, duration) {
+        var arguments$1 = arguments;
+
+        var t = time / duration;
+
+        var _1t = 1 - t;
+
+        var cnt = (arguments.length <= 4 ? 0 : arguments.length - 4) + 1;
+        var sum = 0;
+
+        for (var i = 1; i < (arguments.length <= 4 ? 0 : arguments.length - 4); i++) {
+          sum += cnt * Math.pow(_1t, cnt - i) * Math.pow(t, i) * (i + 4 < 4 || arguments$1.length <= i + 4 ? undefined : arguments$1[i + 4]);
+        }
+
+        return Math.pow(_1t, cnt) * begin + sum + Math.pow(t, cnt) * (begin + change);
+      }
+    }]);
+
+    return Ease;
+  }();
+
+  var PIXIUtlis = /*#__PURE__*/function () {
+    function PIXIUtlis() {
+      _classCallCheck(this, PIXIUtlis);
+    }
+
+    _createClass(PIXIUtlis, null, [{
+      key: "updateLayersOrder",
+
+      /**
+       * [updateLayersOrder description]
+       * @param  {PIXI.DisplayObject} container updateLayersOrder call this function whenever you added a new layer/container
+       * @return {[type]}           [description]
+       */
+      value: function updateLayersOrder(container) {
+        container.children.sort(function (a, b) {
+          a.zBuffer = a.zBuffer || 0;
+          b.zBuffer = b.zBuffer || 0;
+          return b.zBuffer - a.zBuffer;
+        });
+      }
+    }, {
+      key: "backgroundFit",
+
+      /**
+       * [backgroundFit description]
+       * @param  {[type]} background [description]
+       * @param  {[type]} container  [description]
+       * @return {[type]}            [description]
+       */
+      value: function backgroundFit(background, container) {
+        var imageAspect = background.width / background.height,
+            containerW = container.width,
+            containerH = container.height,
+            containerAspect = containerW / containerH;
+
+        if (containerW > containerH) {
+          if (containerAspect < imageAspect) {
+            // taller
+            //console.log('taller')
+            background.width = containerW;
+            background.height = containerW / imageAspect; // background.x = 0
+            // background.y =( containerH - background.height)/2;// -(containerW/imageAspect-containerH)/2
+          } else {
+            // wider
+            background.height = containerH;
+            background.width = containerH * imageAspect; //background.width * containerH/background.height
+            // background.x = -(containerH*imageAspect-containerW)/2
+            // background.y =0
+          }
+        } else {
+          if (containerAspect < imageAspect) {
+            // taller
+            background.width = containerW;
+            background.height = containerW / imageAspect; // background.x = 0
+            // background.y =( containerH - background.height)/2;// -(containerW/imageAspect-containerH)/2
+          } else {
+            // wider
+            background.height = containerH;
+            background.width = containerH * imageAspect; //background.width * containerH/background.height
+            // background.x =  -(containerH*imageAspect-containerW)/2;
+            // background.y =0
+          }
+        } // background.x = 0;
+        // background.y = 0;
+
+
+        return [background.x, background.y, background.width, background.height];
+      }
+    }, {
+      key: "backgroundFill",
+      value: function backgroundFill(background, container) {
+        var orig = Object.assign({}, {
+          background: background,
+          container: container
+        });
+        var imageAspect = background.width / background.height,
+            containerW = container.width,
+            containerH = container.height,
+            containerAspect = containerW / containerH;
+
+        if (containerW > containerH) {
+          if (containerAspect < imageAspect) {
+            // taller
+            //console.log('taller (containerAspect) >')
+            // background.height =  containerH
+            // background.width = containerH * imageAspect;//background.width * containerH/background.height
+            // background.x = -(containerH*imageAspect-(containerW))/2;// * container.scale.x
+            // background.smoothed = false;
+            // background.y = ( orig.background.height-containerH)/2;// * container.scale.x;
+            var viewHeight = containerH; //(renderer.height / renderer.resolution);
+
+            background.scale.y = viewHeight / background._texture.baseTexture.height;
+            background.scale.x = background.scale.y;
+            background.scale.x = background.scale.y; // background.y = -(viewHeight - background.height)/2
+            // 
+            // background.y =  -200
+            //background.y =0
+
+            return [background.x, background.y, background.width, background.height];
+          } else {
+            // wider
+            //console.log('::wider (containerAspect) >',orig.background.width,orig.container.width,background.width,container.width)
+            // background.width = containerW
+            // background.height =  containerW / imageAspect
+            // background.x = (orig.background.width-containerW)/2
+            // //(background.width - container.width)/2 ;
+            //
+            //
+            // background.y = ( containerH - background.height)/2;// -(containerW/imageAspect-containerH)/2
+            var viewWidth = containerW; //(renderer.width / renderer.resolution);
+
+            background.scale.x = viewWidth / background._texture.baseTexture.width;
+            background.scale.y = background.scale.x;
+            background.scale.y = background.scale.x; // background.y = -200;//(viewHeight - background.height)/2
+
+            return background; //[background.x,background.y,background.width,background.height];
+          }
+        } else {
+          if (containerAspect < imageAspect) {
+            // taller
+            // console.log('taller (containerAspect)<')
+            background.height = containerH;
+            background.width = containerH * imageAspect; //background.width * containerH/background.height
+
+            background.x = -(containerH * imageAspect - containerW) / 2;
+            background.y = 0;
+          } else {
+            // wider
+            // console.log('wider (containerAspect)<')
+            background.width = containerW;
+            background.height = containerW / imageAspect;
+            background.x = (background.width - container.width) / 2; //background.x = 0
+
+            background.y = (containerH - background.height) / 2; // -(containerW/imageAspect-containerH)/2
+          }
+        }
+
+        return background; //[background.x,background.y,background.width,background.height]
+      }
+    }, {
+      key: "copyTextureAsImage",
+      value: function copyTextureAsImage(texture, callback) {
+        var canvas = document.getElementById('canvasID'); //var buffer;
+
+        if (!document.getElementById('canvasID')) {
+          canvas = document.createElement('canvas');
+          canvas.setAttribute("id", "canvasID");
+          canvas.style.position = 'absolute'; // canvas.style.top = '0px';
+          // canvas.style.left = '0px';
+
+          canvas.width = texture.width / 2;
+          canvas.height = texture.height / 2; //document.body.appendChild(canvas);
+        } // console.log('copyTextureAsImage ---->',texture.width, texture.height)
+
+
+        var buffer_context = canvas.getContext('2d'); // buffer = new PIXI.CanvasBuffer(texture.width, texture.height)
+        // Fill the path
+
+        /*    buffer_context.fillStyle = "#ff0000";
+            buffer_context.fillRect(0,0,texture.width,texture.height);*/
+        //PIXIUtlis.backgroundFill(background,{x:rect[0]-(rect[2]*(scale-1)),y:rect[1]-(rect[3]*(scale-1)),width:rect[2]*scale,height:rect[3]*scale})
+
+        buffer_context.drawImage(texture.baseTexture.source, 0, 0, texture.width / 2, texture.height / 2);
+        /* var image = new Image();
+         image.src = canvas.toDataURL();
+          document.body.appendChild(image);*/
+        //var renderer = new PIXI.CanvasRenderer( texture.width, texture.height);
+        //var texture = new PIXI.RenderTexture(buffer_context, texture.width, texture.height);
+        // var flechaURI = 'data:image/jpeg;base64,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';
+
+        var sprite = new PIXI$1.Sprite();
+        var imageElement = new Image(); //document.getElementById("MyPix");
+
+        imageElement.src = canvas.toDataURL("image/png");
+
+        imageElement.onload = function () {
+          //var loader = new PIXI.AssetLoader([  canvas.toDataURL("image/png")]);
+          var myBaseTexture = new PIXI$1.BaseTexture(imageElement);
+          var texture2 = new PIXI$1.Texture(myBaseTexture); //,new PIXI.Rectangle(0,0,100,100));
+          // then add to the cache (if required)
+
+          PIXI$1.Texture.addTextureToCache(texture2, "someId"); //setTimeout(()=>{
+
+          var bg = PIXI$1.Sprite.fromImage(canvas.toDataURL("image/png")); //'someId')
+          // bg.texture.baseTexture.on('loaded',()=>{
+
+          console.log(myBaseTexture.width, 'x', myBaseTexture.height); // PIXIUtlis.backgroundFill(bg,{x:0,y:0,width:canvas.width,height:canvas.height})
+
+          callback(bg); // },1000)
+          // this.state.originRect = PIXIUtlis.backgroundFill(background,{x:rect[0]-(rect[2]*(scale-1)),y:rect[1]-(rect[3]*(scale-1)),width:rect[2]*scale,height:rect[3]*scale})
+          //   PIXIUtlis.backgroundFill(background,{width:window.innerWidth,height:window.innerHeight})
+          // })
+        }; //var texture = PIXI.utils.TextureCache[canvas.toDataURL("image/png",1)];
+        //   return text;// new PIXI.Sprite()
+        //target.addChild(canvas);
+
+      }
+    }]);
+
+    return PIXIUtlis;
+  }();
+
+  var TextureUtils = /*#__PURE__*/function () {
+    function TextureUtils() {
+      _classCallCheck(this, TextureUtils);
+    }
+
+    _createClass(TextureUtils, null, [{
+      key: "updateLayersOrder",
+
+      /**
+       * [updateLayersOrder description]
+       * @param  {PIXI.DisplayObject} container updateLayersOrder call this function whenever you added a new layer/container
+       * @return {[type]}           [description]
+       */
+      value: function updateLayersOrder(container) {
+        container.children.sort(function (a, b) {
+          a.zBuffer = a.zBuffer || 0;
+          b.zBuffer = b.zBuffer || 0;
+          return b.zBuffer - a.zBuffer;
+        });
+      }
+    }, {
+      key: "backgroundFit",
+
+      /**
+       * [backgroundFit description]
+       * @param  {[type]} background [description]
+       * @param  {[type]} container  [description]
+       * @return {[type]}            [description]
+       */
+      value: function backgroundFit(background, container) {
+        var imageAspect = background.width / background.height,
+            containerW = container.width,
+            containerH = container.height,
+            containerAspect = containerW / containerH;
+
+        if (containerW > containerH) {
+          if (containerAspect < imageAspect) {
+            // taller
+            //console.log('taller')
+            background.width = containerW;
+            background.height = containerW / imageAspect;
+            background.x = 0;
+            background.y = (containerH - background.height) / 2; // -(containerW/imageAspect-containerH)/2
+          } else {
+            // wider
+            background.height = containerH;
+            background.width = containerH * imageAspect; //background.width * containerH/background.height
+
+            background.x = -(containerH * imageAspect - containerW) / 2;
+            background.y = 0;
+          }
+        } else {
+          if (containerAspect < imageAspect) {
+            // taller
+            background.width = containerW;
+            background.height = containerW / imageAspect;
+            background.x = 0;
+            background.y = (containerH - background.height) / 2; // -(containerW/imageAspect-containerH)/2
+          } else {
+            // wider
+            background.height = containerH;
+            background.width = containerH * imageAspect; //background.width * containerH/background.height
+
+            background.x = -(containerH * imageAspect - containerW) / 2;
+            background.y = 0;
+          }
+        }
+
+        return [background.x, background.y, background.width, background.height];
+      }
+    }, {
+      key: "backgroundFill",
+      value: function backgroundFill(background, container) {
+        var scale = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
+          x: 1,
+          y: 1
+        };
+        var orig = Object.assign({}, {
+          background: background,
+          container: container
+        });
+        if (!background.scale) { background.scale = {
+          x: 1,
+          y: 1
+        }; }
+        if (!background.scale.x) { background.scale.x = 1; }
+        if (!background.scale.y) { background.scale.y = 1; }
+        var imageAspect = background.width / background.height,
+            containerW = container.width,
+            containerH = container.height,
+            containerAspect = containerW / containerH;
+
+        if (containerW > containerH) {
+          if (containerAspect < imageAspect) {
+            console.log('backgroundFill 2 taller'); // taller
+            //console.log('taller (containerAspect) >')
+            // background.height =  containerH
+            // background.width = containerH * imageAspect;//background.width * containerH/background.height
+            // background.x = -(containerH*imageAspect-(containerW))/2;// * container.scale.x
+            // background.smoothed = false;
+            // background.y = ( orig.background.height-containerH)/2;// * container.scale.x;
+
+            var viewHeight = containerH; //(renderer.height / renderer.resolution);
+
+            var myScale = viewHeight / background.height;
+            background.scale.y = myScale; //viewHeight/background.height///background.height/viewHeight * scale.y;
+
+            background.scale.x = background.scale.y * scale.x;
+            background.width = containerW * scale.x;
+            background.height = containerW / imageAspect * scale.y;
+            background.x = -(containerW * scale.x - containerW) / 2;
+            background.y = -(containerW / imageAspect * scale.y - containerH) / 2; // console.log(' background.scale.y ',scale.x, viewHeight ,'=', background.height*background.scale.y,`(${ background.height}*${background.scale.y})` )
+
+            if (background.width > background.height) {
+              var viewHeight = containerH; //(renderer.height / renderer.resolution);
+
+              var myScale = viewHeight / background.height;
+              background.scale.y = myScale; //viewHeight/background.height///background.height/viewHeight * scale.y;
+
+              background.scale.x = background.scale.y * scale.x;
+              background.height = containerW / imageAspect * myScale * scale.y;
+              background.width = containerW * myScale * scale.x;
+              background.x = (background.width - containerW) / 2;
+              background.y = -(background.height - containerH) / 2; // console.log(' background.scale.y ',scale.x, viewHeight ,'=', background.height*background.scale.y,`(${ background.height}*${background.scale.y})` )
+            } // background.y = -(viewHeight - background.height)/2
+            // 
+            // background.y =  -200
+            //background.y =0
+
+
+            return background; //[background.x,background.y,background.width,background.height];
+          } else {
+            console.log('backgroundFill 3 wider');
+
+            if (containerAspect < imageAspect) {
+              console.log('backgroundFill 3 taller'); // taller
+              // console.log('taller (containerAspect)<')
+
+              background.height = containerH * scale.y;
+              background.width = containerH * imageAspect * scale.x; //background.width * containerH/background.height
+
+              background.x = -(containerH * imageAspect - containerW * scale.x) / 2;
+              background.y = 0;
+            } else {
+              console.log('backgroundFill 5 wider'); // wider
+              // console.log('wider (containerAspect)<')
+
+              background.height = containerH * scale.y;
+              background.width = containerH * imageAspect * scale.x;
+              background.x = (containerW - background.width) / 2;
+              background.y = (containerH - background.height) / 2; //*scale.y;// -(containerW/imageAspect-containerH)/2
+            } // wider
+            //console.log('::wider (containerAspect) >',orig.background.width,orig.container.width,background.width,container.width)
+            // background.width = containerW
+            // background.height =  containerW / imageAspect
+            // background.x = (orig.background.width-containerW)/2
+            // //(background.width - container.width)/2 ;
+            //
+            //
+            // background.y = ( containerH - background.height)/2;// -(containerW/imageAspect-containerH)/2
+            // var viewWidth = containerW//(renderer.width / renderer.resolution);
+            // background.scale.x = viewWidth/ background.width;
+            // background.scale.y = background.scale.x;
+            // background.scale.y = background.scale.x;
+            // background.width =  containerW
+            // background.height = containerW / imageAspect;//background.width * containerH/background.height
+            // background.x = - (containerW*scale.x - containerW)/2;
+            // background.y = -((containerH*imageAspect*scale.y)-containerH)/2;
+
+
+            console.log('backgroundFill', background);
+            return background; //[background.x,background.y,background.width,background.height];
+          }
+        } else {
+          if (containerAspect < imageAspect) {
+            console.log('backgroundFill 3 taller'); // taller
+            // console.log('taller (containerAspect)<')
+
+            background.height = containerH * scale.y;
+            background.width = containerH * imageAspect * scale.x; //background.width * containerH/background.height
+
+            background.x = -(containerH * imageAspect - containerW * scale.x) / 2;
+            background.y = 0;
+          } else {
+            console.log('backgroundFill 5 wider'); // wider
+            // console.log('wider (containerAspect)<')
+
+            background.width = containerW * scale.x;
+            background.height = containerW / imageAspect * scale.y;
+            background.x = (background.width * scale.x - container.width) / 2; //background.x = 0
+
+            background.y = (containerH - background.height * scale.y) / 2; // -(containerW/imageAspect-containerH)/2
+          }
+        }
+
+        return background; //[background.x,background.y,background.width,background.height]
+      }
+    }]);
+
+    return TextureUtils;
+  }();
+
+  var Vec2Util = {
+    horizontalAngle: function horizontalAngle(a, b) {
+      var sAngle = Math.atan2(b[1] - b[1], b[0] - b[0]);
+      var pAngle = Math.atan2(a[1] - b[1], a[1] - b[0]);
+      var angle = (pAngle - sAngle) * 180 / Math.PI;
+      return angle;
+    },
+    angle: function angle(a, b) {
+      return 360 - (720 + this.horizontalAngle(a, b)) % 360;
+    }
+  };
+
+  function plot2(propname, x, y) {
+    var color = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '#ff0000';
+    return function (x, y) {
+      if (!document.getElementById('graph-canvas')) {
+        var canvas = document.createElement('canvas');
+        canvas.id = 'graph-canvas';
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        canvas.style.zIndex = 99999999999999999999;
+        canvas.style.position = 'absolute';
+        canvas.style.border = '0px solid';
+        canvas.style.backgroundColor = 'rgba(0,0,0,.4)';
+        canvas.style.pointerEvents = 'none';
+        document.body.appendChild(canvas);
+      }
+
+      var GRAPH_CANVAS = canvas; // if (!this.props.console && !this.props.debug) return;
+
+      if (!GRAPH_CANVAS.graph) { GRAPH_CANVAS.graph = []; }
+      var ctx = GRAPH_CANVAS.getContext('2d');
+      var graphScale = 0.03; //
+
+      if (x % GRAPH_CANVAS.width >= GRAPH_CANVAS.width - 1) {
+        ctx.clearRect(0, 0, GRAPH_CANVAS.width, GRAPH_CANVAS.height);
+        GRAPH_CANVAS.graph.lasttime = 0;
+        return;
+      }
+
+      var x = x % GRAPH_CANVAS.width;
+      var y = y * graphScale + GRAPH_CANVAS.height / 2; // if (this.lastX > x) this.lastX = 1;
+
+      ctx.beginPath();
+      ctx.moveTo(GRAPH_CANVAS.graph.lasttime || 0, GRAPH_CANVAS.graph[propname] || GRAPH_CANVAS.height / 2); // console.log( 'moveTo',GRAPH_CANVAS.graph['lasttime'] || 0 ,', ',  GRAPH_CANVAS.graph[propname] || GRAPH_CANVAS.height / 2)
+
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      ctx.closePath();
+      GRAPH_CANVAS.graph[propname] = y;
+      GRAPH_CANVAS.graph.lasttime = x;
+    }(x, y);
+  }
+
+  var VIDEO_TEXTURE_ADDED = 'videoTextureAdded';
+  var VIDEO_TEXTURE_REMOVED = 'videoTextureRemoved';
+  var TEXTURE_ADDED = 'textureAdded';
+  var TEXTURE_REMOVED = 'TEXTURE_REMOVED';
+  // {
+  // 	this.bind();
+  // 	var gl = this.gl;
+  // 	gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, this.premultiplyAlpha);
+  // 	var newWidth = source.videoWidth || source.width;
+  // 	var newHeight = source.videoHeight || source.height;
+  // 	if(newHeight !== this.height || newWidth !== this.width || source.videoWidth)
+  // 	{
+  // 		gl.texImage2D(gl.TEXTURE_2D, 0, this.format, this.format, this.type, source);
+  // 	}
+  // 	else
+  // 	{
+  //     	gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, this.format, this.type, source);
+  // 	}
+  // 	// if the source is a video, we need to use the videoWidth / videoHeight properties as width / height will be incorrect.
+  // 	this.width = newWidth;
+  // 	this.height = newHeight;
+  // };
+
+
+  var getFileType = function getFileType(url) {
+    var regex = /.mp4|.webm|.jpg|.png/;
+    var found = url.match(regex);
+    return found[0];
+  };
+
+  var TextureLoader$2 = function TextureLoader(_uniforms, filter) {
+    var _this = this;
+
+    _classCallCheck(this, TextureLoader);
+
+    _defineProperty(this, "_userInteracted", false);
+
+    _defineProperty(this, "_subscribe", null);
+
+    _defineProperty(this, "subscribe", function (subscribe) {
+      _this._subscribe = subscribe;
+    });
+
+    _defineProperty(this, "next", function (event) {
+      if (typeof _this._subscribe === 'function') {
+        _this._subscribe(event);
+      }
+
+      console.log('event', event.type, event.url, event.name);
+    });
+
+    _defineProperty(this, "removeTexture", function (textureData) {
+      var texture = textureData.texture,
+          url = textureData.url,
+          cancel = textureData.cancel,
+          alias = textureData.alias;
+      var filetype = getFileType(url);
+
+      switch (filetype) {
+        case '.mp4':
+        case '.webm':
+          var videoElement = texture.baseTexture.source;
+
+          if (videoElement.nodeName === 'VIDEO') {
+            videoElement.removeEventListener("loadeddata", videoElement._loadeddata); // videoElement.pause();
+
+            cancel();
+
+            _this.next({
+              type: VIDEO_TEXTURE_REMOVED,
+              video: videoElement,
+              url: url,
+              name: alias
+            });
+          }
+
+          break;
+
+        default:
+          _this.next({
+            type: TEXTURE_REMOVED,
+            url: url,
+            name: alias
+          });
+
+          break;
+      }
+    });
+
+    _defineProperty(this, "_prevTextures", {});
+
+    _defineProperty(this, "addTextTures", function (uniforms, textures, id) {
+      if (textures === undefined || textures === null) { return; }
+      var texturesArr = Array.isArray(textures) ? textures : [textures];
+      if (texturesArr.length <= 0) { return; }
+      texturesArr.forEach(function (file, i) {
+        var name = Object.keys(file)[0];
+        var alias = id ? id : name;
+        var url = file[name];
+
+        if (_this._prevTextures[alias]) {
+          if (_this._prevTextures[alias]) {
+            _this.removeTexture(_this._prevTextures[alias]);
+          }
+        } // loading
+
+
+        var filetype = getFileType(url);
+        var texture = _this.cachedTextures[url];
+
+        if (texture && texture.textureCacheIds && texture.textureCacheIds[0] === '/assets/demo/demo5-(1).jpg') {
+          texture = null;
+        }
+
+        switch (filetype) {
+          case '.mp4':
+          case '.webm':
+
+            if (!texture) {
+              var v = document.createElement('video');
+              v.crossOrigin = "anonymous";
+              v.setAttribute('_GLSL_ID', url);
+              v.muted = true;
+              v.src = url;
+              v.autoplay = true;
+              var sprite = new PIXI.Sprite.from(PIXI.Texture.fromVideo(v, 1, true, true));
+              texture = sprite.texture; // UGLY UGLY UGLY !!!!
+
+              var source = texture.baseTexture.source;
+
+              _this.next({
+                type: VIDEO_TEXTURE_ADDED,
+                video: source,
+                url: url,
+                texture: texture,
+                name: alias
+              });
+
+              sprite.texture.baseTexture.on('loaded', function () {
+                var texture = sprite.texture;
+
+                _this.applyTexture(texture, uniforms, alias, url);
+
+                texture.valid = true;
+                texture.requiresUpdate = true;
+                var source = texture.baseTexture.source;
+
+                _this.next({
+                  type: VIDEO_TEXTURE_ADDED,
+                  video: source,
+                  url: url,
+                  texture: texture,
+                  name: alias
+                });
+
+                _this.autoUpdate(texture);
+              });
+
+              if (sprite.texture.baseTexture.hasLoaded) {
+                var _texture = sprite.texture;
+                _texture.valid = true;
+                _texture.requiresUpdate = true;
+
+                _this.applyTexture(_texture, uniforms, alias, url);
+
+                var _source = _texture.baseTexture.source;
+
+                _this.next({
+                  type: VIDEO_TEXTURE_ADDED,
+                  video: _source,
+                  url: url,
+                  texture: _texture,
+                  name: alias
+                });
+
+                _this.autoUpdate(_texture);
+              }
+            } else {
+              _this.applyTexture(texture, uniforms, alias, url);
+
+              var _source2 = texture.baseTexture.source;
+              texture.valid = true;
+              texture.requiresUpdate = true;
+
+              _this.next({
+                type: VIDEO_TEXTURE_ADDED,
+                video: _source2,
+                url: url,
+                texture: texture,
+                name: alias
+              });
+
+              _this.autoUpdate(texture);
+            }
+
+            break;
+
+          default:
+            if (!texture) {
+              var _sprite = new PIXI.Sprite.from(url);
+
+              texture = _sprite.texture;
+
+              _sprite.texture.baseTexture.on('loaded', function () {
+                //const source = texture.baseTexture.source;
+                _this.next({
+                  type: TEXTURE_ADDED,
+                  url: url,
+                  texture: texture,
+                  name: alias
+                });
+
+                _this.applyTexture(texture, uniforms, alias, url);
+              });
+
+              if (_sprite.texture.baseTexture.hasLoaded) {
+                _this.next({
+                  type: TEXTURE_ADDED,
+                  url: url,
+                  texture: texture,
+                  name: alias
+                });
+
+                _this.applyTexture(texture, uniforms, alias, url);
+              }
+            } else {
+              _this.next({
+                type: TEXTURE_ADDED,
+                url: url,
+                texture: texture,
+                name: alias
+              });
+
+              _this.applyTexture(texture, uniforms, alias, url);
+            }
+
+            _this._prevTextures[alias] = {
+              texture: texture,
+              cancel: function cancel() {},
+              url: url,
+              alias: alias
+            };
+            break;
+        } // end switch
+
+
+        texturesArr[i] = texture;
+      });
+      return texturesArr.length > 1 ? texturesArr : texturesArr[0];
+    });
+
+    _defineProperty(this, "applyTexture", function (texture, uniforms, alias, url) {
+      var cache = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
+      // texture.baseTexture.wrapMode = PIXI.WRAP_MODES.CLAMP;
+      if (_this.filter && _this.filter.renderer) { _this.filter.renderer.bindTexture(texture); }
+
+      _this.bindSampler2D(texture, uniforms, alias);
+
+      if (cache) { _this.cacheTexture(texture, url, cache); }
+    });
+
+    _defineProperty(this, "cacheTexture", function (texture, url) {
+      _this.cachedTextures = _objectSpread2(_objectSpread2({}, _this.cachedTextures), {}, _defineProperty({}, url, texture));
+    });
+
+    _defineProperty(this, "autoUpdate", function (texture) {
+      PIXI.ticker.shared.add(function () {
+        texture.baseTexture.update();
+      }, _this);
+    });
+
+    _defineProperty(this, "bindSampler2D", function (texture, uniforms, alias) {
+      // add textrue to unifor
+      // if(uniforms[alias] ) uniforms[alias]  = PIXI.Texture.EMPTY ;
+      if (!uniforms[alias]) {
+        uniforms[alias] = {
+          type: 'sampler2D',
+          value: texture
+        };
+      }
+
+      texture.baseTexture.wrapMode = PIXI.WRAP_MODES.CLAMP;
+
+      _this.updateUniforms(texture, alias, uniforms);
+    });
+
+    _defineProperty(this, "updateUniforms", function (texture, name, uniforms) {
+      var width = texture.width,
+          height = texture.height; // Generic as can be:
+      // Image data: (wi, hi) and define ri = wi / hi
+      // Screen resolution: (ws, hs) and define rs = ws / hs
+      // Scaled image dimensions:
+
+      var wi = width;
+      var hi = height;
+      var ws = window.innerWidth;
+      var hs = window.innerHeight;
+      var ri = wi / hi;
+      var rs = ws / hs; // texture needs downscale
+
+      var _ref = rs < ri ? [wi * hs / hi, hs] : [ws, hi * ws / wi],
+          _ref2 = _slicedToArray(_ref, 2),
+          sx = _ref2[0],
+          sy = _ref2[1];
+
+      var scale = [ws / sx, hs / sy]; //[(ws/sx)*ws,(hs/sy)*hs]
+
+      if (!uniforms["scale_".concat(name)]) {
+        uniforms["scale_".concat(name)] = {
+          type: 'f2',
+          value: scale
+        };
+      } else {
+        uniforms["scale_".concat(name)] = scale;
+      } // center
+
+
+      var wn = sx; //(ws/sx)*ws;
+
+      var hn = sy; // const tx = ( -(ws - wn)/2)/ws;
+      // const ty = ((ws-hn)/2)/ws;
+
+      var tx = (ws / 2 - wn / 2) / wn; ///((- ((ws - wn)/2))/ws)+;
+
+      var ty = (hs - hn) / 2 / ws;
+
+      if (!uniforms["transform_".concat(name)]) {
+        uniforms["transform_".concat(name)] = {
+          type: 'f2',
+          value: [tx, ty]
+        };
+      } else {
+        uniforms["transform_".concat(name)] = [tx, ty];
+      }
+
+      console.log('size', tx, ty); //,{wi,hi,ri,rs})
+
+      uniforms[name] = texture;
+    });
+
+    this.filter = filter;
+    this.uniforms = _uniforms;
+    this.cachedTextures = {};
+    document.addEventListener('click', function () {
+      _this._userInteracted = true;
+    });
+  };
+
+  function filterManagerMixin(fm) {
+    if (fm.prepareBackdrop) { return; }
+    fm.pushFilter = pushFilter;
+    fm.popFilter = popFilter;
+    fm.syncUniforms = syncUniforms;
+    fm.prepareBackdrop = prepareBackdrop;
+  }
+
+  function pushFilter(target, filters) {
+    var renderer = this.renderer;
+    var filterData = this.filterData;
+
+    if (!filterData) {
+      filterData = this.renderer._activeRenderTarget.filterStack; // add new stack
+
+      var filterState = new FilterState();
+      filterState.sourceFrame = filterState.destinationFrame = this.renderer._activeRenderTarget.size;
+      filterState.renderTarget = renderer._activeRenderTarget;
+      this.renderer._activeRenderTarget.filterData = filterData = {
+        index: 0,
+        stack: [filterState]
+      };
+      this.filterData = filterData;
+    } // get the current filter state..
+
+
+    var currentState = filterData.stack[++filterData.index];
+    var renderTargetFrame = filterData.stack[0].destinationFrame;
+
+    if (!currentState) {
+      currentState = filterData.stack[filterData.index] = new FilterState();
+    }
+
+    var fullScreen = target.filterArea && target.filterArea.x === 0 && target.filterArea.y === 0 && target.filterArea.width === renderer.screen.width && target.filterArea.height === renderer.screen.height; // for now we go off the filter of the first resolution..
+
+    var resolution = filters[0].resolution;
+    var padding = filters[0].padding | 0;
+    var targetBounds = fullScreen ? renderer.screen : target.filterArea || target.getBounds(true);
+    var sourceFrame = currentState.sourceFrame;
+    var destinationFrame = currentState.destinationFrame;
+    sourceFrame.x = (targetBounds.x * resolution | 0) / resolution;
+    sourceFrame.y = (targetBounds.y * resolution | 0) / resolution;
+    sourceFrame.width = (targetBounds.width * resolution | 0) / resolution;
+    sourceFrame.height = (targetBounds.height * resolution | 0) / resolution;
+
+    if (!fullScreen) {
+      if (filterData.stack[0].renderTarget.transform) ; else if (filters[0].autoFit) {
+        sourceFrame.fit(renderTargetFrame);
+      } // lets apply the padding After we fit the element to the screen.
+      // this should stop the strange side effects that can occur when cropping to the edges
+
+
+      sourceFrame.pad(padding);
+    }
+
+    for (var i = 0; i < filters.length; i++) {
+      var backdrop = null;
+      console.log('uniforms', filters);
+
+      if (filters[i].backdropUniformName) {
+        if (backdrop === null) {
+          backdrop = this.prepareBackdrop(sourceFrame);
+        }
+
+        filters[i]._backdropRenderTarget = backdrop;
+      }
+    }
+
+    destinationFrame.width = sourceFrame.width;
+    destinationFrame.height = sourceFrame.height; // lets play the padding after we fit the element to the screen.
+    // this should stop the strange side effects that can occur when cropping to the edges
+
+    var renderTarget = this.getPotRenderTarget(renderer.gl, sourceFrame.width, sourceFrame.height, resolution);
+    currentState.target = target;
+    currentState.filters = filters;
+    currentState.resolution = resolution;
+    currentState.renderTarget = renderTarget; // bind the render target to draw the shape in the top corner..
+
+    renderTarget.setFrame(destinationFrame, sourceFrame); // bind the render target
+
+    renderer.bindRenderTarget(renderTarget);
+    renderTarget.clear(filters[filters.length - 1].clearColor || [0, 0, 0, 0]);
+  }
+
+  function popFilter() {
+    var filterData = this.filterData;
+    var lastState = filterData.stack[filterData.index - 1];
+    var currentState = filterData.stack[filterData.index];
+    this.quad.map(currentState.renderTarget.size, currentState.sourceFrame).upload();
+    var filters = currentState.filters;
+
+    if (filters.length === 1) {
+      filters[0].apply(this, currentState.renderTarget, lastState.renderTarget, false, currentState);
+      this.freePotRenderTarget(currentState.renderTarget);
+    } else {
+      var flip = currentState.renderTarget;
+      var flop = this.getPotRenderTarget(this.renderer.gl, currentState.sourceFrame.width, currentState.sourceFrame.height, currentState.resolution);
+      flop.setFrame(currentState.destinationFrame, currentState.sourceFrame); // finally lets clear the render target before drawing to it..
+
+      flop.clear();
+      var i = 0;
+
+      for (i = 0; i < filters.length - 1; ++i) {
+        filters[i].apply(this, flip, flop, true, currentState);
+        var t = flip;
+        flip = flop;
+        flop = t;
+      }
+
+      filters[i].apply(this, flip, lastState.renderTarget, false, currentState);
+      this.freePotRenderTarget(flip);
+      this.freePotRenderTarget(flop);
+    }
+
+    currentState.clear();
+    var backdropFree = false;
+
+    for (var _i = 0; _i < filters.length; _i++) {
+      if (filters[_i]._backdropRenderTarget) {
+        if (!backdropFree) {
+          this.freePotRenderTarget(filters[_i]._backdropRenderTarget);
+          backdropFree = true;
+        }
+
+        filters[_i]._backdropRenderTarget = null;
+      }
+    }
+
+    filterData.index--;
+
+    if (filterData.index === 0) {
+      this.filterData = null;
+    }
+  }
+
+  function syncUniforms(shader, filter) {
+    var renderer = this.renderer;
+    var gl = renderer.gl;
+    var uniformData = filter.uniformData;
+    var uniforms = filter.uniforms; // 0 is reserved for the PixiJS texture so we start at 1!
+
+    var textureCount = 1;
+    var currentState; // filterArea and filterClamp that are handled by FilterManager directly
+    // they must not appear in uniformData
+
+    if (shader.uniforms.filterArea) {
+      currentState = this.filterData.stack[this.filterData.index];
+      var filterArea = shader.uniforms.filterArea;
+      filterArea[0] = currentState.renderTarget.size.width;
+      filterArea[1] = currentState.renderTarget.size.height;
+      filterArea[2] = currentState.sourceFrame.x;
+      filterArea[3] = currentState.sourceFrame.y;
+      shader.uniforms.filterArea = filterArea;
+    } // use this to clamp displaced texture coords so they belong to filterArea
+    // see displacementFilter fragment shader for an example
+
+
+    if (shader.uniforms.filterClamp) {
+      currentState = currentState || this.filterData.stack[this.filterData.index];
+      var filterClamp = shader.uniforms.filterClamp;
+      filterClamp[0] = 0;
+      filterClamp[1] = 0;
+      filterClamp[2] = (currentState.sourceFrame.width - 1) / currentState.renderTarget.size.width;
+      filterClamp[3] = (currentState.sourceFrame.height - 1) / currentState.renderTarget.size.height;
+      shader.uniforms.filterClamp = filterClamp;
+    } // TODO Caching layer..
+
+
+    for (var i in uniformData) {
+      if (!shader.uniforms.data[i]) {
+        continue;
+      }
+
+      if (i === filter.backdropUniformName) {
+        var rt = filter._backdropRenderTarget;
+        shader.uniforms[i] = textureCount;
+        renderer.boundTextures[textureCount] = renderer.emptyTextures[textureCount];
+        gl.activeTexture(gl.TEXTURE0 + textureCount);
+        gl.bindTexture(gl.TEXTURE_2D, rt.texture);
+        textureCount++; // continue;
+      }
+
+      var type = uniformData[i].type;
+
+      if (type === 'sampler2d' && uniforms[i] !== 0) {
+        if (uniforms[i].baseTexture) {
+          shader.uniforms[i] = this.renderer.bindTexture(uniforms[i].baseTexture, textureCount);
+        } else {
+          shader.uniforms[i] = textureCount;
+          var _gl = this.renderer.gl;
+          renderer.boundTextures[textureCount] = renderer.emptyTextures[textureCount];
+
+          _gl.activeTexture(_gl.TEXTURE0 + textureCount);
+
+          uniforms[i].texture.bind();
+        }
+
+        textureCount++;
+      } else if (type === 'mat3') {
+        // check if its PixiJS matrix..
+        if (uniforms[i].a !== undefined) {
+          shader.uniforms[i] = uniforms[i].toArray(true);
+        } else {
+          shader.uniforms[i] = uniforms[i];
+        }
+      } else if (type === 'vec2') {
+        // check if its a point..
+        if (uniforms[i].x !== undefined) {
+          var val = shader.uniforms[i] || new Float32Array(2);
+          val[0] = uniforms[i].x;
+          val[1] = uniforms[i].y;
+          shader.uniforms[i] = val;
+        } else {
+          shader.uniforms[i] = uniforms[i];
+        }
+      } else if (type === 'float') {
+        if (shader.uniforms.data[i].value !== uniformData[i]) {
+          shader.uniforms[i] = uniforms[i];
+        }
+      } else {
+        shader.uniforms[i] = uniforms[i];
+      }
+    }
+  }
+  /**
+   * Takes a part of current render target corresponding to bounds
+   * fits sourceFrame to current render target frame to evade problems
+   *
+   * @param {PIXI.Rectangle} bounds backdrop region, can be modified inside
+   * @returns {PIXI.RenderTarget} pooled renderTexture with backdrop
+   */
+
+
+  function prepareBackdrop(bounds) {
+    var renderer = this.renderer;
+    var renderTarget = renderer._activeRenderTarget;
+
+    if (renderTarget.root) {
+      return null;
+    }
+
+    var resolution = renderTarget.resolution;
+    var fr = renderTarget.sourceFrame || renderTarget.destinationFrame;
+    bounds.fit(fr);
+    var x = (bounds.x - fr.x) * resolution;
+    var y = (bounds.y - fr.y) * resolution;
+    var w = bounds.width * resolution;
+    var h = bounds.height * resolution;
+    var gl = renderer.gl;
+    var rt = this.getPotRenderTarget(gl, w, h, 1);
+    renderer.boundTextures[1] = renderer.emptyTextures[1];
+    gl.activeTexture(gl.TEXTURE0 + 1);
+    gl.bindTexture(gl.TEXTURE_2D, rt.texture.texture);
+    gl.copyTexSubImage2D(gl.TEXTURE_2D, 0, 0, 0, x, y, w, h);
+    return rt;
+  }
+
+  var FilterState = /*#__PURE__*/function () {
+    function FilterState() {
+      _classCallCheck(this, FilterState);
+
+      _defineProperty(this, "renderTarget", null);
+
+      _defineProperty(this, "target", null);
+
+      _defineProperty(this, "resolution", 1);
+
+      _defineProperty(this, "sourceFrame", new PIXI$1.Rectangle());
+
+      _defineProperty(this, "destinationFrame", new PIXI$1.Rectangle());
+
+      _defineProperty(this, "filters", []);
+    }
+
+    _createClass(FilterState, [{
+      key: "clear",
+
+      /**f
+       * clears the state
+       */
+      value: function clear() {
+        this.filters = null;
+        this.target = null;
+        this.renderTarget = null;
+      }
+    }]);
+
+    return FilterState;
+  }();
+
+  exports.AccessibilityManager = AccessibilityManager;
+  exports.BeeldBendFilter = BeeldBendFilter;
+  exports.BeeldFlagFilter = BeeldFlagFilter;
+  exports.BeeldWaveFilter = BeeldWaveFilter;
   exports.Canvas = Canvas;
+  exports.ColorUtils = ColorUtils;
+  exports.DepthPerspectiveFilter = index;
+  exports.DeviceUtil = DeviceUtil;
+  exports.DisplacementFilter = DisplacementFilterComponent;
+  exports.DistortionHoverFilter = DistortionHoverFilterComponent;
+  exports.Div = Div;
+  exports.EMPTY = EMPTY;
+  exports.EaseUtil = Ease;
+  exports.FpsController = FPSController$1;
+  exports.ImageBeeldFilter = ImageBeeldFilterComponent;
+  exports.Img = Img;
+  exports.NoiseFilter = NoiseFilter;
+  exports.ParrallaxHoverFilter = ParrallaxHoverFilterComponent;
+  exports.PixiUtils = PIXIUtlis;
+  exports.ScanLineFilter = ScanLineFilter;
+  exports.TextureLoader = TextureLoader$2;
+  exports.TextureUtils = TextureUtils;
+  exports.VHSFilter = VHSFilter;
+  exports.Vec2Util = Vec2Util;
+  exports.WaterBeeldFilter = ReactWaterBeeldFilter;
+  exports.animate = createAnimate;
+  exports.filterManagerMixin = filterManagerMixin;
+  exports.plot = plot2;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
