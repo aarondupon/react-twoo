@@ -22,14 +22,13 @@ export interface IReactPIXIFiberRoot {
   createPixiWebglRender(props:Partial<CanvasProps>, domElement:HTMLElement): any;
 } 
 
-export type Stage = PIXI.Sprite & {renderer:PIXI.Renderer}
+export type Stage = PIXI.Sprite & {renderer:PIXI.WebGLRenderer}
 export type view = HTMLElement & {__PIXI__:{
-  renderer:PIXI.Renderer,
+  renderer:PIXI.WebGLRenderer,
   stage:Stage
 }}
-export type PIXIRenderer = PIXI.Renderer & {
-  view: view
-}
+export type PIXIRenderer = PIXI.WebGLRenderer;
+
 export class ReactPIXIFiberRoot implements IReactPIXIFiberRoot {
 
     props: CanvasProps;
@@ -39,7 +38,7 @@ export class ReactPIXIFiberRoot implements IReactPIXIFiberRoot {
     stage: Stage;
     view: any;
     update:any;
-    constructor(props:CanvasProps,domElement:HTMLElement){
+    constructor(props:CanvasProps,domElement:HTMLCanvasElement){
       this.props = props;
       this.fpsController = new FPSController();
 
@@ -63,10 +62,10 @@ export class ReactPIXIFiberRoot implements IReactPIXIFiberRoot {
 
     }
     // Resize function window
-    createPixiWebglRender(props: CanvasProps,domElement: HTMLElement){
+    createPixiWebglRender(props: CanvasProps,domElement: HTMLCanvasElement){
         const {style = {},autoRender} =  props;
         
-        const {preserveDrawingBuffer,transparent,width,height,backgroundColor,autoResize,className} = props;
+        const { preserveDrawingBuffer,transparent,width,height,backgroundColor,autoResize,className} = props;
         let {target} = props;
         const stage:Stage = new PIXI.Sprite() as Stage
         // @ts-ignore
@@ -76,7 +75,6 @@ export class ReactPIXIFiberRoot implements IReactPIXIFiberRoot {
         let renderer: PIXIRenderer
  
         if (!target || !document.getElementById(target) || target === undefined) {
-            // @ts-ignore
             renderer = new PIXI.WebGLRenderer((width),(height)+paddig*2, {
             antialias: true,
             clearBeforeRender: false,
@@ -115,11 +113,14 @@ export class ReactPIXIFiberRoot implements IReactPIXIFiberRoot {
           // @ts-ignore
           PIXI.TARGET_FPMS = 0.06;
         }
-
-        renderer.view.__PIXI__ = {
-          renderer,
-          stage,
-        }
+        
+        Object.assign(renderer.view,{
+          __PIXI__:{
+            renderer,
+            stage,
+          }
+        })
+       
         
         // @ts-ignore
         const ticker = PIXI.ticker.shared;

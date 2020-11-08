@@ -22673,7 +22673,7 @@ function clip(x, y, w, h) {
   }
 
   var myMask = new PIXI$1.Graphics();
-  myMask.beginFill();
+  myMask.beginFill(0x000000);
   myMask.drawRect(x, y, w, h);
   myMask.endFill();
   self.addChild(myMask);
@@ -22825,13 +22825,17 @@ var Div = /*#__PURE__*/function (_PIXI$Sprite) {
   }, {
     key: "width",
     get: function get() {
-      return this._texture.orig.width > 1 ? Math.abs(this.scale.x) * this._texture.orig.width : this._width;
+      var _this$_texture, _this$_texture$orig;
+
+      return ((_this$_texture = this._texture) === null || _this$_texture === void 0 ? void 0 : (_this$_texture$orig = _this$_texture.orig) === null || _this$_texture$orig === void 0 ? void 0 : _this$_texture$orig.width) > 1 ? Math.abs(this.scale.x) * this._texture.orig.width : this._width;
     },
     set: function set(value) // eslint-disable-line require-jsdoc
     {
+      var _this$_texture2, _this$_texture2$orig;
+
       var s = Math.sign(this.scale.x) || 1;
 
-      if (this._texture.orig.width > 1) {
+      if (((_this$_texture2 = this._texture) === null || _this$_texture2 === void 0 ? void 0 : (_this$_texture2$orig = _this$_texture2.orig) === null || _this$_texture2$orig === void 0 ? void 0 : _this$_texture2$orig.width) > 1) {
         this.scale.x = s * value / this._texture.orig.width;
       }
 
@@ -22848,13 +22852,17 @@ var Div = /*#__PURE__*/function (_PIXI$Sprite) {
   }, {
     key: "height",
     get: function get() {
-      return this._texture.orig.width > 1 ? Math.abs(this.scale.y) * this._texture.orig.height : this._height;
+      var _this$_texture3, _this$_texture3$orig;
+
+      return ((_this$_texture3 = this._texture) === null || _this$_texture3 === void 0 ? void 0 : (_this$_texture3$orig = _this$_texture3.orig) === null || _this$_texture3$orig === void 0 ? void 0 : _this$_texture3$orig.width) > 1 ? Math.abs(this.scale.y) * this._texture.orig.height : this._height;
     },
     set: function set(value) // eslint-disable-line require-jsdoc
     {
+      var _this$_texture4, _this$_texture4$orig;
+
       var s = Math.sign(this.scale.y) || 1;
 
-      if (this._texture.orig.height > 1) {
+      if (((_this$_texture4 = this._texture) === null || _this$_texture4 === void 0 ? void 0 : (_this$_texture4$orig = _this$_texture4.orig) === null || _this$_texture4$orig === void 0 ? void 0 : _this$_texture4$orig.height) > 1) {
         this.scale.y = s * value / this._texture.orig.height;
       }
 
@@ -22900,18 +22908,24 @@ var Div = /*#__PURE__*/function (_PIXI$Sprite) {
   }, {
     key: "x",
     get: function get() {
-      return this.transform.position.x;
+      var _this$transform;
+
+      // @ts-ignore
+      return (_this$transform = this.transform) === null || _this$transform === void 0 ? void 0 : _this$transform.position.x;
     },
     set: function set(x) {
+      // @ts-ignore
       this.transform.position.x = x + this.translateX + (this._style.paddingLeft || 0);
     } // @ts-ignore
 
   }, {
     key: "y",
     get: function get() {
+      // @ts-ignore
       return this.transform.position.y;
     },
     set: function set(y) {
+      // @ts-ignore   
       this.transform.position.y = y + this.translateY + (this._style.paddingTop || 0);
     }
   }, {
@@ -22967,11 +22981,11 @@ var Div = /*#__PURE__*/function (_PIXI$Sprite) {
 
     _defineProperty(_assertThisInitialized(_this2), "_lastBoundsID", void 0);
 
+    _defineProperty(_assertThisInitialized(_this2), "_texture", void 0);
+
     _defineProperty(_assertThisInitialized(_this2), "_filters", void 0);
 
     _defineProperty(_assertThisInitialized(_this2), "_style", void 0);
-
-    _defineProperty(_assertThisInitialized(_this2), "_texture", void 0);
 
     _defineProperty(_assertThisInitialized(_this2), "_translateY", void 0);
 
@@ -23040,7 +23054,9 @@ var Div = /*#__PURE__*/function (_PIXI$Sprite) {
       // }
 
       if (this.parent) {
-        this.applyCssProperty('right', style.right || this.parent._bounds.maxX - style.right, 'x');
+        // @ts-ignore
+        this.applyCssProperty('right', style.right || this.parent._bounds.maxX - style.right, 'x'); // @ts-ignore
+
         this.applyCssProperty('bottom', style.bottom || this.parent._bounds.maxY - style.bottom, 'y');
       }
 
@@ -23120,9 +23136,11 @@ var Div = /*#__PURE__*/function (_PIXI$Sprite) {
           this._bounds // @ts-ignore
           .addBoundsMask(child._bounds, child._mask._bounds);
         } else if (child.filterArea) {
-          this._bounds.addBoundsArea(child._bounds, child.filterArea);
+          this._bounds // @ts-ignore
+          .addBoundsArea(child._bounds, child.filterArea);
         } else {
-          this._bounds.addBounds(child._bounds);
+          this._bounds // @ts-ignore
+          .addBounds(child._bounds);
         }
       }
 
@@ -24579,7 +24597,6 @@ var ReactPIXIFiberRoot = /*#__PURE__*/function () {
       var renderer;
 
       if (!target || !document.getElementById(target) || target === undefined) {
-        // @ts-ignore
         renderer = new PIXI$1.WebGLRenderer(width, height + paddig * 2, {
           antialias: true,
           clearBeforeRender: false,
@@ -24618,10 +24635,12 @@ var ReactPIXIFiberRoot = /*#__PURE__*/function () {
         PIXI$1.TARGET_FPMS = 0.06;
       }
 
-      renderer.view.__PIXI__ = {
-        renderer: renderer,
-        stage: stage
-      }; // @ts-ignore
+      Object.assign(renderer.view, {
+        __PIXI__: {
+          renderer: renderer,
+          stage: stage
+        }
+      }); // @ts-ignore
 
       var ticker = PIXI$1.ticker.shared; // Set this to prevent starting this ticker when listeners are added to it
       // By default this is true only on the PIXI.ticker.shared instance
@@ -24660,6 +24679,7 @@ var ReactPIXIFiberRoot = /*#__PURE__*/function () {
   return ReactPIXIFiberRoot;
 }();
 
+// typeof defaultProps & React.ComponentClass & React.ReactChildren
 var defaultProps$1 = {
   backgroundColor: '0xff0000',
   children: null,
@@ -24746,9 +24766,9 @@ var Canvas = /*#__PURE__*/function (_Component) {
     }
   }, {
     key: "shouldComponentUpdate",
-    value: function shouldComponentUpdate(_ref) {
-      var width = _ref.width,
-          height = _ref.height;
+    value: function shouldComponentUpdate(props) {
+      var width = props.width,
+          height = props.height;
       return width !== this.props.width || height !== this.props.height;
     }
   }, {
@@ -24780,8 +24800,8 @@ var Canvas = /*#__PURE__*/function (_Component) {
 
       console.log('render1: canvas:created and stage');
       var container = /*#__PURE__*/React__default['default'].createElement('canvas', {
-        ref: function ref(_ref2) {
-          _this2.container = _ref2;
+        ref: function ref(_ref) {
+          _this2.container = _ref;
         },
         style: {
           // position: 'fixed',

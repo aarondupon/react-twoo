@@ -2,10 +2,13 @@ import React, {Component, CSSProperties} from 'react';
 import ReactPIXIFiber from './fiber/ReactPIXIFiber';
 import {IReactPIXIFiberRoot, ReactPIXIFiberRoot} from './fiber/ReactPIXIFiberRoot';
 
-type Color = string;
+type Color = number;
 
 export type CanvasProps = {
     children?: React.ReactNode,
+    width: number,
+    height: number,
+    props: Partial<CanvasProps>;
     backgroundColor?: Color,
     clearBeforeRender?: boolean, // true,
     transparent?: boolean,
@@ -15,13 +18,13 @@ export type CanvasProps = {
     antialias?: boolean, // true,
     pause?: boolean,
     className?: string,
-    onRender?: () => {},
-    width?: number,
-    height?: number,
-    autoRender?: boolean,
+    onRender: () => {},
+    autoRender: boolean,
     target?:string | undefined,
     style?: CSSProperties,
-} & typeof defaultProps
+} 
+
+// typeof defaultProps & React.ComponentClass & React.ReactChildren
 
 const defaultProps  = {
     backgroundColor: '0xff0000',
@@ -86,7 +89,8 @@ export default class Canvas extends Component<CanvasProps> {
         }
         
     }
-    shouldComponentUpdate({width,height}){
+    shouldComponentUpdate(props){
+        const {width,height} = props;
         return( width !== this.props.width || height !== this.props.height )
     }    
     componentDidMount() {

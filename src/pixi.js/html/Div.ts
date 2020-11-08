@@ -36,12 +36,12 @@ export interface IDiv {
     scaleX: number;
     scaleY: number;
 
-    accessibleTitle:string,
-    accessibleHint:string,
-    accessible:boolean,
-    interactive:boolean,
-    button?:boolean,
-    cursor?:string,
+    accessibleTitle?:string | null, 
+    accessibleHint?:string | null,
+    accessible?:boolean | null,
+    interactive?:boolean | null,
+    button?:boolean | null,
+    cursor?:string | null,
     applyStyle(style:CSSProperties): void,
     /**
      * Updates the transform on all children of this container for rendering
@@ -174,7 +174,7 @@ function clip(x:number,y:number,w:number,h:number){
     }
 
     const myMask = new PIXI.Graphics();
-    myMask.beginFill();
+    myMask.beginFill(0x000000);
     myMask.drawRect(
         x,
         y,
@@ -325,7 +325,8 @@ export default class Div extends PIXI.Sprite implements IDiv {
     _textureWidth: number;
     _textureHeight: number;
     _lastBoundsID: number;
-    private _filters: any;
+    _texture: any;
+    _filters: any;
     
     get style(){
         return this._style
@@ -344,14 +345,14 @@ export default class Div extends PIXI.Sprite implements IDiv {
     // @ts-ignore
     get width()
     {
-        return this._texture.orig.width > 1  ? Math.abs(this.scale.x) * this._texture.orig.width : this._width;
+        return this._texture?.orig?.width > 1  ? Math.abs(this.scale.x) * this._texture.orig.width : this._width;
     }
     set width(value) // eslint-disable-line require-jsdoc
     {
         const s = Math.sign(this.scale.x) || 1;
        
 
-        if(this._texture.orig.width > 1 ) { this.scale.x = s * value / this._texture.orig.width ; }
+        if(this._texture?.orig?.width > 1 ) { this.scale.x = s * value / this._texture.orig.width ; }
         this._width = value;
         this.applyStyle(this._style)
     }
@@ -363,12 +364,12 @@ export default class Div extends PIXI.Sprite implements IDiv {
     // @ts-ignore
     get height()
     {
-        return this._texture.orig.width > 1 ? Math.abs(this.scale.y) * this._texture.orig.height : this._height;
+        return this._texture?.orig?.width > 1 ? Math.abs(this.scale.y) * this._texture.orig.height : this._height;
     }
     set height(value) // eslint-disable-line require-jsdoc
     {
         const s = Math.sign(this.scale.y) || 1;
-        if(this._texture.orig.height > 1 ) { this.scale.y = s * value / this._texture.orig.height; }
+        if(this._texture?.orig?.height > 1 ) { this.scale.y = s * value / this._texture.orig.height; }
         this._height = value;
         
         this.applyStyle(this._style)
@@ -402,17 +403,21 @@ export default class Div extends PIXI.Sprite implements IDiv {
     }
     // @ts-ignore
     get x(){
-        return this.transform.position.x;
+        // @ts-ignore
+        return this.transform?.position.x;
     }
 
     set x(x){
+          // @ts-ignore
         this.transform.position.x = x + this.translateX  +  (this._style.paddingLeft ||0)
     }
     // @ts-ignore
     get y(){
+          // @ts-ignore
         return this.transform.position.y;
     }
-    set y(y){       
+    set y(y){    
+         // @ts-ignore   
         this.transform.position.y = y + this.translateY + (this._style.paddingTop ||0)
     }
     get scaleX(){
@@ -432,7 +437,6 @@ export default class Div extends PIXI.Sprite implements IDiv {
     }
 
     private _style:any
-    private _texture: any;
     private _translateY: number;
     private _translateX: any;
     private _alpha: number;
@@ -513,7 +517,9 @@ export default class Div extends PIXI.Sprite implements IDiv {
         //     newStyle.transform.forEach((obj)=>Object.assign(this,obj))
         // }
         if(this.parent){
+            // @ts-ignore
             this.applyCssProperty('right',style.right || this.parent._bounds.maxX - style.right,'x');
+            // @ts-ignore
             this.applyCssProperty('bottom',style.bottom || this.parent._bounds.maxY - style.bottom,'y');
         }
          
@@ -615,10 +621,12 @@ export default class Div extends PIXI.Sprite implements IDiv {
             } else if (child.filterArea) {
                 this
                     ._bounds
+                    // @ts-ignore
                     .addBoundsArea(child._bounds, child.filterArea);
             } else {
                 this
                     ._bounds
+                    // @ts-ignore
                     .addBounds(child._bounds);
             }
         }

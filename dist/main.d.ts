@@ -1,5 +1,5 @@
 import React, { ReactNode, Component, CSSProperties } from 'react';
-import { Sprite, Renderer, Filter, DisplayObject, Bounds, Graphics } from 'pixi.js';
+import { Sprite, WebGLRenderer, Filter, DisplayObject, Bounds, Graphics, mesh } from 'pixi.js';
 import { CanvasProps as CanvasProps$1 } from 'src/canvas';
 
 declare class FPSController {
@@ -21,17 +21,15 @@ interface IReactPIXIFiberRoot {
     createPixiWebglRender(props: Partial<CanvasProps$1>, domElement: HTMLElement): any;
 }
 declare type Stage = Sprite & {
-    renderer: Renderer;
+    renderer: WebGLRenderer;
 };
 declare type view = HTMLElement & {
     __PIXI__: {
-        renderer: Renderer;
+        renderer: WebGLRenderer;
         stage: Stage;
     };
 };
-declare type PIXIRenderer = Renderer & {
-    view: view;
-};
+declare type PIXIRenderer = WebGLRenderer;
 declare class ReactPIXIFiberRoot implements IReactPIXIFiberRoot {
     props: CanvasProps$1;
     fpsController: FPSController;
@@ -40,18 +38,21 @@ declare class ReactPIXIFiberRoot implements IReactPIXIFiberRoot {
     stage: Stage;
     view: any;
     update: any;
-    constructor(props: CanvasProps$1, domElement: HTMLElement);
+    constructor(props: CanvasProps$1, domElement: HTMLCanvasElement);
     cancel(): void;
     autoRender(renderfunction: {
         (): void;
         (): void;
     }): void;
-    createPixiWebglRender(props: CanvasProps$1, domElement: HTMLElement): PIXIRenderer;
+    createPixiWebglRender(props: CanvasProps$1, domElement: HTMLCanvasElement): WebGLRenderer;
 }
 
-declare type Color = string;
+declare type Color = number;
 declare type CanvasProps = {
     children?: React.ReactNode;
+    width: number;
+    height: number;
+    props: Partial<CanvasProps>;
     backgroundColor?: Color;
     clearBeforeRender?: boolean;
     transparent?: boolean;
@@ -61,28 +62,10 @@ declare type CanvasProps = {
     antialias?: boolean;
     pause?: boolean;
     className?: string;
-    onRender?: () => {};
-    width?: number;
-    height?: number;
-    autoRender?: boolean;
+    onRender: () => {};
+    autoRender: boolean;
     target?: string | undefined;
     style?: CSSProperties;
-} & typeof defaultProps;
-declare const defaultProps: {
-    backgroundColor: string;
-    children: null;
-    clearBeforeRender: boolean;
-    transparent: boolean;
-    preserveDrawingBuffer: boolean;
-    autoResize: boolean;
-    forceFXAA: boolean;
-    antialias: boolean;
-    pause: boolean;
-    className: string;
-    onRender(): void;
-    width: number;
-    height: number;
-    autoRender: boolean;
 };
 declare class Canvas extends Component<CanvasProps> {
     static defaultProps: {
@@ -107,10 +90,7 @@ declare class Canvas extends Component<CanvasProps> {
     componentWillUnmount(): void;
     componentWillReceiveProps(nextProps: any): void;
     resize(nextProps: any): void;
-    shouldComponentUpdate({ width, height }: {
-        width: any;
-        height: any;
-    }): boolean;
+    shouldComponentUpdate(props: any): boolean;
     componentDidMount(): void;
     renderInner(): ReactPIXIFiberRoot;
     render(): React.DetailedReactHTMLElement<{
@@ -154,7 +134,7 @@ declare class TextureLoader {
  * @contructor
  * @param texture {Texture} The texture used for the displacemtent map * must be power of 2 texture at the moment
  */
-declare class BeeldSliderFilter extends Filter {
+declare class BeeldSliderFilter extends Filter<any> {
     /**
      * Creates an instance of DisplacementFilter.
      * @param {*} speed
@@ -167,7 +147,7 @@ declare class BeeldSliderFilter extends Filter {
     animation: any;
     set animate(arg: any);
     get animate(): any;
-    renderer: any;
+    renderer: WebGLRenderer | undefined;
     update: (t: any) => void;
     set prev(arg: any);
     _prev: any;
@@ -212,7 +192,7 @@ declare class BeeldSliderFilter extends Filter {
  * @contructor
  * @param texture {Texture} The texture used for the displacemtent map * must be power of 2 texture at the moment
  */
-declare class BeeldHoverFilter extends Filter {
+declare class BeeldHoverFilter extends Filter<any> {
     /**
      * Creates an instance of DisplacementFilter.
      * @param {*} speed
@@ -268,7 +248,7 @@ declare class TextureLoader$1 {
  * @contructor
  * @param texture {Texture} The texture used for the displacemtent map * must be power of 2 texture at the moment
  */
-declare class BeeldSliderFilter$1 extends Filter {
+declare class BeeldSliderFilter$1 extends Filter<any> {
     /**
      * Creates an instance of DisplacementFilter.
      * @param {*} speed
@@ -281,7 +261,7 @@ declare class BeeldSliderFilter$1 extends Filter {
     animation: any;
     set animate(arg: any);
     get animate(): any;
-    renderer: any;
+    renderer: WebGLRenderer | undefined;
     update: (t: any) => void;
     set prev(arg: any);
     _prev: any;
@@ -339,7 +319,7 @@ declare class AccessibilityManager {
     /**
      * @param {PIXI.CanvasRenderer|PIXI.WebGLRenderer} renderer - A reference to the current renderer
      */
-    constructor(renderer: any | any);
+    constructor(renderer: PIXI.CanvasRenderer | PIXI.WebGLRenderer);
     /**
      * This is the dom element that will sit over the PixiJS element. This is where the div overlays will go.
      *
@@ -372,7 +352,7 @@ declare class AccessibilityManager {
      *
      * @member {PIXI.SystemRenderer}
      */
-    renderer: any;
+    renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
     /**
      * The array of currently active accessible items.
      *
@@ -606,12 +586,12 @@ interface IDiv {
     y: number;
     scaleX: number;
     scaleY: number;
-    accessibleTitle: string;
-    accessibleHint: string;
-    accessible: boolean;
-    interactive: boolean;
-    button?: boolean;
-    cursor?: string;
+    accessibleTitle?: string | null;
+    accessibleHint?: string | null;
+    accessible?: boolean | null;
+    interactive?: boolean | null;
+    button?: boolean | null;
+    cursor?: string | null;
     applyStyle(style: CSSProperties): void;
     /**
      * Updates the transform on all children of this container for rendering
@@ -662,7 +642,8 @@ declare class Div extends Sprite implements IDiv {
     _textureWidth: number;
     _textureHeight: number;
     _lastBoundsID: number;
-    private _filters;
+    _texture: any;
+    _filters: any;
     get style(): any;
     set style(style: any);
     /**
@@ -687,16 +668,15 @@ declare class Div extends Sprite implements IDiv {
     set translateX(translateX: any);
     get translateY(): number;
     set translateY(translateY: number);
-    get x(): number;
-    set x(x: number);
-    get y(): number;
-    set y(y: number);
+    get x(): any;
+    set x(x: any);
+    get y(): any;
+    set y(y: any);
     get scaleX(): number;
     set scaleX(scaleX: number);
     get scaleY(): number;
     set scaleY(scaleY: number);
     private _style;
-    private _texture;
     private _translateY;
     private _translateX;
     private _alpha;
@@ -726,7 +706,6 @@ declare class Img extends Sprite {
     __height: any;
     __textureWidth: any;
     __textureHeight: any;
-    _lastBoundsID: number | undefined;
     set style(arg: any);
     get style(): any;
     set opacity(arg: any);
@@ -784,7 +763,7 @@ declare function applyCssTransformProperty$1(transform: any): void;
 declare function addBackgroundImage(src: any, backgroundSize: any, w: any, h: any): void;
 declare class addBackgroundImage {
     constructor(src: any, backgroundSize: any, w: any, h: any);
-    backgroundImage: any;
+    backgroundImage: Sprite | mesh.Plane;
     casheAsBitmap: boolean;
 }
 
