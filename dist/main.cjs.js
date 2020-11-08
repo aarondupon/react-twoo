@@ -12,6 +12,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
 var PIXI$1 = require('pixi.js');
+var EMPTY$1 = require('src/filters/core/Texture/EMPTY');
 var core = require('pixi.js/lib/core');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -38,6 +39,7 @@ function _interopNamespace(e) {
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var PIXI__namespace = /*#__PURE__*/_interopNamespace(PIXI$1);
+var EMPTY__default = /*#__PURE__*/_interopDefaultLegacy(EMPTY$1);
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -22953,7 +22955,7 @@ var Div = /*#__PURE__*/function (_PIXI$Sprite) {
 
     _classCallCheck(this, Div);
 
-    _this2 = _super.call(this, props.texture);
+    _this2 = _super.call(this, props.texture || new EMPTY__default['default']());
 
     _defineProperty(_assertThisInitialized(_this2), "clip", clip);
 
@@ -23008,13 +23010,15 @@ var Div = /*#__PURE__*/function (_PIXI$Sprite) {
         return;
       }
 
-      this.getBounds();
+      if (this._texture) {
+        this.getBounds();
+      }
+
       var bounds = this._bounds;
       var width = this.width || style.width || bounds.maxX - bounds.minX;
       var height = this.height || style.height || bounds.maxY - bounds.minY;
-      var _this$texture = this.texture,
-          textureWidth = _this$texture.width,
-          textureHeight = _this$texture.height; // tslint:disable-next-line:no-unused-expression
+      var textureWidth = this.texture ? this.texture.width : undefined;
+      var textureHeight = this.texture ? this.texture.height : undefined; // tslint:disable-next-line:no-unused-expression
 
       this.width === 0 && (this.width = width); // tslint:disable-next-line:no-unused-expression
 
@@ -23112,7 +23116,9 @@ var Div = /*#__PURE__*/function (_PIXI$Sprite) {
 
       this._bounds.clear();
 
-      this._calculateBounds();
+      if (this.texture !== undefined) {
+        this._calculateBounds();
+      }
 
       var width = this._width || style.width;
       var height = this._height || style.height; // tslint:disable-next-line:prefer-for-of

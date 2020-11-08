@@ -4,7 +4,7 @@ import css from 'css-to-react-native';
 // import camelizeStyleName from 'fbjs/lib/camelizeStyleName';
 import shallowequal from 'shallowequal';
 import { CSSProperties } from 'react';
-import { EMPTY } from 'dist/main.cjs';
+import EMPTY from 'src/filters/core/Texture/EMPTY';
 
 
 export interface IDiv {
@@ -444,7 +444,7 @@ export default class Div extends PIXI.Sprite implements IDiv {
      // @ts-ignore
     private _UID: string;
     constructor(props) {
-        super(props.texture || new EMPTY())
+        super(props.texture || new EMPTY)
         this._UID =  `div_${new Date().getTime()}`
         const style = Object.assign(JSON.parse(JSON.stringify(Div.defaultProps.style)),props.style)
         this._style = getStyle(cleanupStyle(style));
@@ -597,7 +597,9 @@ export default class Div extends PIXI.Sprite implements IDiv {
             ._bounds
             .clear();
 
-        this._calculateBounds();
+        if(this.texture !== undefined) {
+            this._calculateBounds();
+        }
         const width = this._width || style.width;
         const height = this._height || style.height;
         
