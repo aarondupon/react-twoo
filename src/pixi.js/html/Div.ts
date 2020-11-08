@@ -4,6 +4,7 @@ import css from 'css-to-react-native';
 // import camelizeStyleName from 'fbjs/lib/camelizeStyleName';
 import shallowequal from 'shallowequal';
 import { CSSProperties } from 'react';
+import { EMPTY } from 'dist/main.cjs';
 
 
 export interface IDiv {
@@ -443,7 +444,7 @@ export default class Div extends PIXI.Sprite implements IDiv {
      // @ts-ignore
     private _UID: string;
     constructor(props) {
-        super(props.texture)
+        super(props.texture || new EMPTY())
         this._UID =  `div_${new Date().getTime()}`
         const style = Object.assign(JSON.parse(JSON.stringify(Div.defaultProps.style)),props.style)
         this._style = getStyle(cleanupStyle(style));
@@ -451,12 +452,14 @@ export default class Div extends PIXI.Sprite implements IDiv {
     applyStyle(style){
 
         if(!style) { return; }
-        this.getBounds();
+        if(this._texture){
+            this.getBounds();
+        }
         const bounds = this._bounds;
         const width = this.width || style.width || bounds.maxX - bounds.minX;
         const height = this.height || style.height || bounds.maxY - bounds.minY ;
-        const {width:textureWidth,height:textureHeight} = this.texture;
-       
+        const textureWidth = this.texture ? this.texture.width :  undefined
+        const textureHeight = this.texture ? this.texture.height :  undefined
         // tslint:disable-next-line:no-unused-expression
         this.width === 0 &&  (this.width = width)
          // tslint:disable-next-line:no-unused-expression
