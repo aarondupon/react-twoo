@@ -4,6 +4,7 @@
   "private": true,
   "main": "dist/main.cjs.js",
   "module": "dist/main.cjs.js",
+  "types": "dist/main.d.ts",
   "repository": {
     "url": "https://github.com/aarondupon/react-twoo"
   },
