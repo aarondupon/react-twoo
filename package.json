@@ -22,6 +22,7 @@
     "babel-plugin-transform-class-property-arrow-functions": "^1.0.1",
     "css-to-react-native": "^3.0.0",
     "fbjs": "^3.0.0",
+    "object-assign": "^4.1.1",
     "parse-css-transition": "^0.1.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
@@ -31,7 +32,9 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-shader": "^0.0.3",
     "rollup-plugin-string": "^3.0.0",
-    "rollup-plugin-typescript": "^1.0.1"
+    "rollup-plugin-typescript": "^1.0.1",
+    "scheduler": "^0.20.1",
+    "shallowequal": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",

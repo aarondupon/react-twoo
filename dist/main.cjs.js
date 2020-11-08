@@ -12,7 +12,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
 var PIXI$1 = require('pixi.js');
-var shallowequal = require('shallowequal');
 var core = require('pixi.js/lib/core');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -39,7 +38,6 @@ function _interopNamespace(e) {
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var PIXI__namespace = /*#__PURE__*/_interopNamespace(PIXI$1);
-var shallowequal__default = /*#__PURE__*/_interopDefaultLegacy(shallowequal);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -10826,6 +10824,53 @@ exports.default = _default;
 
 unwrapExports(dist);
 
+//
+
+var shallowequal = function shallowEqual(objA, objB, compare, compareContext) {
+  var ret = compare ? compare.call(compareContext, objA, objB) : void 0;
+
+  if (ret !== void 0) {
+    return !!ret;
+  }
+
+  if (objA === objB) {
+    return true;
+  }
+
+  if (typeof objA !== "object" || !objA || typeof objB !== "object" || !objB) {
+    return false;
+  }
+
+  var keysA = Object.keys(objA);
+  var keysB = Object.keys(objB);
+
+  if (keysA.length !== keysB.length) {
+    return false;
+  }
+
+  var bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
+
+  // Test for A's keys different from B.
+  for (var idx = 0; idx < keysA.length; idx++) {
+    var key = keysA[idx];
+
+    if (!bHasOwnProperty(key)) {
+      return false;
+    }
+
+    var valueA = objA[key];
+    var valueB = objB[key];
+
+    ret = compare ? compare.call(compareContext, valueA, valueB, key) : void 0;
+
+    if (ret === false || (ret === void 0 && valueA !== valueB)) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 var parseColor = function parseColor(color) {
   var colorObj = rgbToHex(color);
   return colorObj;
@@ -11237,7 +11282,7 @@ var Div = /*#__PURE__*/function (_PIXI$Sprite) {
     },
     set: function set(style) {
       var newStyle = getStyle(cleanupStyle(style));
-      shallowequal__default['default'](newStyle, this._style) === false && this.applyStyle(newStyle);
+      shallowequal(newStyle, this._style) === false && this.applyStyle(newStyle);
       this._style = newStyle;
     }
     /**
@@ -11933,7 +11978,7 @@ var Img = /*#__PURE__*/function (_PIXI$Sprite) {
     },
     set: function set(style) {
       var newStyle = getStyle$1(cleanupStyle$1(style));
-      shallowequal__default['default'](newStyle, this._style) === false && this.applyStyle(newStyle);
+      shallowequal(newStyle, this._style) === false && this.applyStyle(newStyle);
       this._style = newStyle;
     }
     /**
