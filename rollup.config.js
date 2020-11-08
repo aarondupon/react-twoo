@@ -54,6 +54,20 @@ const glsltypes = [
 ]
 const GLSL_EXTENSIONS = ['.vs','.fs','.vert','.frag','.glsl']
 
+const tsBundle = 
+  {
+    input: "./src/main.ts",
+    output: [{ file: "dist/main.d.ts", format: "es" }],
+    plugins: [dts(
+      {
+        compilerOptions:{
+          checkJs:false,
+          noEmit:true,
+          skipLibCheck:true
+        }
+      }
+    )]
+  }
 
 export const cjsBundle  = 
   {
@@ -187,4 +201,4 @@ export const cjsBundle  =
   }
 
 
-export default [cjsBundle]
+export default [cjsBundle,tsBundle];

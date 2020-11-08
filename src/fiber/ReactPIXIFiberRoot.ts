@@ -13,26 +13,32 @@ let COUNT = 0;
 PIXI.settings.FILTER_RESOLUTION = 1
 
 export interface IReactPIXIFiberRoot {
+  view: view;
+  renderer:PIXIRenderer;
+  stage: Stage
+  update(props: Readonly<CanvasProps> & Readonly<{ children?: import("react").ReactNode; }>);
   cancel(): void;
   autoRender(renderfunction:()=>{}): void;
   createPixiWebglRender(props:Partial<CanvasProps>, domElement:HTMLElement): any;
-}
+} 
 
 export type Stage = PIXI.Sprite & {renderer:PIXI.Renderer}
-
+export type view = HTMLElement & {__PIXI__:{
+  renderer:PIXI.Renderer,
+  stage:Stage
+}}
 export type PIXIRenderer = PIXI.Renderer & {
-  view: HTMLElement & {__PIXI__:{
-    renderer:PIXI.Renderer,
-    stage:Stage
-  }}
+  view: view
 }
-export class ReactPIXIFiberRoot {
+export class ReactPIXIFiberRoot implements IReactPIXIFiberRoot {
+
     props: CanvasProps;
     fpsController: FPSController;
     raf: any;
     renderer: any;
-    stage: PIXI.Sprite;
+    stage: Stage;
     view: any;
+    update:any;
     constructor(props:CanvasProps,domElement:HTMLElement){
       this.props = props;
       this.fpsController = new FPSController();

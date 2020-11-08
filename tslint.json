@@ -12,6 +12,10 @@
     "member-access":false,
     "no-console":false,
     "ordered-imports":false,
-    "object-literal-sort-keys":false
+    "object-literal-sort-keys":false,
+    "no-bitwise":false,
+    "variable-name": {
+      "options":["allow-leading-underscore","check-format"]
+    }
   }
 }

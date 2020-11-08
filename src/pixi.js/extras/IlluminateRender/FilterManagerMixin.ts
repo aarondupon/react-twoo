@@ -1,6 +1,7 @@
+
 import * as PIXI from 'pixi.js';
 export default function filterManagerMixin(fm){
-    if (fm.prepareBackdrop) return;
+    if (fm.prepareBackdrop) { return; }
 
 		fm.pushFilter = pushFilter;
 		fm.popFilter = popFilter;
@@ -8,7 +9,7 @@ export default function filterManagerMixin(fm){
 		fm.prepareBackdrop = prepareBackdrop;
 }
 
-function pushFilter(target: PIXI.DisplayObject, filters: Array<BackdropFilter<any>>) {
+function pushFilter(target: PIXI.DisplayObject, filters) {
 		const renderer = this.renderer;
 
 		let filterData = this.filterData;
@@ -49,6 +50,7 @@ function pushFilter(target: PIXI.DisplayObject, filters: Array<BackdropFilter<an
 
 		// for now we go off the filter of the first resolution..
 		const resolution = filters[0].resolution;
+
 		const padding = filters[0].padding | 0;
 		const targetBounds = fullScreen ? renderer.screen : (target.filterArea || target.getBounds(true));
 		const sourceFrame = currentState.sourceFrame;
@@ -76,6 +78,7 @@ function pushFilter(target: PIXI.DisplayObject, filters: Array<BackdropFilter<an
 			sourceFrame.pad(padding);
 		}
 
+		// tslint:disable-next-line:prefer-for-of
 		for (let i = 0; i < filters.length; i++)
 		{
             let backdrop = null;
@@ -166,6 +169,8 @@ function pushFilter(target: PIXI.DisplayObject, filters: Array<BackdropFilter<an
 		currentState.clear();
 
 		let backdropFree = false;
+
+		// tslint:disable-next-line:prefer-for-of
 		for (let i = 0; i < filters.length; i++)
 		{
 			if (filters[i]._backdropRenderTarget)
@@ -186,7 +191,7 @@ function pushFilter(target: PIXI.DisplayObject, filters: Array<BackdropFilter<an
 			this.filterData = null;
 		}
     }
-    function syncUniforms(shader: PIXI.glCore.GLShader, filter: BackdropFilter<any>) {
+    function syncUniforms(shader, filter) {
 
 		const renderer = this.renderer;
 		const gl = renderer.gl;
@@ -264,6 +269,7 @@ function pushFilter(target: PIXI.DisplayObject, filters: Array<BackdropFilter<an
 				{
 					shader.uniforms[i] = textureCount;
 
+					// tslint:disable-next-line:no-shadowed-variable
 					const gl = this.renderer.gl;
 
 					renderer.boundTextures[textureCount] = renderer.emptyTextures[textureCount];
@@ -322,7 +328,7 @@ function pushFilter(target: PIXI.DisplayObject, filters: Array<BackdropFilter<an
  * @param {PIXI.Rectangle} bounds backdrop region, can be modified inside
  * @returns {PIXI.RenderTarget} pooled renderTexture with backdrop
  */
-function prepareBackdrop(bounds: PIXI.Rectangle): PIXI.RenderTarget
+function prepareBackdrop(bounds: PIXI.Rectangle)
 {
     const renderer = this.renderer;
     const renderTarget = renderer._activeRenderTarget;
@@ -348,12 +354,12 @@ function prepareBackdrop(bounds: PIXI.Rectangle): PIXI.RenderTarget
 
 class FilterState
 	{
-		renderTarget : PIXI.RenderTarget = null;
-		target: PIXI.DisplayObject = null;
+		renderTarget = null;
+		target: PIXI.DisplayObject | null = null;
 		resolution: number = 1;
-		sourceFrame = new PIXI.Rectangle();
-		destinationFrame = new PIXI.Rectangle();
-		filters: Array<BackdropFilter<any>> = [];
+		sourceFrame:PIXI.Rectangle = new PIXI.Rectangle();
+		destinationFrame:PIXI.Rectangle = new PIXI.Rectangle();
+		filters:any[] | null = [];
 
 		/**f
 		 * clears the state

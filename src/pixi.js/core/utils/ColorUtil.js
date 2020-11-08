@@ -21,6 +21,7 @@ var ColorUtils = {
 	}
 
 }
+export const random = getRandomColor;
 //alias
-ColorUtils.random = ColorUtils.getRandomColor
+// ColorUtils.random = ColorUtils.getRandomColor
 export default ColorUtils

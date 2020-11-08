@@ -1,6 +1,6 @@
 import React, {Component, CSSProperties} from 'react';
 import ReactPIXIFiber from './fiber/ReactPIXIFiber';
-import {ReactPIXIFiberRoot} from './fiber/ReactPIXIFiberRoot';
+import {IReactPIXIFiberRoot, ReactPIXIFiberRoot} from './fiber/ReactPIXIFiberRoot';
 
 type Color = string;
 
@@ -34,7 +34,8 @@ const defaultProps  = {
     antialias: false, // true,
     pause: false,
     className: 'custom-render-canvas',
-    onRender: () => {},
+    // tslint:disable-next-line:no-empty
+    onRender(){},
     width: window.innerWidth,
     height: window.innerHeight,
     autoRender: true,
@@ -43,7 +44,9 @@ const defaultProps  = {
 
 
 export default class Canvas extends Component<CanvasProps> {
-    reactPIXIFiberRoot: typeof ReactPIXIFiberRoot;
+    static defaultProps = defaultProps
+    reactPIXIFiberRoot: IReactPIXIFiberRoot;
+    container: any;
     constructor(props:CanvasProps){
         super(props);
         console.log('constructor:canvas:created and stage!')
@@ -58,7 +61,7 @@ export default class Canvas extends Component<CanvasProps> {
         console.log('componentWillUnmount:')
     }
     componentWillReceiveProps (nextProps) {
-        console.log('renderInner3:canvas: created and stage')//,Date.now(),this.props, this.container)
+        console.log('renderInner3:canvas: created and stage');
  
           // console.log('reactPIXIFiberRoot',this.reactPIXIFiberRoot)
         ReactPIXIFiber.render(nextProps.children, this.reactPIXIFiberRoot.stage);
@@ -68,20 +71,26 @@ export default class Canvas extends Component<CanvasProps> {
         }
     }
     resize(nextProps){
-        const {renderer,view,state} = this.reactPIXIFiberRoot;
+        const {renderer,view/*,state*/} = this.reactPIXIFiberRoot;
         const parent = view.parentNode;
-        const w = parent.clientWidth;
-        const h = parent.clientHeight;
-        renderer.resize(w,h);
-        renderer.view.style.width = w + 'px';
-        renderer.view.style.height = h + 'px';
-        renderer.resize(w,h);
+        // @ts-ignore
+        if(parent &&  parent.clientWidth && parent.clientHeight ){
+             // @ts-ignore
+            const w = parent.clientWidth;
+             // @ts-ignore
+            const h = parent.clientHeight;
+            renderer.resize(w,h);
+            renderer.view.style.width = w + 'px';
+            renderer.view.style.height = h + 'px';
+            renderer.resize(w,h);
+        }
+        
     }
     shouldComponentUpdate({width,height}){
         return( width !== this.props.width || height !== this.props.height )
     }    
     componentDidMount() {
-        if(this.reactPIXIFiberRoot)this.reactPIXIFiberRoot.update(this.props)
+        if(this.reactPIXIFiberRoot) {this.reactPIXIFiberRoot.update(this.props) }
         console.log('if(this.reactPIXIFiberRoot',this.reactPIXIFiberRoot)
         this.renderInner()
        
@@ -95,7 +104,7 @@ export default class Canvas extends Component<CanvasProps> {
         // if (this.props.autoRender) {
         //    reactPIXIFiberRoot.autoRender()
         // }
-        console.log('renderInner2:canvas: created and stage::')//,Date.now(),this.props, this.container)
+        console.log('renderInner2:canvas: created and stage::');
         return reactPIXIFiberRoot;
     }
     render() {
@@ -120,4 +129,3 @@ export default class Canvas extends Component<CanvasProps> {
     }
 }
 
-Canvas.defaultProps = defaultProps

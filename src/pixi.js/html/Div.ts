@@ -1,10 +1,9 @@
 import * as PIXI from 'pixi.js';
 import css from 'css-to-react-native';
-import parseCsstransition from 'parse-css-transition';
-import camelizeStyleName from 'fbjs/lib/camelizeStyleName';
+// import parseCsstransition from 'parse-css-transition';
+// import camelizeStyleName from 'fbjs/lib/camelizeStyleName';
 import shallowequal from 'shallowequal';
 import { CSSProperties } from 'react';
-
 
 
 export interface IDiv {
@@ -41,14 +40,14 @@ export interface IDiv {
     accessibleHint:string,
     accessible:boolean,
     interactive:boolean,
-    button:boolean,
-    cursor:boolean,
+    button?:boolean,
+    cursor?:string,
     applyStyle(style:CSSProperties): void,
     /**
      * Updates the transform on all children of this container for rendering
      */
     updateTransform(): void,
-    calculateBounds(): PIXI.Bounds,
+    calculateBounds(): void,
 // tslint:disable-next-line:no-bitwise
 }
 
@@ -84,6 +83,7 @@ const parseColor = (color)=>{
     return colorObj;
 }
 
+// @ts-ignore
 function componentToHex(c) {
     const hex = c.toString(16);
     return hex.length === 1 ? "0" + hex : hex;
@@ -105,7 +105,7 @@ function rgbToHex(strColor:string){
     const G = res[2];
     const B = res[3];
     const A = res[4];
-    
+    // @ts-ignore
     const hex =  '0x' + ((B | G << 8 | R << 16) | 1 << 24).toString(16).slice(1);
     const alpha = parseFloat(A) || 1;
     return {hex,alpha};
@@ -119,7 +119,7 @@ function rgbToHex(strColor:string){
 //         this[`__${property}`] = value;
 //     }
 // }
-function applyCssProperty(property,value,SETTER){
+function applyCssProperty(property,value,SETTER: string | null = null){
     if(value && this[`__${property}`] !== value ){
         // console.log('applyCssProperty',property,value)
         this[SETTER || property] = value;
@@ -157,7 +157,7 @@ function applyCssTransformProperty(transform: any[]){
     transform.forEach((tr)=>{
         const propName =Object.keys(tr)[0];
         const value = tr[propName];
-        // @ts-ignore
+        // tslint:disable-next-line:no-unused-expression
         cssTransfromProperty[propName] && cssTransfromProperty[propName](value,this)
         
     })
@@ -166,11 +166,11 @@ function applyCssTransformProperty(transform: any[]){
 
 // custom plugins 
 function clip(x:number,y:number,w:number,h:number){
-    const _self = this;
-    // _self.cacheAsBitmap = false;
-    if(_self.mask){
-        _self.removeChild(_self.mask);
-        _self.mask = null;        
+    const self = this;
+    // self.cacheAsBitmap = false;
+    if(self.mask){
+        self.removeChild(self.mask);
+        self.mask = null;        
     }
 
     const myMask = new PIXI.Graphics();
@@ -183,11 +183,11 @@ function clip(x:number,y:number,w:number,h:number){
         );
     
     myMask.endFill();
-    _self.addChild(myMask)
-    _self.mask = myMask;
+    self.addChild(myMask)
+    self.mask = myMask;
     
-    // _self.cacheAsBitmap = true;
-    // _self.filterArea = new PIXI.Rectangle(
+    // self.cacheAsBitmap = true;
+    // self.filterArea = new PIXI.Rectangle(
     //     0,//this.transform.worldTransform.tx,
     //     0,//this.transform.worldTransform.ty,
     //     w,
@@ -201,7 +201,8 @@ function drawBoundingbox(w,h,color= '#000000', width=1,style = 'solid'){
     }
     const {hex,alpha}  = parseColor(color);
     const boundingbox = new PIXI.Graphics();
-    boundingbox.lineStyle(width,hex,alpha)
+    // @ts-ignore
+    boundingbox.lineStyle(width,hex ,alpha)
     boundingbox.drawRect(
         0,
         0,
@@ -220,8 +221,10 @@ function drawBackground(w,h,color= '#000000', width=0,style = 'solid'){
     }
     const background = new PIXI.Graphics();
     const {hex,alpha} = parseColor(color);
-    background.beginFill(hex,alpha)
-    width && background.lineStyle(width,hex,alpha)
+
+    background.beginFill(hex as number ,alpha)
+    // tslint:disable-next-line:no-unused-expression
+    width && background.lineStyle(width,hex as number,alpha)
     background.drawRect(
         0,
         0,
@@ -234,32 +237,33 @@ function drawBackground(w,h,color= '#000000', width=0,style = 'solid'){
     }
 
 
-function getBoundsWithChildren(){
-    const root  = this;
-    const getBounds = (root,bounds) =>{
-        const getBoundFromChild = (node) =>{
-            if(node.children.length > 0){
-                bounds = node.children.reduce((bounds,node) => {
+// function getBoundsWithChildren(){
+//     const root  = this;
+//     // @ts-ignore
+//     const getBounds = (root: any,bounds: any) =>{
+//         const getBoundFromChild = (node) =>{
+//             if(node.children.length > 0){
+//                 bounds = node.children.reduce((bounds,node) => {
                 
-                    bounds.maxX =  Math.max(node._bounds.maxX , bounds.maxX)
-                    bounds.maxY =  Math.max(node._bounds.maxY , bounds.maxY)
+//                     bounds.maxX =  Math.max(node._bounds.maxX , bounds.maxX)
+//                     bounds.maxY =  Math.max(node._bounds.maxY , bounds.maxY)
                     
                     
-                    return bounds
-                },node._bounds)
-                // getBoundFromChild(node)
-                return bounds
-            }
-            return bounds
-        }
+//                     return bounds
+//                 },node._bounds)
+//                 // getBoundFromChild(node)
+//                 return bounds
+//             }
+//             return bounds
+//         }
         
-        const nenwBounds = getBoundFromChild(root)
+//         const nenwBounds = getBoundFromChild(root)
         
 
-        return nenwBounds
-    }
+//         return nenwBounds
+//     }
 
-}
+// }
 
 
 /**
@@ -272,28 +276,29 @@ function getBoundsWithChildren(){
  * @return      string
  * @access      public
  */
-String.prototype.padding = function(n, c)
-{
-        const val = this.valueOf();
-        if ( Math.abs(n) <= val.length ) {
-                return val;
-        }
-        const m = Math.max((Math.abs(n) - this.length) || 0, 0);
-        const pad = Array(m + 1).join(String(c || ' ').charAt(0));
-//      var pad = String(c || ' ').charAt(0).repeat(Math.abs(n) - this.length);
-        return (n < 0) ? pad + val : val + pad;
-//      return (n < 0) ? val + pad : pad + val;
-};
+// String.prototype.padding = function(n, c)
+// {
+//         const val = this.valueOf();
+//         if ( Math.abs(n) <= val.length ) {
+//                 return val;
+//         }
+//         const m = Math.max((Math.abs(n) - this.length) || 0, 0);
+//         const pad = Array(m + 1).join(String(c || ' ').charAt(0));
+// //      var pad = String(c || ' ').charAt(0).repeat(Math.abs(n) - this.length);
+//         return (n < 0) ? pad + val : val + pad;
+// //      return (n < 0) ? val + pad : pad + val;
+// };
 
-const csstransitionArray = (css) =>{
-    // example: "opacity .3s, box-shadow 0.2s, transform 0.2s"
-    const transition = parseCsstransition(css).map(o=>{
-        o.name = camelizeStyleName(o.name)
-        return o;
-    });
+
+// const csstransitionArray = (css) =>{
+//     // example: "opacity .3s, box-shadow 0.2s, transform 0.2s"
+//     const transition = parseCsstransition(css).map(o=>{
+//         o.name = camelizeStyleName(o.name)
+//         return o;
+//     });
     
-    return transition
-}
+//     return transition
+// }
 const cleanupStyle = (style) =>
             Object.keys(style).reduce((obj,key)=>{
                  if(style[key] !== 'none') { obj[key] = style[key]; }
@@ -301,12 +306,33 @@ const cleanupStyle = (style) =>
             },{})
 const getStyle = (style) =>css(Object.keys(style).map((key)=>[key,String(style[key])]))
 
-export default class Div extends PIXI.Sprite {
+
+export default class Div extends PIXI.Sprite implements IDiv {
+    static defaultProps = defaultProps
+    // plugins
+    clip                        = clip
+    drawBoundingbox             = drawBoundingbox
+    drawBackground              = drawBackground
+    applyCssProperty            = applyCssProperty
+    applyCssTransformProperty   = applyCssTransformProperty
+
+    _scaleX = 1
+    _scaleY = 1
+    
+    _clip: boolean;
+    _styleWidth: any;
+    _styleHeight: any;
+    _textureWidth: number;
+    _textureHeight: number;
+    _lastBoundsID: number;
+    private _filters: any;
+    
     get style(){
         return this._style
     }
     set style(style){
         const newStyle = getStyle(cleanupStyle(style));
+        // tslint:disable-next-line:no-unused-expression
         shallowequal(newStyle,this._style) === false &&  this.applyStyle(newStyle) 
         this._style = newStyle     
     }
@@ -315,6 +341,7 @@ export default class Div extends PIXI.Sprite {
      *
      * @member {number}
      */
+    // @ts-ignore
     get width()
     {
         return this._texture.orig.width > 1  ? Math.abs(this.scale.x) * this._texture.orig.width : this._width;
@@ -333,6 +360,7 @@ export default class Div extends PIXI.Sprite {
      *
      * @member {number}
      */
+    // @ts-ignore
     get height()
     {
         return this._texture.orig.width > 1 ? Math.abs(this.scale.y) * this._texture.orig.height : this._height;
@@ -351,6 +379,7 @@ export default class Div extends PIXI.Sprite {
     set opacity(opacity){
         this._alpha = opacity
     }
+    // @ts-ignore
     get alpha(){
         return this._alpha || 1
     }
@@ -371,6 +400,7 @@ export default class Div extends PIXI.Sprite {
         this._translateY = translateY
         this.y =this.position.y + translateY
     }
+    // @ts-ignore
     get x(){
         return this.transform.position.x;
     }
@@ -378,6 +408,7 @@ export default class Div extends PIXI.Sprite {
     set x(x){
         this.transform.position.x = x + this.translateX  +  (this._style.paddingLeft ||0)
     }
+    // @ts-ignore
     get y(){
         return this.transform.position.y;
     }
@@ -399,16 +430,15 @@ export default class Div extends PIXI.Sprite {
          this._scaleY = scaleY;
          this.scale.set(this._scaleX,scaleY)
     }
-    // plugins
-    clip                        = clip
-    drawBoundingbox             = drawBoundingbox
-    drawBackground              = drawBackground
-    applyCssProperty            = applyCssProperty
-    applyCssTransformProperty   = applyCssTransformProperty
-    _scaleX = 1
-    _scaleY = 1
+
+    private _style:any
+    private _texture: any;
+    private _translateY: number;
+    private _translateX: any;
+    private _alpha: number;
+     // @ts-ignore
+    private _UID: string;
     constructor(props) {
-         super()
         super(props.texture)
         this._UID =  `div_${new Date().getTime()}`
         const style = Object.assign(JSON.parse(JSON.stringify(Div.defaultProps.style)),props.style)
@@ -423,7 +453,9 @@ export default class Div extends PIXI.Sprite {
         const height = this.height || style.height || bounds.maxY - bounds.minY ;
         const {width:textureWidth,height:textureHeight} = this.texture;
        
+        // tslint:disable-next-line:no-unused-expression
         this.width === 0 &&  (this.width = width)
+         // tslint:disable-next-line:no-unused-expression
         this.height === 0 && (this.height = height)
     
         if(style.transform){
@@ -438,7 +470,7 @@ export default class Div extends PIXI.Sprite {
             style.overflow === 'hidden'  
             && width 
             && height
-            && (this.__width !== width ||this.__height !== height)
+            && (this._styleWidth !== width ||this._styleHeight !== height)
             ){
                 
                 this.clip(0,0,width || style.width,height || style.width)   
@@ -449,8 +481,8 @@ export default class Div extends PIXI.Sprite {
         if(
             (style.borderColor || style.borderWidth)
             && (
-                this.__width !== width ||this.__height !== height
-                || this.__textureWidth !== textureWidth ||this.__textureHeight !== textureHeight
+                this._styleWidth !== width ||this._styleHeight !== height
+                || this._textureWidth !== textureWidth ||this._textureHeight !== textureHeight
                 )
             ){
                 this.drawBoundingbox( width ,height ,style.borderColor,style.borderWidth,style.borderStyle)
@@ -460,8 +492,8 @@ export default class Div extends PIXI.Sprite {
         if(
             (style.backgroundColor)
             && (
-                this.__width !== width ||this.__height !== height
-                || this.__textureWidth !== textureWidth ||this.__textureHeight !== textureHeight
+                this._styleWidth !== width ||this._styleHeight !== height
+                || this._textureWidth !== textureWidth ||this._textureHeight !== textureHeight
                 )
             ){
                 this.drawBackground(this.texture.valid ? textureWidth : width ,this.texture.valid ? textureHeight : height ,style.backgroundColor,style.borderWidth,style.borderStyle)
@@ -481,15 +513,15 @@ export default class Div extends PIXI.Sprite {
         //     newStyle.transform.forEach((obj)=>Object.assign(this,obj))
         // }
         if(this.parent){
-            this.applyCssProperty('right',style.right,this.parent._bounds.maxX - style.right,'x');
-            this.applyCssProperty('bottom',style.bottom,this.parent._bounds.maxY - style.bottom,'y');
+            this.applyCssProperty('right',style.right || this.parent._bounds.maxX - style.right,'x');
+            this.applyCssProperty('bottom',style.bottom || this.parent._bounds.maxY - style.bottom,'y');
         }
          
-        this.__width  = width;
-        this.__height = height;
+        this._styleWidth  = width;
+        this._styleHeight = height;
 
-        this.__textureWidth = this.texture.width || width;
-        this.__textureHeight = this.texture.height || height;
+        this._textureWidth = this.texture.width || width;
+        this._textureHeight = this.texture.height || height;
          
         // this._style = style
 
@@ -506,6 +538,7 @@ export default class Div extends PIXI.Sprite {
         
         this.transform.updateTransform(this.parent.transform);
         // TODO: check render flags, how to process stuff here
+         // @ts-ignore
         this.worldAlpha = this.alpha * this.parent.worldAlpha;
         // console.log(this._scaleX,this.scaleX)
         // this.scale.set(this._scaleX,this._scaleY)
@@ -559,19 +592,25 @@ export default class Div extends PIXI.Sprite {
         const width = this._width || style.width;
         const height = this._height || style.height;
         
+        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.children.length; i++) {
             const child = this.children[i];
             if (!child.visible || !child.renderable) {
                 continue;
             }
+            // @ts-ignore
             child.calculateBounds();
             // TODO: filter+mask, need to mask both somehow
+             // @ts-ignore
             if (child._mask) {
                 child
+                    // @ts-ignore
                     ._mask
+                     // @ts-ignore
                     .calculateBounds();
                 this
                     ._bounds
+                     // @ts-ignore
                     .addBoundsMask(child._bounds, child._mask._bounds);
             } else if (child.filterArea) {
                 this
@@ -594,8 +633,10 @@ export default class Div extends PIXI.Sprite {
         const paddingBottom = (style.paddingBottom || 0);
 
         Object.assign(bounds, {
+          // @ts-ignore
           minX: this._bounds.mixX - paddingLeft,
           maxX: maxX + paddingRight,
+          // @ts-ignore
           minY: this._bounds.minY - paddingTop,
           maxY: maxY + paddingBottom
         })
@@ -610,5 +651,5 @@ export default class Div extends PIXI.Sprite {
     }
 }
 
-Div.defaultProps = defaultProps
+ // @ts-ignore
 PIXI.Div = Div;

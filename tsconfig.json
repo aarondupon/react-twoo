@@ -11,13 +11,17 @@
     "moduleResolution": "node",
     "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
+    "noImplicitReturns": false,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
     "importHelpers": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "declaration": true,
+    "skipLibCheck": false,
+    "checkJs": false,
+    "allowSyntheticDefaultImports":true
   },
   "exclude": [
     "node_modules",
@@ -28,4 +32,5 @@
     "jest",
     "src/setupTests.ts"
   ]
+    
 }
