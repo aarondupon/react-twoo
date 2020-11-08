@@ -3,47 +3,104 @@ import css from 'css-to-react-native';
 import parseCsstransition from 'parse-css-transition';
 import camelizeStyleName from 'fbjs/lib/camelizeStyleName';
 import shallowequal from 'shallowequal';
+import { CSSProperties } from 'react';
 
-var date = Date.now();
-const FPS = 30
-const checkfps = (fps = FPS) => {
- 
-    let allow = false;
-    const interval = 1000 / fps;
-    const then = date;
-    const now = Date.now();
-    const delta = now - then;
-    if (delta > interval && date) {
-        date = now - (delta % interval);
-        allow = true
 
-    }
-    return allow;
-};
+
+export interface IDiv {
+    clip: typeof clip;
+    drawBoundingbox: typeof drawBoundingbox;
+    drawBackground: typeof drawBackground;
+    applyCssProperty: typeof applyCssProperty;
+    applyCssTransformProperty: typeof applyCssTransformProperty;
+    _scaleX: number;
+    _scaleY: number;
+    style: CSSProperties;
+    /**
+     * The width of the sprite, setting this will actually modify the scale to achieve the value set
+     * 
+     * @member {number}
+     */
+    width: number;
+    /**
+     * The height of the sprite, setting this will actually modify the scale to achieve the value set
+     * 
+     * @member {number}
+     */
+    height: number;
+    opacity: any;
+    alpha: any;
+    translateX: any;
+    translateY: any;
+    x: number;
+    y: number;
+    scaleX: number;
+    scaleY: number;
+
+    accessibleTitle:string,
+    accessibleHint:string,
+    accessible:boolean,
+    interactive:boolean,
+    button:boolean,
+    cursor:boolean,
+    applyStyle(style:CSSProperties): void,
+    /**
+     * Updates the transform on all children of this container for rendering
+     */
+    updateTransform(): void,
+    calculateBounds(): PIXI.Bounds,
+// tslint:disable-next-line:no-bitwise
+}
+
+const defaultProps = {
+    style:{
+        
+        color:'none',
+        paddingTop: 0,
+        paddingRight: 0,
+        paddingBottom: 0,
+        paddingLeft: 0,
+        height:'initial',
+        width:'initial',
+        overflow:'none',
+        overflowX: 'none',
+        overflowY:'none',
+        transform:'none',
+        border:'none',
+        opacity:'none',
+        zIndex:'none',
+        },
+    accessibleTitle:null,
+    accessibleHint:null,
+    accessible:null,
+    interactive:null,
+    button:null,
+    cursor:null,
+}
 
 // utils
 const parseColor = (color)=>{
-    let colorObj = rgbToHex(color);
+    const colorObj = rgbToHex(color);
     return colorObj;
 }
 
 function componentToHex(c) {
-    var hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
+    const hex = c.toString(16);
+    return hex.length === 1 ? "0" + hex : hex;
 }
-a
-function rgbToHex(strColor){
+
+function rgbToHex(strColor:string){
 
     if (strColor.substr(0, 1) === '#' || strColor.substr(0, 1) === '0x') {
-        const hex = strColor.includes('#') ? strColor.replace('#','0x') : strColor;
-        return {hex,alpha:1};
+        const col = strColor.includes('#') ? strColor.replace('#','0x') : strColor;
+        return {hex:col,alpha:1};
     }
     
-    var rgbReg = /^rgb?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i
-    var rgbaReg = /^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?([+-]?([0-9]+([.][0-9]*)?|[.][0-9]+))?/i
+    const rgbReg = /^rgb?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i
+    const rgbaReg = /^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?([+-]?([0-9]+([.][0-9]*)?|[.][0-9]+))?/i
 
-    var res = strColor.match( strColor.indexOf('rgba') !== -1 ? rgbaReg : rgbReg);//strColor.match();
-    if(res === null) return {hex:0xffffff,alpha:0}
+    const res = strColor.match( strColor.indexOf('rgba') !== -1 ? rgbaReg : rgbReg);// strColor.match();
+    if(res === null) { return {hex:0xffffff,alpha:0} }
     const R = res[1];
     const G = res[2];
     const B = res[3];
@@ -51,7 +108,7 @@ function rgbToHex(strColor){
     
     const hex =  '0x' + ((B | G << 8 | R << 16) | 1 << 24).toString(16).slice(1);
     const alpha = parseFloat(A) || 1;
-    return {hex:hex,alpha};
+    return {hex,alpha};
   }
 
 
@@ -64,42 +121,43 @@ function rgbToHex(strColor){
 // }
 function applyCssProperty(property,value,SETTER){
     if(value && this[`__${property}`] !== value ){
-        //console.log('applyCssProperty',property,value)
+        // console.log('applyCssProperty',property,value)
         this[SETTER || property] = value;
         this[`__${property}`] = value;
     }
 }
 
 const cssTransfromProperty = {
-    scale(value,target){
+    scale(value: number,target: { _texture: { orig: { width: number; }; }; _width: number; scale: { x: number; y: number; }; }){
         /**f
          * pixi calculates the scale relative to y
          */
-        let sx =  target._texture.orig.width > 1 ? target._width / target._texture.orig.width : 1;
-        let sy =  1;//target._texture.orig.height > 1 ? target._height / target._texture.orig.height: 1;
+        const sx =  target._texture.orig.width > 1 ? target._width / target._texture.orig.width : 1;
+        const sy =  1;// target._texture.orig.height > 1 ? target._height / target._texture.orig.height: 1;
             target.scale = {x:value*sx,y:value*sy};
     },
-    scaleX(value,target){
-         /**
+    scaleX(value: number,target: { _texture: { orig: { width: number; height: number; }; }; _width: number; _height: number; scale: { y: any; x?: number; }; }){
+        /**
          * pixi calculates the scale relative to y
          */
-        let sx =  target._texture.orig.width > 1 ? target._width / target._texture.orig.width : 1;
-        let sy =  target._texture.orig.height > 1 ?target._height / target._texture.orig.height: 1;
+        const sx =  target._texture.orig.width > 1 ? target._width / target._texture.orig.width : 1;
+        const sy =  target._texture.orig.height > 1 ?target._height / target._texture.orig.height: 1;
         target.scale = {x:value*sx,y:target.scale.y*sy};
     },
-    scaleY(value,target){
-         /**
+    scaleY(value: number,target: { _texture: { orig: { width: number; }; }; _width: number; scale: { x: any; y?: number; }; }){
+        /**
          * pixi calculates the scale relative to y
          */
-        let sx =  target._texture.orig.width > 1 ? target._width / target._texture.orig.width : 1;
-        let sy =   1;//target._texture.orig.height  > 1 ? target._height / target._texture.orig.height: 1;
+        const sx =  target._texture.orig.width > 1 ? target._width / target._texture.orig.width : 1;
+        const sy =   1;// target._texture.orig.height  > 1 ? target._height / target._texture.orig.height: 1;
         target.scale =  {x:target.scale.x*sx,y:value*sy};
     },
 }
-function applyCssTransformProperty(transform){
+function applyCssTransformProperty(transform: any[]){
     transform.forEach((tr)=>{
         const propName =Object.keys(tr)[0];
-        let value = tr[propName];
+        const value = tr[propName];
+        // @ts-ignore
         cssTransfromProperty[propName] && cssTransfromProperty[propName](value,this)
         
     })
@@ -107,18 +165,15 @@ function applyCssTransformProperty(transform){
 }
 
 // custom plugins 
-function clip(x,y,w,h,maks){
-    var _self = this;
-    //_self.cacheAsBitmap = false;
+function clip(x:number,y:number,w:number,h:number){
+    const _self = this;
+    // _self.cacheAsBitmap = false;
     if(_self.mask){
-       
         _self.removeChild(_self.mask);
-        _self.mask = null;
-        
-        
+        _self.mask = null;        
     }
 
-    var myMask = new PIXI.Graphics();
+    const myMask = new PIXI.Graphics();
     myMask.beginFill();
     myMask.drawRect(
         x,
@@ -131,16 +186,13 @@ function clip(x,y,w,h,maks){
     _self.addChild(myMask)
     _self.mask = myMask;
     
-    //_self.cacheAsBitmap = true;
+    // _self.cacheAsBitmap = true;
     // _self.filterArea = new PIXI.Rectangle(
     //     0,//this.transform.worldTransform.tx,
     //     0,//this.transform.worldTransform.ty,
     //     w,
     //     h
     //     )
-            
-    
-    
 }
 
 function drawBoundingbox(w,h,color= '#000000', width=1,style = 'solid'){
@@ -148,7 +200,7 @@ function drawBoundingbox(w,h,color= '#000000', width=1,style = 'solid'){
         this.removeChild(this.boundingbox);
     }
     const {hex,alpha}  = parseColor(color);
-    var boundingbox = new PIXI.Graphics();
+    const boundingbox = new PIXI.Graphics();
     boundingbox.lineStyle(width,hex,alpha)
     boundingbox.drawRect(
         0,
@@ -161,12 +213,12 @@ function drawBoundingbox(w,h,color= '#000000', width=1,style = 'solid'){
     this.addChild(boundingbox)
     }
 
-//TODO:: needs to be optimised
+// TODO:: needs to be optimised
 function drawBackground(w,h,color= '#000000', width=0,style = 'solid'){
     if(this.background){
         this.removeChild(this.background);
     }
-    var background = new PIXI.Graphics();
+    const background = new PIXI.Graphics();
     const {hex,alpha} = parseColor(color);
     background.beginFill(hex,alpha)
     width && background.lineStyle(width,hex,alpha)
@@ -222,12 +274,12 @@ function getBoundsWithChildren(){
  */
 String.prototype.padding = function(n, c)
 {
-        var val = this.valueOf();
+        const val = this.valueOf();
         if ( Math.abs(n) <= val.length ) {
                 return val;
         }
-        var m = Math.max((Math.abs(n) - this.length) || 0, 0);
-        var pad = Array(m + 1).join(String(c || ' ').charAt(0));
+        const m = Math.max((Math.abs(n) - this.length) || 0, 0);
+        const pad = Array(m + 1).join(String(c || ' ').charAt(0));
 //      var pad = String(c || ' ').charAt(0).repeat(Math.abs(n) - this.length);
         return (n < 0) ? pad + val : val + pad;
 //      return (n < 0) ? val + pad : pad + val;
@@ -244,12 +296,117 @@ const csstransitionArray = (css) =>{
 }
 const cleanupStyle = (style) =>
             Object.keys(style).reduce((obj,key)=>{
-                 if(style[key] !== 'none') obj[key] = style[key];
+                 if(style[key] !== 'none') { obj[key] = style[key]; }
                 return obj;
             },{})
 const getStyle = (style) =>css(Object.keys(style).map((key)=>[key,String(style[key])]))
 
 export default class Div extends PIXI.Sprite {
+    get style(){
+        return this._style
+    }
+    set style(style){
+        const newStyle = getStyle(cleanupStyle(style));
+        shallowequal(newStyle,this._style) === false &&  this.applyStyle(newStyle) 
+        this._style = newStyle     
+    }
+    /**
+     * The width of the sprite, setting this will actually modify the scale to achieve the value set
+     *
+     * @member {number}
+     */
+    get width()
+    {
+        return this._texture.orig.width > 1  ? Math.abs(this.scale.x) * this._texture.orig.width : this._width;
+    }
+    set width(value) // eslint-disable-line require-jsdoc
+    {
+        const s = Math.sign(this.scale.x) || 1;
+       
+
+        if(this._texture.orig.width > 1 ) { this.scale.x = s * value / this._texture.orig.width ; }
+        this._width = value;
+        this.applyStyle(this._style)
+    }
+    /**
+     * The height of the sprite, setting this will actually modify the scale to achieve the value set
+     *
+     * @member {number}
+     */
+    get height()
+    {
+        return this._texture.orig.width > 1 ? Math.abs(this.scale.y) * this._texture.orig.height : this._height;
+    }
+    set height(value) // eslint-disable-line require-jsdoc
+    {
+        const s = Math.sign(this.scale.y) || 1;
+        if(this._texture.orig.height > 1 ) { this.scale.y = s * value / this._texture.orig.height; }
+        this._height = value;
+        
+        this.applyStyle(this._style)
+    }
+    get opacity(){
+        return this._alpha || 1
+    }
+    set opacity(opacity){
+        this._alpha = opacity
+    }
+    get alpha(){
+        return this._alpha || 1
+    }
+    set alpha(alpha){
+        this._alpha = alpha
+    }
+    get translateX(){
+        return this._translateX || 0
+    }
+    set translateX(translateX){
+        this._translateX = translateX
+        this.x = this.position.x + translateX
+    }
+    get translateY(){
+        return this._translateY || 0
+    }
+    set translateY(translateY){
+        this._translateY = translateY
+        this.y =this.position.y + translateY
+    }
+    get x(){
+        return this.transform.position.x;
+    }
+
+    set x(x){
+        this.transform.position.x = x + this.translateX  +  (this._style.paddingLeft ||0)
+    }
+    get y(){
+        return this.transform.position.y;
+    }
+    set y(y){       
+        this.transform.position.y = y + this.translateY + (this._style.paddingTop ||0)
+    }
+    get scaleX(){
+        return this._scaleX || 2;
+    }
+    set scaleX(scaleX){  
+         this._scaleX = scaleX;
+         this.scale.set(scaleX,this._scaleY)
+    }
+    get scaleY(){
+        return this._scaleY || 1;
+
+    }
+    set scaleY(scaleY){  
+         this._scaleY = scaleY;
+         this.scale.set(this._scaleX,scaleY)
+    }
+    // plugins
+    clip                        = clip
+    drawBoundingbox             = drawBoundingbox
+    drawBackground              = drawBackground
+    applyCssProperty            = applyCssProperty
+    applyCssTransformProperty   = applyCssTransformProperty
+    _scaleX = 1
+    _scaleY = 1
     constructor(props) {
          super()
         super(props.texture)
@@ -257,15 +414,9 @@ export default class Div extends PIXI.Sprite {
         const style = Object.assign(JSON.parse(JSON.stringify(Div.defaultProps.style)),props.style)
         this._style = getStyle(cleanupStyle(style));
     }
-    //plugins
-    clip                        = clip
-    drawBoundingbox             = drawBoundingbox
-    drawBackground              = drawBackground
-    applyCssProperty            = applyCssProperty
-    applyCssTransformProperty   = applyCssTransformProperty
     applyStyle(style){
 
-        if(!style) return;
+        if(!style) { return; }
         this.getBounds();
         const bounds = this._bounds;
         const width = this.width || style.width || bounds.maxX - bounds.minX;
@@ -281,7 +432,7 @@ export default class Div extends PIXI.Sprite {
            
         }
 
-        //clippig
+        // clippig
         this._clip =  false    
         if(
             style.overflow === 'hidden'  
@@ -294,7 +445,7 @@ export default class Div extends PIXI.Sprite {
                 this._clip = true;        
         }
         
-        //borderColor 
+        // borderColor 
         if(
             (style.borderColor || style.borderWidth)
             && (
@@ -305,7 +456,7 @@ export default class Div extends PIXI.Sprite {
                 this.drawBoundingbox( width ,height ,style.borderColor,style.borderWidth,style.borderStyle)
             
         }
-        //background
+        // background
         if(
             (style.backgroundColor)
             && (
@@ -348,7 +499,7 @@ export default class Div extends PIXI.Sprite {
      */
     updateTransform()
     {
-        //if(!checkfps(1)) return
+        // if(!checkfps(1)) return
        // if(!fpsController.checkfps(24,'updateTransform')) return 
 
         this._boundsID++;
@@ -397,7 +548,7 @@ export default class Div extends PIXI.Sprite {
     }
     calculateBounds()
     {   
-        //if(!checkfps(2)) return this._bounds;
+        // if(!checkfps(2)) return this._bounds;
      //   if(!fpsController.checkfps(10,'calculateBounds')) return this._bounds
         const style = this._style;
         this
@@ -408,8 +559,8 @@ export default class Div extends PIXI.Sprite {
         const width = this._width || style.width;
         const height = this._height || style.height;
         
-        for (var i = 0; i < this.children.length; i++) {
-            var child = this.children[i];
+        for (let i = 0; i < this.children.length; i++) {
+            const child = this.children[i];
             if (!child.visible || !child.renderable) {
                 continue;
             }
@@ -432,7 +583,7 @@ export default class Div extends PIXI.Sprite {
                     .addBounds(child._bounds);
             }
         }
-        var bounds = new PIXI.Bounds();
+        const bounds = new PIXI.Bounds();
         // calclulate size        
         const maxX =  Number.isInteger(width) ? this._bounds.minX + width : this._bounds.maxX ;
         const maxY =  Number.isInteger(height) ? this._bounds.minY + height : this._bounds.maxY ;
@@ -457,131 +608,7 @@ export default class Div extends PIXI.Sprite {
         return this._bounds
         return 
     }
-    get style(){
-        return this._style
-    }
-    set style(style){
-        const newStyle = getStyle(cleanupStyle(style));
-        shallowequal(newStyle,this._style) === false &&  this.applyStyle(newStyle) 
-        this._style = newStyle     
-    }
-    /**
-     * The width of the sprite, setting this will actually modify the scale to achieve the value set
-     *
-     * @member {number}
-     */
-    get width()
-    {
-        return this._texture.orig.width > 1  ? Math.abs(this.scale.x) * this._texture.orig.width : this._width;
-    }
-    set width(value) // eslint-disable-line require-jsdoc
-    {
-        const s = Math.sign(this.scale.x) || 1;
-       
-
-        if(this._texture.orig.width > 1 ) this.scale.x = s * value / this._texture.orig.width ;
-        this._width = value;
-        this.applyStyle(this._style)
-    }
-    /**
-     * The height of the sprite, setting this will actually modify the scale to achieve the value set
-     *
-     * @member {number}
-     */
-    get height()
-    {
-        return this._texture.orig.width > 1 ? Math.abs(this.scale.y) * this._texture.orig.height : this._height;
-    }
-    set height(value) // eslint-disable-line require-jsdoc
-    {
-        const s = Math.sign(this.scale.y) || 1;
-        if(this._texture.orig.height > 1 ) this.scale.y = s * value / this._texture.orig.height;
-        this._height = value;
-        
-        this.applyStyle(this._style)
-    }
-    get opacity(){
-        return this._alpha || 1
-    }
-    set opacity(opacity){
-        this._alpha = opacity
-    }
-    get alpha(){
-        return this._alpha || 1
-    }
-    set alpha(alpha){
-        this._alpha = alpha
-    }
-    get translateX(){
-        return this._translateX || 0
-    }
-    set translateX(translateX){
-        this._translateX = translateX
-        this.x = this.position.x + translateX
-    }
-    get translateY(){
-        return this._translateY || 0
-    }
-    set translateY(translateY){
-        this._translateY = translateY
-        this.y =this.position.y + translateY
-    }
-    get x(){
-        return this.transform.position.x;
-    }
-
-    set x(x){
-        this.transform.position.x = x + this.translateX  +  (this._style.paddingLeft ||0)
-    }
-    get y(){
-        return this.transform.position.y;
-    }
-    set y(y){       
-        this.transform.position.y = y + this.translateY + (this._style.paddingTop ||0)
-    }
-    _scaleX = 1
-    _scaleY = 1
-    get scaleX(){
-        return this._scaleX || 2;
-    }
-    set scaleX(scaleX){  
-         this._scaleX = scaleX;
-         this.scale.set(scaleX,this._scaleY)
-    }
-    get scaleY(){
-        return this._scaleY || 1;
-
-    }
-    set scaleY(scaleY){  
-         this._scaleY = scaleY;
-         this.scale.set(this._scaleX,scaleY)
-    }
 }
 
-Div.defaultProps = {
-    style:{
-        
-        color:'none',
-        paddingTop: 0,
-        paddingRight: 0,
-        paddingBottom: 0,
-        paddingLeft: 0,
-        height:'initial',
-        width:'initial',
-        overflow:'none',
-        overflowX: 'none',
-        overflowY:'none',
-        transform:'none',
-        border:'none',
-        opacity:'none',
-        zIndex:'none',
-        },
-    accessibleTitle:null,
-    accessibleHint:null,
-    accessible:null,
-    interactive:null,
-    button:null,
-    cursor:null,
-}
-
+Div.defaultProps = defaultProps
 PIXI.Div = Div;

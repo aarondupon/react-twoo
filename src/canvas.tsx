@@ -1,37 +1,74 @@
-import React, {Component} from 'react';
+import React, {Component, CSSProperties} from 'react';
 import ReactPIXIFiber from './fiber/ReactPIXIFiber';
 import {ReactPIXIFiberRoot} from './fiber/ReactPIXIFiberRoot';
-// import throttle from 'lodash.throttle';
-// import App from './App';
 
-export default class Canvas extends Component {
-   
-    constructor(){
-        super();
+type Color = string;
+
+export type CanvasProps = {
+    children?: React.ReactNode,
+    backgroundColor?: Color,
+    clearBeforeRender?: boolean, // true,
+    transparent?: boolean,
+    preserveDrawingBuffer?: boolean, // true,
+    autoResize?: boolean, // true,
+    forceFXAA?: boolean,
+    antialias?: boolean, // true,
+    pause?: boolean,
+    className?: string,
+    onRender?: () => {},
+    width?: number,
+    height?: number,
+    autoRender?: boolean,
+    target?:string | undefined,
+    style?: CSSProperties,
+} & typeof defaultProps
+
+const defaultProps  = {
+    backgroundColor: '0xff0000',
+    children: null,
+    clearBeforeRender: false, // true,
+    transparent: true,
+    preserveDrawingBuffer: false, // true,
+    autoResize: false, // true,
+    forceFXAA: false,
+    antialias: false, // true,
+    pause: false,
+    className: 'custom-render-canvas',
+    onRender: () => {},
+    width: window.innerWidth,
+    height: window.innerHeight,
+    autoRender: true,
+}
+
+
+
+export default class Canvas extends Component<CanvasProps> {
+    reactPIXIFiberRoot: typeof ReactPIXIFiberRoot;
+    constructor(props:CanvasProps){
+        super(props);
         console.log('constructor:canvas:created and stage!')
-        // this.resize = throttle(this.resize,200)
         this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
         this.resize = this.resize.bind(this);
         this.renderInner = this.renderInner.bind(this);
     }
     componentWillUnmount(){
-        if(this._reactPIXIFiberRoot && typeof this._reactPIXIFiberRoot.cancel  ===  'function' ){
-            this._reactPIXIFiberRoot.cancel();
+        if(this.reactPIXIFiberRoot && typeof this.reactPIXIFiberRoot.cancel  ===  'function' ){
+            this.reactPIXIFiberRoot.cancel();
         }
         console.log('componentWillUnmount:')
     }
     componentWillReceiveProps (nextProps) {
         console.log('renderInner3:canvas: created and stage')//,Date.now(),this.props, this.container)
  
-          // console.log('_reactPIXIFiberRoot',this._reactPIXIFiberRoot)
-        ReactPIXIFiber.render(nextProps.children, this._reactPIXIFiberRoot.stage);
+          // console.log('reactPIXIFiberRoot',this.reactPIXIFiberRoot)
+        ReactPIXIFiber.render(nextProps.children, this.reactPIXIFiberRoot.stage);
         
         if( nextProps.width !== this.props.width || nextProps.height !== this.props.height){
             this.resize(nextProps)
         }
     }
     resize(nextProps){
-        const {renderer,view,state} = this._reactPIXIFiberRoot;
+        const {renderer,view,state} = this.reactPIXIFiberRoot;
         const parent = view.parentNode;
         const w = parent.clientWidth;
         const h = parent.clientHeight;
@@ -44,14 +81,14 @@ export default class Canvas extends Component {
         return( width !== this.props.width || height !== this.props.height )
     }    
     componentDidMount() {
-        if(this._reactPIXIFiberRoot)this._reactPIXIFiberRoot.update(this.props)
-        console.log('if(this._reactPIXIFiberRoot',this._reactPIXIFiberRoot)
+        if(this.reactPIXIFiberRoot)this.reactPIXIFiberRoot.update(this.props)
+        console.log('if(this.reactPIXIFiberRoot',this.reactPIXIFiberRoot)
         this.renderInner()
        
     }
     renderInner(){
         const reactPIXIFiberRoot = new ReactPIXIFiberRoot(this.props, this.container);
-        this._reactPIXIFiberRoot = reactPIXIFiberRoot
+        this.reactPIXIFiberRoot = reactPIXIFiberRoot
         
         ReactPIXIFiber.render(this.props.children, reactPIXIFiberRoot.stage);
     
@@ -83,19 +120,4 @@ export default class Canvas extends Component {
     }
 }
 
-Cavans.defaultProps  = {
-    children: null,
-    backgroundColor: '0xff0000',
-    clearBeforeRender: false, // true,
-    transparent: true,
-    preserveDrawingBuffer: false, // true,
-    autoResize: false, // true,
-    forceFXAA: false,
-    antialias: false, // true,
-    pause: false,
-    className: 'custom-render-canvas',
-    onRender: () => {},
-    width: window.innerWidth,
-    height: window.innerHeight,
-    autoRender: true,
-}
+Canvas.defaultProps = defaultProps

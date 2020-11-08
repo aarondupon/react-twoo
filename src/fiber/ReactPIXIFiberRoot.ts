@@ -1,32 +1,55 @@
 import * as PIXI from 'pixi.js';
 import {mapStage,mapRender,mapCanvasToStage} from '../common/utils/mapRendererToStage';
-import {renderAnimationRaf} from '../common/utils/renderAnimation';
-import HtmlRenderer from '../pixi.js/HtmlRenderer';
+// import {renderAnimationRaf} from '../common/utils/renderAnimation';
+// import HtmlRenderer from '../pixi.js/HtmlRenderer';
 import animate from 'animate';
 import FPSController from '../common/FpsController';
+import { CanvasProps } from 'src/canvas';
 
 
-const PIXI_RENDERS = [];
-var COUNT = 0;
+const PIXI_RENDERS:any[] = [];
+let COUNT = 0;
 
 PIXI.settings.FILTER_RESOLUTION = 1
+
+export interface IReactPIXIFiberRoot {
+  cancel(): void;
+  autoRender(renderfunction:()=>{}): void;
+  createPixiWebglRender(props:Partial<CanvasProps>, domElement:HTMLElement): any;
+}
+
+export type Stage = PIXI.Sprite & {renderer:PIXI.Renderer}
+
+export type PIXIRenderer = PIXI.Renderer & {
+  view: HTMLElement & {__PIXI__:{
+    renderer:PIXI.Renderer,
+    stage:Stage
+  }}
+}
 export class ReactPIXIFiberRoot {
-    constructor(props,domElement){
+    props: CanvasProps;
+    fpsController: FPSController;
+    raf: any;
+    renderer: any;
+    stage: PIXI.Sprite;
+    view: any;
+    constructor(props:CanvasProps,domElement:HTMLElement){
       this.props = props;
       this.fpsController = new FPSController();
 
       this.cancel = this.cancel.bind(this)
       this.autoRender =  this.autoRender.bind(this)
-      this._createPixiWebglRender = this._createPixiWebglRender.bind(this)
+      this.createPixiWebglRender = this.createPixiWebglRender.bind(this)
       
       COUNT ++;
-      this._createPixiWebglRender(props,domElement)
+      this.createPixiWebglRender(props,domElement)
       return this;  
     }
     cancel(){
+      // tslint:disable-next-line:no-unused-expression
       (this.raf && typeof this.raf.cancel === "function") &&  this.raf.cancel()
     }
-    autoRender(renderfunction){
+    autoRender(renderfunction: { (): void; (): void; }){
       
       this.raf = animate(()=>{
         renderfunction()
@@ -34,41 +57,37 @@ export class ReactPIXIFiberRoot {
 
     }
     // Resize function window
-    _createPixiWebglRender(props,domElement){
+    createPixiWebglRender(props: CanvasProps,domElement: HTMLElement){
         const {style = {},autoRender} =  props;
         
-        let {targetName,preserveDrawingBuffer,transparent, target,width,height,backgroundColor,clearBeforeRender,autoResize,className} = props;
-        const stage = new PIXI.Sprite()
+        const {preserveDrawingBuffer,transparent,width,height,backgroundColor,autoResize,className} = props;
+        let {target} = props;
+        const stage:Stage = new PIXI.Sprite() as Stage
+        // @ts-ignore
         stage.CANVAS_ID = COUNT;
-        // stage.UID = this.UID
-        // stage.filters = [new PIXI.filters.AlphaFilter()];
-        // stage.filters = [];
         const paddig = 0
         stage.y = paddig
-        const res = 1
-        //stage.scale = (new PIXI.Point(res,res))
-        // stage.filterArea = new PIXI.Rectangle(-300,-300,1000,1000)
-
-        // PIXI.settings.RESOLUTION = 1  
-        let renderer;
-        // PIXI.RESOLUTION = window.devicePixelRatio || 1;
-       // const COUNT = Date.now();//Snew Date().getUTCMilliseconds();
-        if (!document.getElementById(target) || target === undefined) {
+        let renderer: PIXIRenderer
+ 
+        if (!target || !document.getElementById(target) || target === undefined) {
+            // @ts-ignore
             renderer = new PIXI.WebGLRenderer((width),(height)+paddig*2, {
-           forceFXAA: true,//this.props.forceFXAA,
-            antialias: true, // this.props.antialias,
-            backgroundColor,
-            clearBeforeRender:false,
-            transparent,
-            preserveDrawingBuffer, // this.props.preserveDrawingBuffer,
+            antialias: true,
+            clearBeforeRender: false,
+            forceFXAA: true,
             autoResize,
+            backgroundColor,
+            transparent,
+            preserveDrawingBuffer,
             resolution: PIXI.settings.RESOLUTION,
             view:domElement,
           });
           
           console.log('autoResize',autoResize)
 
-          if (!target) target = `${COUNT}_target`;
+          if (!target){
+            target = `${COUNT}_target`;
+          }
           PIXI_RENDERS[target] = renderer;
         } else {
           renderer = PIXI_RENDERS[target];
@@ -82,14 +101,13 @@ export class ReactPIXIFiberRoot {
           renderer.view.style.position = style.position || 'absolute';
           renderer.view.style.top = `${-paddig}px` || 'inherit';
           renderer.view.style.left = `${style.left}px` || 'inherit';
-          renderer.view.style.opacity = 1;
+          renderer.view.style.opacity = '1';
           renderer.view.setAttribute('data-name','front');
           renderer.view.className = `${className}`;
-          // domElement.appendChild(renderer.view);
         } else if (target === undefined) {
           renderer.view.id = `stage_${COUNT}`;
+          // @ts-ignore
           PIXI.TARGET_FPMS = 0.06;
-          // domElement.appendChild(renderer.view);
         }
 
         renderer.view.__PIXI__ = {
@@ -97,7 +115,8 @@ export class ReactPIXIFiberRoot {
           stage,
         }
         
-        var ticker = PIXI.ticker.shared;
+        // @ts-ignore
+        const ticker = PIXI.ticker.shared;
         // Set this to prevent starting this ticker when listeners are added to it
         // By default this is true only on the PIXI.ticker.shared instance
         ticker.autoStart = false;

@@ -8,6 +8,8 @@ import pkg from "./package.json";
 // import resolve from "rollup-plugin-node-resolve";
 import resolve from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json';
+import dts from "rollup-plugin-dts";
+
 
 import uglify from "rollup-plugin-uglify";
 
@@ -29,7 +31,7 @@ import shader from 'rollup-plugin-shader';
 
 
 
-const input = "src/main.js";
+const input = "src/main.ts";
 const outputName = "react-twoo";
 // const external = Object.keys(pkg.peerDependencies || {});
 // const esExternal = external.concat(Object.keys(pkg.dependencies || {}));
