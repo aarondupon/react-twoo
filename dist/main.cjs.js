@@ -12,7 +12,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
 var PIXI$1 = require('pixi.js');
-var EMPTY$1 = require('src/filters/core/Texture/EMPTY');
 var core = require('pixi.js/lib/core');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -39,7 +38,6 @@ function _interopNamespace(e) {
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var PIXI__namespace = /*#__PURE__*/_interopNamespace(PIXI$1);
-var EMPTY__default = /*#__PURE__*/_interopDefaultLegacy(EMPTY$1);
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -22536,6 +22534,13 @@ var shallowequal = function shallowEqual(objA, objB, compare, compareContext) {
   return true;
 };
 
+function EMPTY() {
+  var baseTexture = new PIXI.BaseTexture();
+  return new PIXI.Texture(baseTexture);
+}
+
+EMPTY.prototype.constructor = EMPTY;
+
 var defaultProps = {
   style: {
     color: 'none',
@@ -22955,7 +22960,7 @@ var Div = /*#__PURE__*/function (_PIXI$Sprite) {
 
     _classCallCheck(this, Div);
 
-    _this2 = _super.call(this, props.texture || new EMPTY__default['default']());
+    _this2 = _super.call(this, props.texture || new EMPTY());
 
     _defineProperty(_assertThisInitialized(_this2), "clip", clip);
 
@@ -23043,7 +23048,7 @@ var Div = /*#__PURE__*/function (_PIXI$Sprite) {
 
 
       if (style.backgroundColor && (this._styleWidth !== width || this._styleHeight !== height || this._textureWidth !== textureWidth || this._textureHeight !== textureHeight)) {
-        this.drawBackground(this.texture.valid ? textureWidth : width, this.texture.valid ? textureHeight : height, style.backgroundColor, style.borderWidth, style.borderStyle);
+        this.drawBackground(this.texture && this.texture.valid ? textureWidth : width, this.texture && this.texture.valid ? textureHeight : height, style.backgroundColor, style.borderWidth, style.borderStyle);
       } // console.log('draw canvas div',this)
 
 
@@ -23066,8 +23071,8 @@ var Div = /*#__PURE__*/function (_PIXI$Sprite) {
 
       this._styleWidth = width;
       this._styleHeight = height;
-      this._textureWidth = this.texture.width || width;
-      this._textureHeight = this.texture.height || height; // this._style = style
+      this._textureWidth = this.texture ? this.texture.width : width;
+      this._textureHeight = this.texture ? this.texture.height : height; // this._style = style
     }
     /**
     * Updates the transform on all children of this container for rendering
@@ -24535,155 +24540,145 @@ var FPSController$1 = /*#__PURE__*/function () {
 var PIXI_RENDERS = [];
 var COUNT = 0;
 PIXI$1.settings.FILTER_RESOLUTION = 1;
-var ReactPIXIFiberRoot = /*#__PURE__*/function () {
-  function ReactPIXIFiberRoot(props, domElement) {
-    _classCallCheck(this, ReactPIXIFiberRoot);
+var ReactPIXIFiberRoot = function ReactPIXIFiberRoot(_props, _domElement) {
+  var _this = this;
 
-    _defineProperty(this, "props", void 0);
+  _classCallCheck(this, ReactPIXIFiberRoot);
 
-    _defineProperty(this, "fpsController", void 0);
+  _defineProperty(this, "props", void 0);
 
-    _defineProperty(this, "raf", void 0);
+  _defineProperty(this, "fpsController", void 0);
 
-    _defineProperty(this, "renderer", void 0);
+  _defineProperty(this, "raf", void 0);
 
-    _defineProperty(this, "stage", void 0);
+  _defineProperty(this, "renderer", void 0);
 
-    _defineProperty(this, "view", void 0);
+  _defineProperty(this, "stage", void 0);
 
-    _defineProperty(this, "update", void 0);
+  _defineProperty(this, "view", void 0);
 
-    this.props = props;
-    this.fpsController = new FPSController$1();
-    this.cancel = this.cancel.bind(this);
-    this.autoRender = this.autoRender.bind(this);
-    this.createPixiWebglRender = this.createPixiWebglRender.bind(this);
-    COUNT++;
-    this.createPixiWebglRender(props, domElement);
-    return this;
-  }
+  _defineProperty(this, "update", void 0);
 
-  _createClass(ReactPIXIFiberRoot, [{
-    key: "cancel",
-    value: function cancel() {
-      // tslint:disable-next-line:no-unused-expression
-      this.raf && typeof this.raf.cancel === "function" && this.raf.cancel();
-    }
-  }, {
-    key: "autoRender",
-    value: function autoRender(renderfunction) {
-      var _this = this;
+  _defineProperty(this, "cancel", function () {
+    // tslint:disable-next-line:no-unused-expression
+    _this.raf && typeof _this.raf.cancel === "function" && _this.raf.cancel();
+  });
 
-      this.raf = animate(function () {
-        renderfunction();
-      }, function () {
-        return _this.fpsController.checkfps(30);
+  _defineProperty(this, "autoRender", function (renderfunction) {
+    _this.raf = animate(function () {
+      renderfunction();
+    }, function () {
+      return _this.fpsController.checkfps(30);
+    });
+  });
+
+  _defineProperty(this, "createPixiWebglRender", function (props, domElement) {
+    var _props$style = props.style,
+        style = _props$style === void 0 ? {} : _props$style,
+        autoRender = props.autoRender;
+    var preserveDrawingBuffer = props.preserveDrawingBuffer,
+        transparent = props.transparent,
+        width = props.width,
+        height = props.height,
+        backgroundColor = props.backgroundColor,
+        autoResize = props.autoResize,
+        className = props.className;
+    var target = props.target;
+    var stage = new PIXI$1.Sprite(); // @ts-ignore
+
+    stage.CANVAS_ID = COUNT;
+    var paddig = 0;
+    stage.y = paddig;
+    var renderer;
+
+    if (!target || !document.getElementById(target) || target === undefined) {
+      renderer = new PIXI$1.WebGLRenderer(width, height + paddig * 2, {
+        antialias: true,
+        clearBeforeRender: false,
+        forceFXAA: true,
+        autoResize: autoResize,
+        backgroundColor: backgroundColor,
+        transparent: transparent,
+        preserveDrawingBuffer: preserveDrawingBuffer,
+        resolution: PIXI$1.settings.RESOLUTION,
+        view: domElement
       });
-    } // Resize function window
+      console.log('autoResize', autoResize);
 
-  }, {
-    key: "createPixiWebglRender",
-    value: function createPixiWebglRender(props, domElement) {
-      var _props$style = props.style,
-          style = _props$style === void 0 ? {} : _props$style,
-          autoRender = props.autoRender;
-      var preserveDrawingBuffer = props.preserveDrawingBuffer,
-          transparent = props.transparent,
-          width = props.width,
-          height = props.height,
-          backgroundColor = props.backgroundColor,
-          autoResize = props.autoResize,
-          className = props.className;
-      var target = props.target;
-      var stage = new PIXI$1.Sprite(); // @ts-ignore
-
-      stage.CANVAS_ID = COUNT;
-      var paddig = 0;
-      stage.y = paddig;
-      var renderer;
-
-      if (!target || !document.getElementById(target) || target === undefined) {
-        renderer = new PIXI$1.WebGLRenderer(width, height + paddig * 2, {
-          antialias: true,
-          clearBeforeRender: false,
-          forceFXAA: true,
-          autoResize: autoResize,
-          backgroundColor: backgroundColor,
-          transparent: transparent,
-          preserveDrawingBuffer: preserveDrawingBuffer,
-          resolution: PIXI$1.settings.RESOLUTION,
-          view: domElement
-        });
-        console.log('autoResize', autoResize);
-
-        if (!target) {
-          target = "".concat(COUNT, "_target");
-        }
-
-        PIXI_RENDERS[target] = renderer;
-      } else {
-        renderer = PIXI_RENDERS[target];
-      } // renderer.render(stage);///////!!!!
-      // setInterval(function(){renderer.render(stage); }, 100);
-
-
-      if (!document.getElementById(target) && target !== undefined) {
-        renderer.view.id = target;
-        renderer.view.style.position = style.position || 'absolute';
-        renderer.view.style.top = "".concat(-paddig, "px") || 'inherit';
-        renderer.view.style.left = "".concat(style.left, "px") || 'inherit';
-        renderer.view.style.opacity = '1';
-        renderer.view.setAttribute('data-name', 'front');
-        renderer.view.className = "".concat(className);
-      } else if (target === undefined) {
-        renderer.view.id = "stage_".concat(COUNT); // @ts-ignore
-
-        PIXI$1.TARGET_FPMS = 0.06;
+      if (!target) {
+        target = "".concat(COUNT, "_target");
       }
 
-      Object.assign(renderer.view, {
-        __PIXI__: {
-          renderer: renderer,
-          stage: stage
-        }
-      }); // @ts-ignore
-
-      var ticker = PIXI$1.ticker.shared; // Set this to prevent starting this ticker when listeners are added to it
-      // By default this is true only on the PIXI.ticker.shared instance
-
-      ticker.autoStart = false; // Call this to ensure the ticker is stopped right now
-
-      ticker.stop();
-      mapCanvasToStage(renderer.view, stage);
-      mapStage(stage, renderer);
-      mapRender(stage, renderer);
-      this.renderer = renderer;
-      this.stage = stage;
-      this.view = renderer.view;
-      stage.renderer = renderer; // window.renderer = renderer;
-
-      if (autoRender) {
-        this.autoRender(function () {
-          return renderer.render(stage);
-        });
-      } // setTimeout(()=>renderer.render(stage),100)
-      /// coment to remove html render
-      // var accessibilityManager = new HtmlRenderer(renderer);
-      // Object.assign( window,{HTMLRenderer:accessibilityManager});
-      // this.htmlRenderer = accessibilityManager;
-      // this.stage.htmlRenderer = accessibilityManager;
-      // accessibilityManager.addChild(stage)
-      // setTimeout(()=>{
-      //   accessibilityManager.activate()
-      // },1000)
+      PIXI_RENDERS[target] = renderer;
+    } else {
+      renderer = PIXI_RENDERS[target];
+    } // renderer.render(stage);///////!!!!
+    // setInterval(function(){renderer.render(stage); }, 100);
 
 
-      return renderer;
+    if (!document.getElementById(target) && target !== undefined) {
+      renderer.view.id = target;
+      renderer.view.style.position = style.position || 'absolute';
+      renderer.view.style.top = "".concat(-paddig, "px") || 'inherit';
+      renderer.view.style.left = "".concat(style.left, "px") || 'inherit';
+      renderer.view.style.opacity = '1';
+      renderer.view.setAttribute('data-name', 'front');
+      renderer.view.className = "".concat(className);
+    } else if (target === undefined) {
+      renderer.view.id = "stage_".concat(COUNT); // @ts-ignore
+
+      PIXI$1.TARGET_FPMS = 0.06;
     }
-  }]);
 
-  return ReactPIXIFiberRoot;
-}();
+    Object.assign(renderer.view, {
+      __PIXI__: {
+        renderer: renderer,
+        stage: stage
+      }
+    }); // @ts-ignore
+
+    var ticker = PIXI$1.ticker.shared; // Set this to prevent starting this ticker when listeners are added to it
+    // By default this is true only on the PIXI.ticker.shared instance
+
+    ticker.autoStart = false; // Call this to ensure the ticker is stopped right now
+
+    ticker.stop();
+    mapCanvasToStage(renderer.view, stage);
+    mapStage(stage, renderer);
+    mapRender(stage, renderer);
+    _this.renderer = renderer;
+    _this.stage = stage;
+    _this.view = renderer.view;
+    stage.renderer = renderer; // window.renderer = renderer;
+
+    if (autoRender) {
+      _this.autoRender(function () {
+        return renderer.render(stage);
+      });
+    } // setTimeout(()=>renderer.render(stage),100)
+    /// coment to remove html render
+    // var accessibilityManager = new HtmlRenderer(renderer);
+    // Object.assign( window,{HTMLRenderer:accessibilityManager});
+    // this.htmlRenderer = accessibilityManager;
+    // this.stage.htmlRenderer = accessibilityManager;
+    // accessibilityManager.addChild(stage)
+    // setTimeout(()=>{
+    //   accessibilityManager.activate()
+    // },1000)
+
+
+    return renderer;
+  });
+
+  this.props = _props;
+  this.fpsController = new FPSController$1(); // this.cancel = this.cancel.bind(this)
+  // this.autoRender =  this.autoRender.bind(this)
+  // this.createPixiWebglRender = this.createPixiWebglRender.bind(this)
+
+  COUNT++;
+  this.createPixiWebglRender(_props, _domElement);
+  return this;
+};
 
 // typeof defaultProps & React.ComponentClass & React.ReactChildren
 var defaultProps$1 = {
@@ -25203,13 +25198,6 @@ var TextureLoader = function TextureLoader(_uniforms, filter) {
     _this._userInteracted = true;
   });
 };
-
-function EMPTY() {
-  var baseTexture = new PIXI.BaseTexture();
-  return new PIXI.Texture(baseTexture);
-}
-
-EMPTY.prototype.constructor = EMPTY;
 
 var animate$1 = require('animate'); // import TextureLoader from './../core/TextureLoader';
 /**

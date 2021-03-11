@@ -39,12 +39,12 @@ declare class ReactPIXIFiberRoot implements IReactPIXIFiberRoot {
     view: any;
     update: any;
     constructor(props: CanvasProps$1, domElement: HTMLCanvasElement);
-    cancel(): void;
-    autoRender(renderfunction: {
+    cancel: () => void;
+    autoRender: (renderfunction: {
         (): void;
         (): void;
-    }): void;
-    createPixiWebglRender(props: CanvasProps$1, domElement: HTMLCanvasElement): WebGLRenderer;
+    }) => void;
+    createPixiWebglRender: (props: CanvasProps$1, domElement: HTMLCanvasElement) => WebGLRenderer;
 }
 
 declare type Color = number;

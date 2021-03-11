@@ -4,7 +4,7 @@ import css from 'css-to-react-native';
 // import camelizeStyleName from 'fbjs/lib/camelizeStyleName';
 import shallowequal from 'shallowequal';
 import { CSSProperties } from 'react';
-import EMPTY from 'src/filters/core/Texture/EMPTY';
+import EMPTY from '../../filters/core/Texture/EMPTY';
 
 
 export interface IDiv {
@@ -503,7 +503,7 @@ export default class Div extends PIXI.Sprite implements IDiv {
                 || this._textureWidth !== textureWidth ||this._textureHeight !== textureHeight
                 )
             ){
-                this.drawBackground(this.texture.valid ? textureWidth : width ,this.texture.valid ? textureHeight : height ,style.backgroundColor,style.borderWidth,style.borderStyle)
+                this.drawBackground((this.texture && this.texture.valid )? textureWidth : width ,(this.texture && this.texture.valid) ? textureHeight : height ,style.backgroundColor,style.borderWidth,style.borderStyle)
             
         }
        
@@ -529,8 +529,8 @@ export default class Div extends PIXI.Sprite implements IDiv {
         this._styleWidth  = width;
         this._styleHeight = height;
 
-        this._textureWidth = this.texture.width || width;
-        this._textureHeight = this.texture.height || height;
+        this._textureWidth = this.texture ? this.texture.width : width;
+        this._textureHeight = this.texture ? this.texture.height : height;
          
         // this._style = style
 

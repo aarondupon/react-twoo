@@ -42,19 +42,19 @@ export class ReactPIXIFiberRoot implements IReactPIXIFiberRoot {
       this.props = props;
       this.fpsController = new FPSController();
 
-      this.cancel = this.cancel.bind(this)
-      this.autoRender =  this.autoRender.bind(this)
-      this.createPixiWebglRender = this.createPixiWebglRender.bind(this)
+      // this.cancel = this.cancel.bind(this)
+      // this.autoRender =  this.autoRender.bind(this)
+      // this.createPixiWebglRender = this.createPixiWebglRender.bind(this)
       
       COUNT ++;
       this.createPixiWebglRender(props,domElement)
       return this;  
     }
-    cancel(){
+    cancel = () =>{
       // tslint:disable-next-line:no-unused-expression
       (this.raf && typeof this.raf.cancel === "function") &&  this.raf.cancel()
     }
-    autoRender(renderfunction: { (): void; (): void; }){
+    autoRender = (renderfunction: { (): void; (): void; }) => {
       
       this.raf = animate(()=>{
         renderfunction()
@@ -62,7 +62,7 @@ export class ReactPIXIFiberRoot implements IReactPIXIFiberRoot {
 
     }
     // Resize function window
-    createPixiWebglRender(props: CanvasProps,domElement: HTMLCanvasElement){
+    createPixiWebglRender = (props: CanvasProps,domElement: HTMLCanvasElement)=>{
         const {style = {},autoRender} =  props;
         
         const { preserveDrawingBuffer,transparent,width,height,backgroundColor,autoResize,className} = props;
