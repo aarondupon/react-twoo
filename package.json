@@ -30,7 +30,7 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-reconciler": "^0.26.1",
-    "react-scripts-ts": "3.1.0",
+    "react-scripts-ts": "4.0.8",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-dts": "^1.4.13",
     "rollup-plugin-glslify": "^1.2.0",
